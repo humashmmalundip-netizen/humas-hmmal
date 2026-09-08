@@ -223,13 +223,17 @@
     <!-- HERO SECTION WITH FULL PHOTO BACKGROUND (EDITABLE IMAGE) -->
     <section class="relative min-h-[90vh] lg:min-h-[92vh] w-full flex flex-col justify-between overflow-hidden">
         
-        <!-- ========================================================================= -->
-        <!-- EDITABLE HERO BACKGROUND PHOTO & OVERLAY CONTAINER -->
-        <!-- Ganti URL gambar pada atribut style 'background-image' di bawah ini dengan foto pilihan Anda! -->
-        <!-- Contoh: background-image: linear-gradient(...), url('NAMA_FILE_FOTO_ANDA.jpg'); -->
-        <!-- ========================================================================= -->
-        <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
-             style="background-image: linear-gradient(to bottom, rgba(30, 2, 8, 0.462), rgba(88, 0, 22, 0.85)), url('assets/humas.webp');">
+        <!-- 1. Gambar utama (diakses cepat oleh browser + fetchpriority=high) -->
+        <img 
+            src="assets/humas.webp" 
+            alt="Humas HMMAL UNDIP" 
+            fetchpriority="high" 
+            class="absolute inset-0 z-0 w-full h-full object-cover object-center transition-all duration-700"
+        />
+
+        <!-- 2. Overlay gradient warna (ditaruh di atas gambar) -->
+        <div 
+            class="absolute inset-0 z-0 bg-gradient-to-b from-[rgba(30,2,8,0.462)] to-[rgba(88,0,22,0.85)] pointer-events-none">
         </div>
 
         <!-- Hero Text Content -->
@@ -568,13 +572,13 @@
 
                 <!-- Social Media Buttons -->
                 <div class="flex items-center gap-3 pt-1">
-                    <a href="https://www.instagram.com/humas.hmmal/" target="_blank" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
+                    <a href="https://www.instagram.com/humas.hmmal/" aria-label="instagram-humas" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
                         <i class="fa-brands fa-instagram text-sm"></i>
                     </a>
-                    <a href="https://www.youtube.com/@hmmanajemendanadministrasi9490" target="_blank" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
+                    <a href="https://www.youtube.com/@hmmanajemendanadministrasi9490" aria-label="youtube-hmmal" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
                         <i class="fa-brands fa-youtube text-sm"></i>
                     </a>
-                    <a href="https://www.tiktok.com/@hmmalundip?_r=1&_t=ZS-99BX7bSbHEX" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
+                    <a href="https://www.tiktok.com/@hmmalundip?_r=1&_t=ZS-99BX7bSbHEX" aria-label="tiktok-hmmal" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
                         <i class="fa-brands fa-tiktok text-sm"></i>
                     </a>
                 </div>
@@ -610,7 +614,7 @@
                 <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Hubungi Kami</p>
                 
                 <!-- Email Card -->
-                <a href="mailto:humashmmalundip@gmail.com" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-maroon-800 hover:bg-maroon-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
+                <a href="mailto:humashmmalundip@gmail.com" aria-label="email-humas" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-maroon-800 hover:bg-maroon-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
                     <div class="w-10 h-10 rounded-2xl bg-rose-100/70 group-hover:bg-maroon-800 text-maroon-800 group-hover:text-white flex items-center justify-center shrink-0 transition-colors duration-300">
                         <i class="fa-regular fa-envelope text-sm"></i>
                     </div>
@@ -621,7 +625,7 @@
                 </a>
 
                 <!-- WhatsApp Card -->
-                <a href="https://wa.me/6281617591588" target="_blank" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-emerald-600 hover:bg-emerald-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
+                <a href="https://wa.me/6281617591588" aria-label="whatsapp-humas" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-emerald-600 hover:bg-emerald-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
                     <div class="w-10 h-10 rounded-2xl bg-sky-100/70 group-hover:bg-emerald-600 text-sky-700 group-hover:text-white flex items-center justify-center shrink-0 transition-colors duration-300">
                         <i class="fa-brands fa-whatsapp text-base"></i>
                     </div>
