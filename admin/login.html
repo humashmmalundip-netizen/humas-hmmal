@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login Admin Humas HMMAL UNDIP - Kelola informasi dan program kerja Humas HMMAL UNDIP dengan mudah.">
+    <title>Login Admin CMS - HMMAL UNDIP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    </noscript>
+    <link rel="icon" type="image/png" href="../assets/logo-humas.webp" />
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen relative flex items-center justify-center bg-[#FAF6F6] text-slate-800 overflow-hidden select-none p-4">
+
+  <!-- Atmospheric Soft Cloud Gradients & Arch Lines -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-rose-200/50 via-rose-100/30 to-transparent rounded-full blur-3xl opacity-80"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-rose-100/60 to-transparent blur-2xl"></div>
+    
+    <!-- Arch Lines SVG -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] border border-rose-900/5 rounded-full pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] h-[950px] border border-rose-900/5 rounded-full pointer-events-none"></div>
+  </div>
+
+  <!-- Top Navigation / Logo Brand (Posisi Kiri Atas dengan Logo Lingkaran) -->
+    <header class="absolute top-0 left-0 w-full p-6 sm:p-8 flex items-center justify-between z-20 pointer-events-none">
+    <div class="pointer-events-auto flex items-center gap-2.5 bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/80 shadow-sm shadow-rose-950/5">
+        <!-- Icon Logo Mini Lingkaran Presisi -->
+        <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
+            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" width="32" height="32" class="w-full h-full object-cover">
+        </div>
+        <span class="text-xs font-bold text-slate-800 tracking-tight pr-1">Humas HMMAL UNDIP</span>
+    </div>
+    </header>
+
+  <!-- Card Login Utama (Center Presisi Seimbang) -->
+  <main class="w-full max-w-[400px] relative z-10 my-auto">
+    <div class="bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-white shadow-[0_20px_60px_-15px_rgba(107,29,47,0.08)] p-8 sm:p-9 text-center space-y-5">
+
+      <!-- Top Icon Box Floating (Icon Panah Masuk) -->
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-slate-100 shadow-md shadow-rose-950/5 mx-auto text-[#6B1D2F]">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+        </svg>
+      </div>
+
+      <!-- Header Titles -->
+      <div class="space-y-1.5">
+        <h1 class="text-xl font-bold text-slate-900 tracking-tight">Masuk Admin CMS</h1>
+        <p class="text-xs text-slate-500 leading-relaxed max-w-[260px] mx-auto">
+          Kelola informasi dan program kerja Humas HMMAL UNDIP.
+        </p>
+      </div>
+
+      <!-- Container Message Box Alert Unobtrusive -->
+      <div id="errorAlert" class="hidden text-xs text-red-600 bg-red-50/90 border border-red-200/60 p-3 rounded-2xl text-center leading-snug"></div>
+
+      <!-- Form Login -->
+      <form id="loginForm" class="space-y-3.5 text-left pt-1">
+
+        <!-- Input Email -->
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <input 
+            type="email" 
+            id="email" 
+            required
+            placeholder="Email Admin" 
+            class="w-full pl-10 pr-4 py-3 bg-slate-100/80 border border-transparent rounded-2xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-rose-800/20 focus:ring-4 focus:ring-rose-950/5 transition-all"
+          >
+        </div>
+
+        <!-- Input Password -->
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <input 
+            type="password" 
+            id="password" 
+            required
+            placeholder="Password" 
+            class="w-full pl-10 pr-10 py-3 bg-slate-100/80 border border-transparent rounded-2xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-rose-800/20 focus:ring-4 focus:ring-rose-950/5 transition-all"
+          >
+          <!-- Button Toggle Password View -->
+          <button 
+            type="button" 
+            id="togglePassword"
+            aria-label="Tampilkan atau sembunyikan kata sandi"
+            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition"
+          >
+            <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Tombol Masuk Utama -->
+        <button 
+          type="submit" 
+          id="btnLogin" 
+          class="w-full py-3.5 px-4 bg-[#212429] hover:bg-[#15171a] text-white text-xs font-semibold rounded-2xl shadow-lg shadow-slate-900/10 transition duration-200 active:scale-[0.98] disabled:opacity-70 cursor-pointer mt-2"
+        >
+          Masuk Sekarang
+        </button>
+      </form>
+
+      <!-- Footer Minimalis Dalam Card -->
+      <div class="pt-2">
+        <p class="text-[11px] text-slate-400 font-medium">HMMAL UNDIP &copy; 2026</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // 1. INISIALISASI SUPABASE CLIENT
+    const SUPABASE_URL = 'https://gaslxxrrhvwtsnwzvhej.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdhc2x4eHJyaHZ3dHNud3p2aGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTM3MzEsImV4cCI6MjEwNDg2OTczMX0.WdsQoA11wTIKETeA-SThAd5PQjSGPO1wdI2G3F4w8l8';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 2. CEK SESI (Jika sudah login, langsung ke dashboard)
+    async function checkSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        window.location.replace('dashboard.html');
+      }
+    }
+    checkSession();
+
+    // 3. LOGIKA TOGGLE VISIBILITAS PASSWORD (Show / Hide)
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+    });
+
+    // 4. LOGIKA PROSES LOGIN
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnLogin');
+      const errorAlert = document.getElementById('errorAlert');
+      
+      errorAlert.classList.add('hidden');
+      btn.innerText = 'Memproses...';
+      btn.disabled = true;
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        errorAlert.innerText = 'Gagal Login: ' + error.message;
+        errorAlert.classList.remove('hidden');
+        btn.innerText = 'Masuk Sekarang';
+        btn.disabled = false;
+      } else {
+        window.location.replace('dashboard.html');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin CMS - Humas HMMAL UNDIP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/logo-humas.webp" />
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #FAF6F6; }
+    ::-webkit-scrollbar-thumb { background: #e2d8d8; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6B1D2F; }
+  </style>
+</head>
+<body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 min-h-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
+
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-40 right-0 w-[600px] h-[600px] bg-gradient-to-b from-rose-200/40 via-rose-100/20 to-transparent rounded-full blur-3xl opacity-70"></div>
+    <div class="absolute bottom-0 -left-20 w-[500px] h-[500px] bg-rose-100/50 rounded-full blur-3xl opacity-60"></div>
+  </div>
+
+  <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-100 shadow-sm">
+    <div class="px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
+            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <h1 class="text-xs font-bold text-slate-900 leading-none">CMS Dashboard</h1>
+          <p class="text-[10px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown Toggle Button -->
+      <button id="btnMobileMenuToggle" class="p-2 text-slate-700 hover:bg-rose-50 rounded-xl transition cursor-pointer" aria-label="Toggle Navigation">
+        <svg id="iconMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="iconMenuClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Minimalist Mobile Dropdown Panel -->
+    <div id="mobileDropdownMenu" class="hidden border-t border-rose-100/60 bg-white/95 backdrop-blur-2xl px-4 py-3 space-y-1 shadow-xl">
+      <button onclick="switchTab('program-kerja')" class="nav-mobile-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50/80 transition" data-tab="program-kerja">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        <span>Program Kerja</span>
+      </button>
+
+      <button onclick="switchTab('tentang-kami')" class="nav-mobile-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="tentang-kami">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Tentang Kami</span>
+      </button>
+
+      <button onclick="switchTab('anggota')" class="nav-mobile-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="anggota">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>Anggota</span>
+      </button>
+
+      <button onclick="switchTab('aktivitas')" class="nav-mobile-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="aktivitas">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>Aktivitas</span>
+      </button>
+
+      <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
+        <a href="../index.html" target="_blank" class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">
+          <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          Lihat Web
+        </a>
+        <button onclick="handleLogout()" class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200/60 transition cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+          Keluar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <aside class="hidden md:flex flex-col w-64 min-h-screen bg-white/80 backdrop-blur-xl border-r border-rose-100/80 p-5 sticky top-0 z-40 justify-between shrink-0 shadow-sm">
+    <div class="space-y-6">
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 px-2 py-1">
+        <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
+            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-slate-900 leading-tight">CMS Dashboard</h1>
+          <p class="text-[11px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
+        </div>
+      </div>
+
+      <!-- Left Sidebar Navigation Items -->
+      <nav class="space-y-1.5 pt-2">
+        <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
+
+        <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50 border border-rose-200/50 shadow-sm transition" data-tab="program-kerja">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          <span>Program Kerja</span>
+        </button>
+
+        <button onclick="switchTab('tentang-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="tentang-kami">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Tentang Kami</span>
+        </button>
+
+        <button onclick="switchTab('anggota')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="anggota">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span>Anggota</span>
+        </button>
+
+        <button onclick="switchTab('aktivitas')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="aktivitas">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Aktivitas</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Bottom Action Buttons -->
+    <div class="space-y-2 pt-6 border-t border-slate-100">
+      <a href="../index.html" target="_blank" class="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100/80 hover:bg-slate-200/80 transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        <span>Lihat Website</span>
+      </a>
+
+      <button id="btnLogout" onclick="handleLogout()" class="w-full flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold rounded-xl border border-rose-200/60 transition cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+        <span>Keluar</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+
+    <!-- TAB VIEW 1: PROGRAM KERJA (MAIN CMS) -->
+    <section id="tab-program-kerja" class="tab-content space-y-8">
+      
+      <!-- Header Banner -->
+      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+        <div class="space-y-1 relative z-10">
+          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
+            Manajemen Konten
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Program Kerja Unggulan</h2>
+          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
+            Tambah, perbarui, dan atur tata letak agenda kegiatan Humas HMMAL UNDIP. Konten terbaru akan tampil paling atas.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3 sm:gap-4 relative z-10">
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 px-4 py-3 rounded-2xl text-center min-w-[100px]">
+            <span class="block text-xl font-extrabold text-white" id="statTotalCount">0</span>
+            <span class="text-[10px] uppercase font-semibold text-rose-200">Program Kerja</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout Grid: Form on Left, Table/List on Right -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <section class="lg:col-span-5 bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <div class="border-b border-slate-100 pb-4">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+              Tambah Program Kerja Baru
+            </h3>
+            <p class="text-xs text-slate-500 mt-1">Pilih kategori dan unggah kegiatan baru Anda.</p>
+          </div>
+
+          <form id="prokerjaForm" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Program</label>
+              <input 
+                type="text" 
+                id="proJudul" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 focus:ring-2 focus:ring-rose-900/10 outline-none transition" 
+                placeholder="Contoh: Abdi Masyarakat" 
+                required
+              >
+            </div>
+
+            <!-- Restricted Kategori Options -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Program</label>
+              <select 
+                id="proKategori" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-rose-900 focus:ring-2 focus:ring-rose-900/10 outline-none transition cursor-pointer"
+                required
+              >
+                <option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option>
+                <option value="Social Responsibility">Social Responsibility</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Waktu / Bulan</label>
+                <input 
+                  type="text" 
+                  id="proWaktu" 
+                  class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 focus:ring-2 focus:ring-rose-900/10 outline-none transition" 
+                  placeholder="Oktober 2026" 
+                  required
+                >
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Urutan Tampil</label>
+                <input 
+                  type="number" 
+                  id="proUrutan" 
+                  class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 focus:ring-2 focus:ring-rose-900/10 outline-none transition" 
+                  value="1" 
+                  min="1"
+                  required
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Singkat Program</label>
+              <textarea 
+                id="proDeskripsi" 
+                rows="3" 
+                class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 focus:ring-2 focus:ring-rose-900/10 outline-none transition" 
+                placeholder="Jelaskan secara ringkas mengenai latar belakang dan tujuan agenda..."
+                required
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Kegiatan</label>
+              <input 
+                type="file" 
+                id="proFile" 
+                accept="image/*" 
+                class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer" 
+                required
+              >
+            </div>
+
+            <button 
+              type="submit" 
+              id="btnSavePro" 
+              class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md shadow-rose-950/10 transition active:scale-[0.98] disabled:opacity-70 cursor-pointer flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>Upload Program Kerja</span>
+            </button>
+          </form>
+        </section>
+
+        <section class="lg:col-span-7 bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+                Daftar Program Kerja (Terbaru di Atas)
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">Daftar agenda terbit disortir otomatis berdasarkan waktu unggah.</p>
+            </div>
+            <button onclick="loadProkerjaData()" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition cursor-pointer" title="Refresh Data">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
+          </div>
+
+          <!-- Table View for Desktop -->
+          <div class="hidden sm:block overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-100 text-slate-400 font-semibold uppercase tracking-wider">
+                  <th class="py-3 px-2 text-center w-12">No</th>
+                  <th class="py-3 px-3">Gambar</th>
+                  <th class="py-3 px-3">Judul & Kategori</th>
+                  <th class="py-3 px-3">Waktu</th>
+                  <th class="py-3 px-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="prokerjaTableBody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Card View for Mobile -->
+          <div id="prokerjaMobileCards" class="block sm:hidden space-y-3">
+            <!-- Rendered dynamically -->
+          </div>
+
+        </section>
+
+      </div>
+    </section>
+
+    <!-- TAB VIEW 2: TENTANG KAMI (DIRECT EDIT FORM FOR SUPABASE) -->
+    <section id="tab-tentang-kami" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 sm:p-8 space-y-8">
+        
+        <!-- Header & Toolbar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+              <span class="w-1.5 h-5 rounded-full bg-[#6B1D2F]"></span>
+              Kelola Profil & "Tentang Kami"
+            </h2>
+            <p class="text-xs text-slate-500 mt-1 pl-4">Atur Sekilas Humas, Foto Profil, Visi Utama, dan Misi Strategis.</p>
+          </div>
+          
+          <button type="button" onclick="loadTentangKamiData()" class="inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 text-xs font-medium rounded-lg border border-slate-200/80 transition-all cursor-pointer self-start sm:self-auto">
+            <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Refresh Data</span>
+          </button>
+        </div>
+
+        <form id="formTentangKami" class="space-y-8">
+          
+          <!-- Foto Profil / Bagan & Deskripsi Sekilas Humas -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold tracking-wider text-slate-400 ">
+              1. Foto Profil & Deskripsi Ringkas
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+              <!-- Upload Image Preview Box -->
+              <div class="md:col-span-5 space-y-3">
+                <label class="block text-xs font-semibold text-slate-700">Foto Profil / Divisi</label>
+                <div class="relative group overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-xs">
+                  <img id="previewGambar" src="https://placehold.co/400x300/6B1D2F/ffffff?text=Loading..." class="w-full aspect-[16/9] object-cover transition duration-300 group-hover:scale-102">
+                </div>
+                
+                <input type="file" id="inputGambar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer transition">
+                <p class="text-[11px] text-slate-400">Format yang didukung: JPG, PNG, WEBP.</p>
+              </div>
+
+              <!-- Deskripsi Area -->
+              <div class="md:col-span-7 space-y-2">
+                <label class="block text-xs font-semibold text-slate-700">Sekilas Humas (Deskripsi Ringkas)</label>
+                <textarea id="inputDeskripsi" rows="7" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="Tuliskan deskripsi profil bidang..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr class="border-slate-100" />
+
+          <!-- Visi Utama -->
+          <div class="space-y-2">
+            <h3 class="text-sm font-bold tracking-wider text-slate-400">
+              2. Visi Utama
+            </h3>
+            <textarea id="inputVisi" rows="3" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="Tuliskan narasi visi utama bidang..."></textarea>
+          </div>
+
+          <hr class="border-slate-100" />
+
+          <!-- Misi Strategis -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold tracking-wider text-slate-400">
+                3. Misi Strategis
+              </h3>
+              <span class="text-[11px] text-slate-400">1 poin misi per baris (Tekan Enter)</span>
+            </div>
+            <textarea id="inputMisi" rows="5" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="1. Mengoptimalkan peran dan kinerja...&#10;2. Menjadi jembatan komunikasi...&#10;3. Membangun serta menjaga hubungan..."></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center justify-end pt-4 border-t border-slate-100">
+            <button type="submit" id="btnSaveTentangKami" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#541624] text-white text-xs font-semibold rounded-xl shadow-xs hover:shadow transition-all active:scale-[0.99] cursor-pointer flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Simpan Perubahan</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB VIEW 3: ANGGOTA (FULLY FUNCTIONAL CMS) -->
+    <section id="tab-anggota" class="tab-content hidden space-y-8">
+      <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-6 rounded-full bg-[#6B1D2F] inline-block"></span>
+              Kelola Data Anggota & Pengurus
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">Daftar staf, kepala divisi, dan fungsionaris Humas HMMAL UNDIP.</p>
+          </div>
+          <button onclick="openAnggotaModal()" class="px-4 py-2.5 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2 self-start sm:self-auto cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>Tambah Anggota Baru</span>
+          </button>
+        </div>
+
+        <!-- Members Grid Container -->
+        <div id="anggotaGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB VIEW 4: AKTIVITAS (SYSTEM LOGS) -->
+    <section id="tab-aktivitas" class="tab-content hidden space-y-6">
+      <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-6 rounded-full bg-[#6B1D2F] inline-block"></span>
+              Log Aktivitas & Riwayat Unggahan
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">Catatan pembaruan konten dan aktivitas publikasi terbaru di CMS.</p>
+          </div>
+          <button onclick="addLog('Melakukan penyegaran data sistem', 'sistem')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+            Catat Log
+          </button>
+        </div>
+
+        <div id="activityLogsList" class="space-y-3">
+          <div class="p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <div>
+                <p class="font-bold text-slate-800">Sistem CMS Berjalan Normal</p>
+                <p class="text-[11px] text-slate-500">Terhubung secara real-time dengan Supabase Database.</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-semibold text-slate-400">Baru Saja</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Edit Program Kerja Modal -->
+  <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">Edit Program Kerja</h3>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      
+      <form id="editProkerjaForm" class="space-y-4">
+        <input type="hidden" id="editProId">
+        <input type="hidden" id="editProOldGambarUrl">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Program</label>
+          <input type="text" id="editProJudul" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Program</label>
+          <select 
+            id="editProKategori" 
+            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition cursor-pointer" 
+            required
+          >
+            <option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option>
+            <option value="Social Responsibility">Social Responsibility</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Waktu / Bulan</label>
+            <input type="text" id="editProWaktu" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Urutan Tampil</label>
+            <input type="number" id="editProUrutan" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Program</label>
+          <textarea id="editProDeskripsi" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Ganti Foto Kegiatan (Opsional)</label>
+          <input type="file" id="editProFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer">
+          <p class="text-[11px] text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+            Batal
+          </button>
+          <button type="submit" id="btnUpdatePro" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Tambah/Edit Anggota -->
+  <div id="anggotaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">Tambah / Edit Anggota</h3>
+        <button onclick="closeAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="anggotaForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+          <input type="text" id="angNama" placeholder="Nama Pengurus" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Jabatan Divisi</label>
+          <input type="text" id="angJabatan" placeholder="Contoh: Kepala Divisi Humas / Staff" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Link Instagram (Opsional)</label>
+          <input type="text" id="angIg" placeholder="https://instagram.com/username" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Pengurus</label>
+          <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer">
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeAnggotaModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+            Batal
+          </button>
+          <button type="submit" id="btnSaveAnggota" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition">
+            Simpan Anggota
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation Delete Modal -->
+  <div id="deleteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-slate-100">
+      <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-800 flex items-center justify-center mx-auto">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      </div>
+      <div>
+        <h4 id="deleteModalTitle" class="text-base font-bold text-slate-900">Hapus Konten?</h4>
+        <p class="text-xs text-slate-500 mt-1">Tindakan ini tidak dapat dibatalkan. Data akan dihapus secara permanen.</p>
+      </div>
+      <div class="flex items-center gap-2 pt-2">
+        <button onclick="closeDeleteModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+          Batal
+        </button>
+        <button id="btnConfirmDelete" class="w-1/2 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md transition">
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <script>
+    const SUPABASE_URL = 'https://gaslxxrrhvwtsnwzvhej.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdhc2x4eHJyaHZ3dHNud3p2aGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTM3MzEsImV4cCI6MjEwNDg2OTczMX0.WdsQoA11wTIKETeA-SThAd5PQjSGPO1wdI2G3F4w8l8';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let listProgramKerja = [];
+    let listAnggota = [];
+    let currentGambarUrl = '';
+    let deleteTargetId = null;
+    let deleteTargetType = 'prokerja'; // 'prokerja' | 'anggota'
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-desktop-btn').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.className = 'nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50 border border-rose-200/50 shadow-sm transition';
+        } else {
+          btn.className = 'nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition';
+        }
+      });
+
+      document.querySelectorAll('.nav-mobile-btn').forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.className = 'nav-mobile-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50/80 transition';
+        } else {
+          btn.className = 'nav-mobile-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition';
+        }
+      });
+
+      const mobileMenu = document.getElementById('mobileDropdownMenu');
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        toggleMobileMenu();
+      }
+
+      if (tabId === 'tentang-kami') loadTentangKamiData();
+      if (tabId === 'anggota') loadAnggotaData();
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileDropdownMenu');
+      const iconOpen = document.getElementById('iconMenuOpen');
+      const iconClose = document.getElementById('iconMenuClose');
+
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        iconOpen.classList.add('hidden');
+        iconClose.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }
+    }
+
+    document.getElementById('btnMobileMenuToggle').addEventListener('click', toggleMobileMenu);
+
+    function safeRedirect(url) {
+      try {
+        if (window.location.protocol === 'blob:') {
+          console.warn('Redirect skipped in preview environment:', url);
+          return;
+        }
+        window.location.replace(url);
+      } catch (e) {
+        console.error('Redirect error:', e);
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      const isError = type === 'error';
+      const bgClass = isError ? 'bg-red-900 text-white' : 'bg-[#6B1D2F] text-white';
+
+      toast.className = `pointer-events-auto px-4 py-3 rounded-2xl shadow-xl ${bgClass} text-xs font-semibold flex items-center gap-2.5 transition-all duration-300 opacity-0 translate-y-2`;
+      toast.innerHTML = `<span>${message}</span>`;
+
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => toast.classList.remove('opacity-0', 'translate-y-2'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function addLog(activityMessage, category = 'konten') {
+      const list = document.getElementById('activityLogsList');
+      if (!list) return;
+
+      const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      const logItem = document.createElement('div');
+      logItem.className = 'p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs';
+      logItem.innerHTML = `
+        <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-rose-600"></span>
+          <div>
+            <p class="font-bold text-slate-800">${activityMessage}</p>
+            <p class="text-[11px] text-slate-500">Tipe: ${category}</p>
+          </div>
+        </div>
+        <span class="text-[10px] font-semibold text-slate-400">${time}</span>
+      `;
+      list.prepend(logItem);
+    }
+
+    async function checkAuth() {
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+
+        if (!session) {
+          if (window.location.protocol === 'blob:') {
+            document.getElementById('dashboardContent').style.display = 'flex';
+            loadProkerjaData();
+            return;
+          }
+          safeRedirect('login.html');
+          return;
+        }
+
+        document.getElementById('dashboardContent').style.display = 'flex';
+        loadProkerjaData();
+
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_OUT' || !session) {
+            safeRedirect('login.html');
+          }
+        });
+      } catch (err) {
+        document.getElementById('dashboardContent').style.display = 'flex';
+        loadProkerjaData();
+      }
+    }
+    checkAuth();
+
+    async function handleLogout() {
+      try { await supabaseClient.auth.signOut(); } catch (err) {}
+      safeRedirect('login.html');
+    }
+
+    /* =========================================
+       1. PROGRAM KERJA FUNCTIONS
+       ========================================= */
+    async function loadProkerjaData() {
+      const tbody = document.getElementById('prokerjaTableBody');
+      const mobileContainer = document.getElementById('prokerjaMobileCards');
+      const statTotal = document.getElementById('statTotalCount');
+
+      const { data, error } = await supabaseClient
+        .from('program_kerja')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        showToast('Gagal memuat data: ' + error.message, 'error');
+        return;
+      }
+
+      listProgramKerja = data || [];
+      if (statTotal) statTotal.innerText = listProgramKerja.length;
+
+      if (tbody) {
+        tbody.innerHTML = '';
+        if (listProgramKerja.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400">Belum ada data program kerja.</td></tr>`;
+        } else {
+          listProgramKerja.forEach((item, index) => {
+            tbody.innerHTML += `
+              <tr class="hover:bg-rose-50/40 transition">
+                <td class="py-3.5 px-2 text-center font-bold text-slate-400">${index + 1}</td>
+                <td class="py-3.5 px-3">
+                  <img src="${item.gambar_url || 'https://placehold.co/100x70/6B1D2F/ffffff?text=No+Image'}" class="w-14 h-10 object-cover rounded-xl shadow-sm border border-slate-100">
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="font-bold text-slate-900">${item.judul}</div>
+                  <div class="text-[11px] text-rose-800 font-semibold">${item.kategori}</div>
+                </td>
+                <td class="py-3.5 px-3 text-slate-500 font-medium">${item.waktu}</td>
+                <td class="py-3.5 px-3 text-right whitespace-nowrap">
+                  <button onclick="openEditModal(${item.id})" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-[11px] font-semibold mr-1 transition shadow-sm cursor-pointer">
+                    Edit
+                  </button>
+                  <button onclick="askDeleteProkerja(${item.id})" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[11px] font-semibold transition shadow-sm cursor-pointer">
+                    Hapus
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+        }
+      }
+
+      if (mobileContainer) {
+        mobileContainer.innerHTML = '';
+        if (listProgramKerja.length === 0) {
+          mobileContainer.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs">Belum ada data program kerja.</div>`;
+        } else {
+          listProgramKerja.forEach((item) => {
+            mobileContainer.innerHTML += `
+              <div class="bg-slate-50/80 border border-slate-200/60 p-3.5 rounded-2xl flex items-center justify-between gap-3">
+                <img src="${item.gambar_url || 'https://placehold.co/100x70/6B1D2F/ffffff?text=No+Image'}" class="w-16 h-12 object-cover rounded-xl shadow-sm">
+                <div class="flex-1 min-w-0">
+                  <div class="font-bold text-slate-900 text-xs truncate">${item.judul}</div>
+                  <div class="text-[10px] text-rose-800 font-semibold truncate">${item.kategori}</div>
+                  <div class="text-[10px] text-slate-400">${item.waktu}</div>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <button onclick="openEditModal(${item.id})" class="px-2.5 py-1 bg-amber-500 text-white rounded-lg text-[10px] font-semibold cursor-pointer">
+                    Edit
+                  </button>
+                  <button onclick="askDeleteProkerja(${item.id})" class="px-2.5 py-1 bg-rose-600 text-white rounded-lg text-[10px] font-semibold cursor-pointer">
+                    Hapus
+                  </button>
+                </div>
+              </div>
+            `;
+          });
+        }
+      }
+    }
+
+    document.getElementById('prokerjaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSavePro');
+      btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> <span>Proses Unggah...</span>`;
+      btn.disabled = true;
+
+      try {
+        const fileInput = document.getElementById('proFile');
+        const file = fileInput.files[0];
+        const fileName = `prokerja_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+        const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+        if (uploadError) throw uploadError;
+
+        const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+
+        const { error } = await supabaseClient.from('program_kerja').insert([{
+          judul: document.getElementById('proJudul').value,
+          kategori: document.getElementById('proKategori').value,
+          waktu: document.getElementById('proWaktu').value,
+          urutan: parseInt(document.getElementById('proUrutan').value) || 1,
+          deskripsi: document.getElementById('proDeskripsi').value,
+          gambar_url: pubData.publicUrl,
+          status: 'Teragenda'
+        }]);
+
+        if (error) throw error;
+
+        showToast('Program kerja berhasil ditambahkan!', 'success');
+        addLog(`Menambahkan program kerja: ${document.getElementById('proJudul').value}`, 'Program Kerja');
+        document.getElementById('prokerjaForm').reset();
+        loadProkerjaData();
+
+      } catch (err) {
+        showToast('Gagal menambah program kerja: ' + err.message, 'error');
+      } finally {
+        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> <span>Upload Program Kerja</span>`;
+        btn.disabled = false;
+      }
+    });
+
+    function openEditModal(id) {
+      const item = listProgramKerja.find(p => p.id === id);
+      if (!item) return;
+
+      document.getElementById('editProId').value = item.id;
+      document.getElementById('editProJudul').value = item.judul || '';
+      document.getElementById('editProKategori').value = item.kategori || 'Planning, Networking, and Partnership';
+      document.getElementById('editProWaktu').value = item.waktu || '';
+      document.getElementById('editProUrutan').value = item.urutan || 1;
+      document.getElementById('editProDeskripsi').value = item.deskripsi || '';
+      document.getElementById('editProOldGambarUrl').value = item.gambar_url || '';
+      document.getElementById('editProFile').value = '';
+
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('editProkerjaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnUpdatePro');
+      btn.innerText = 'Menyimpan...';
+      btn.disabled = true;
+
+      try {
+        const id = document.getElementById('editProId').value;
+        const fileInput = document.getElementById('editProFile');
+        let imageUrl = document.getElementById('editProOldGambarUrl').value;
+
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const fileName = `prokerja_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+          const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+          if (uploadError) throw uploadError;
+
+          const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+          imageUrl = pubData.publicUrl;
+        }
+
+        const { error } = await supabaseClient
+          .from('program_kerja')
+          .update({
+            judul: document.getElementById('editProJudul').value,
+            kategori: document.getElementById('editProKategori').value,
+            waktu: document.getElementById('editProWaktu').value,
+            urutan: parseInt(document.getElementById('editProUrutan').value) || 1,
+            deskripsi: document.getElementById('editProDeskripsi').value,
+            gambar_url: imageUrl
+          })
+          .eq('id', id);
+
+        if (error) throw error;
+
+        showToast('Program kerja berhasil diperbarui!', 'success');
+        addLog(`Memperbarui program kerja ID ${id}`, 'Program Kerja');
+        closeEditModal();
+        loadProkerjaData();
+
+      } catch (err) {
+        showToast('Gagal memperbarui: ' + err.message, 'error');
+      } finally {
+        btn.innerText = 'Simpan Perubahan';
+        btn.disabled = false;
+      }
+    });
+
+    /* =========================================
+       2. TENTANG KAMI FUNCTIONS (SUPABASE ID = 1)
+       ========================================= */
+    async function loadTentangKamiData() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('tentang_kami')
+          .select('*')
+          .eq('id', 1)
+          .maybeSingle();
+
+        if (error) {
+          showToast('Gagal memuat data Tentang Kami: ' + error.message, 'error');
+          return;
+        }
+
+        if (data) {
+          document.getElementById('inputDeskripsi').value = data.deskripsi || '';
+          document.getElementById('inputVisi').value = data.visi || '';
+          document.getElementById('inputMisi').value = data.misi || '';
+          
+          currentGambarUrl = data.gambar_url || '';
+          document.getElementById('previewGambar').src = currentGambarUrl || 'https://placehold.co/400x250/6B1D2F/ffffff?text=No+Image';
+        }
+      } catch (err) {
+        showToast('Terjadi kesalahan: ' + err.message, 'error');
+      }
+    }
+
+    // Pratinjau gambar saat berkas dipilih
+    document.getElementById('inputGambar').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('previewGambar').src = URL.createObjectURL(file);
+      }
+    });
+
+    // Simpan data Tentang Kami ke Supabase
+    document.getElementById('formTentangKami').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSaveTentangKami');
+      btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> <span>Menyimpan...</span>`;
+      btn.disabled = true;
+
+      try {
+        let finalGambarUrl = currentGambarUrl;
+        const fileInput = document.getElementById('inputGambar');
+
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const fileName = `tentang_kami_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+          const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+          if (uploadError) throw uploadError;
+
+          const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+          finalGambarUrl = pubData.publicUrl;
+        }
+
+        const payload = {
+          id: 1,
+          deskripsi: document.getElementById('inputDeskripsi').value,
+          visi: document.getElementById('inputVisi').value,
+          misi: document.getElementById('inputMisi').value,
+          gambar_url: finalGambarUrl,
+          updated_at: new Date().toISOString()
+        };
+
+        const { error } = await supabaseClient
+          .from('tentang_kami')
+          .upsert(payload, { onConflict: 'id' });
+
+        if (error) throw error;
+
+        currentGambarUrl = finalGambarUrl;
+        showToast('Data Tentang Kami berhasil diperbarui!', 'success');
+        addLog('Memperbarui data Profil, Visi, dan Misi', 'Tentang Kami');
+        loadTentangKamiData();
+
+      } catch (err) {
+        showToast('Gagal menyimpan: ' + err.message, 'error');
+      } finally {
+        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Simpan Perubahan Tentang Kami</span>`;
+        btn.disabled = false;
+      }
+    });
+
+    /* =========================================
+       3. ANGGOTA FUNCTIONS
+       ========================================= */
+    async function loadAnggotaData() {
+      const container = document.getElementById('anggotaGridContainer');
+      if (!container) return;
+
+      const { data, error } = await supabaseClient
+        .from('anggota_humas')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        container.innerHTML = `
+          <div class="col-span-full p-6 text-center bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2">
+            <p class="text-xs text-slate-500">Klik "Tambah Anggota Baru" untuk menambahkan pengurus divisi Humas.</p>
+          </div>
+        `;
+        return;
+      }
+
+      listAnggota = data || [];
+      container.innerHTML = '';
+
+      if (listAnggota.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-6 text-slate-400 text-xs">Belum ada data anggota.</div>`;
+      } else {
+        listAnggota.forEach(item => {
+          container.innerHTML += `
+            <div class="bg-slate-50 border border-slate-200/70 p-4 rounded-2xl flex items-center gap-3">
+              <img src="${item.foto_url || 'https://placehold.co/80x80/6B1D2F/ffffff?text=User'}" class="w-12 h-12 rounded-full object-cover shadow-sm">
+              <div class="flex-1 min-w-0">
+                <h4 class="font-bold text-slate-900 text-xs truncate">${item.nama}</h4>
+                <p class="text-[11px] text-rose-800 font-semibold truncate">${item.jabatan}</p>
+              </div>
+              <button onclick="askDeleteAnggota(${item.id})" class="p-1.5 text-rose-600 hover:bg-rose-100 rounded-lg transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              </button>
+            </div>
+          `;
+        });
+      }
+    }
+
+    function openAnggotaModal() {
+      document.getElementById('anggotaForm').reset();
+      const modal = document.getElementById('anggotaModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAnggotaModal() {
+      const modal = document.getElementById('anggotaModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSaveAnggota');
+      btn.innerText = 'Menyimpan...';
+      btn.disabled = true;
+
+      try {
+        const fileInput = document.getElementById('angFile');
+        let photoUrl = 'https://placehold.co/80x80/6B1D2F/ffffff?text=User';
+
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const fileName = `anggota_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+          const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+          if (uploadError) throw uploadError;
+
+          const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+          photoUrl = pubData.publicUrl;
+        }
+
+        const { error } = await supabaseClient.from('anggota_humas').insert([{
+          nama: document.getElementById('angNama').value,
+          jabatan: document.getElementById('angJabatan').value,
+          instagram: document.getElementById('angIg').value,
+          foto_url: photoUrl
+        }]);
+
+        if (error) throw error;
+
+        showToast('Anggota berhasil ditambahkan!', 'success');
+        addLog(`Menambahkan pengurus: ${document.getElementById('angNama').value}`, 'Anggota');
+        closeAnggotaModal();
+        loadAnggotaData();
+
+      } catch (err) {
+        showToast('Gagal menambah anggota: ' + err.message, 'error');
+      } finally {
+        btn.innerText = 'Simpan Anggota';
+        btn.disabled = false;
+      }
+    });
+
+    /* =========================================
+       4. DELETE CONFIRMATION FUNCTIONS
+       ========================================= */
+    function askDeleteProkerja(id) {
+      deleteTargetId = id;
+      deleteTargetType = 'prokerja';
+      document.getElementById('deleteModalTitle').innerText = 'Hapus Program Kerja?';
+      const modal = document.getElementById('deleteModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function askDeleteAnggota(id) {
+      deleteTargetId = id;
+      deleteTargetType = 'anggota';
+      document.getElementById('deleteModalTitle').innerText = 'Hapus Data Anggota?';
+      const modal = document.getElementById('deleteModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDeleteModal() {
+      deleteTargetId = null;
+      const modal = document.getElementById('deleteModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
+      if (!deleteTargetId) return;
+
+      try {
+        let tableName = 'program_kerja';
+        if (deleteTargetType === 'anggota') tableName = 'anggota_humas';
+
+        const { error } = await supabaseClient.from(tableName).delete().eq('id', deleteTargetId);
+        if (error) throw error;
+
+        showToast('Data berhasil dihapus', 'info');
+        addLog(`Hapus data ${deleteTargetType} (ID: ${deleteTargetId})`, 'Hapus');
+        closeDeleteModal();
+
+        if (deleteTargetType === 'prokerja') loadProkerjaData();
+        if (deleteTargetType === 'anggota') loadAnggotaData();
+
+      } catch (err) {
+        showToast('Gagal menghapus: ' + err.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>
