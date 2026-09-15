@@ -9,121 +9,142 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     </noscript>
     <link rel="icon" type="image/png" href="../assets/logo-humas.webp" />
 
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-  </style>
+    <style>
+      body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+      }
+      /* Custom frosted glass style matching the sample image */
+      .glass-card {
+        background: rgba(254, 254, 255, 0.097);
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
+        border: 1px solid rgba(255, 255, 255, 0.485);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+      }
+      .glass-input {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.599);
+        backdrop-filter: blur(12px);
+        color: #ffffff;
+      }
+      .glass-input::placeholder {
+        color: #f7f8f984;
+      }
+      .glass-input:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+      }
+      .glass-btn-secondary {
+        background: rgba(194, 3, 3, 0.07);
+        border: 1px solid rgba(240, 0, 0, 0.14);
+        backdrop-filter: blur(10px);
+      }
+      .glass-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+    </style>
 </head>
-<body class="min-h-screen relative flex items-center justify-center bg-[#FAF6F6] text-slate-800 overflow-hidden select-none p-4">
+<body class="min-h-screen relative flex items-center justify-center text-slate-100 overflow-x-hidden select-none p-4">
 
-  <!-- Atmospheric Soft Cloud Gradients & Arch Lines -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-rose-200/50 via-rose-100/30 to-transparent rounded-full blur-3xl opacity-80"></div>
-    <div class="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-rose-100/60 to-transparent blur-2xl"></div>
-    
-    <!-- Arch Lines SVG -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] border border-rose-900/5 rounded-full pointer-events-none"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] h-[950px] border border-rose-900/5 rounded-full pointer-events-none"></div>
+  <!-- Background Image with Dark Atmospheric Overlay -->
+  <div class="fixed inset-0 z-0">
+    <img 
+      src="../assets/humas26.webp" 
+      alt="Atmospheric Twilight Scenery" 
+      class="w-full h-full object-cover scale-105"
+    />
+    <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-white-950/80 via-slate-900/30 to-white-950/40"></div>
   </div>
 
-  <!-- Top Navigation / Logo Brand (Posisi Kiri Atas dengan Logo Lingkaran) -->
-    <header class="absolute top-0 left-0 w-full p-6 sm:p-8 flex items-center justify-between z-20 pointer-events-none">
-    <div class="pointer-events-auto flex items-center gap-2.5 bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/80 shadow-sm shadow-rose-950/5">
-        <!-- Icon Logo Mini Lingkaran Presisi -->
-        <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
-            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" width="32" height="32" class="w-full h-full object-cover">
-        </div>
-        <span class="text-xs font-bold text-slate-800 tracking-tight pr-1">Humas HMMAL UNDIP</span>
-    </div>
-    </header>
+  <!-- Card Login Utama -->
+  <main class="w-full max-w-[420px] relative z-10 my-auto py-10">
+    <div class="glass-card rounded-2xl p-8 sm:p-10 text-center space-y-6">
 
-  <!-- Card Login Utama (Center Presisi Seimbang) -->
-  <main class="w-full max-w-[400px] relative z-10 my-auto">
-    <div class="bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-white shadow-[0_20px_60px_-15px_rgba(107,29,47,0.08)] p-8 sm:p-9 text-center space-y-5">
-
-      <!-- Top Icon Box Floating (Icon Panah Masuk) -->
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-slate-100 shadow-md shadow-rose-950/5 mx-auto text-[#6B1D2F]">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+      <!-- Top Sun/Sparkle Icon (Sesuai contoh sampel foto) -->
+      <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/15 shadow-inner mx-auto text-white/90">
+        <svg class="w-6 h-6 stroke-current" fill="none" stroke-width="1.75" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
         </svg>
       </div>
 
       <!-- Header Titles -->
-      <div class="space-y-1.5">
-        <h1 class="text-xl font-bold text-slate-900 tracking-tight">Masuk Admin CMS</h1>
-        <p class="text-xs text-slate-500 leading-relaxed max-w-[260px] mx-auto">
-          Kelola informasi dan program kerja Humas HMMAL UNDIP.
+      <div class="space-y-2">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Welcome back!</h1>
+        <p class="text-xs text-slate-300/90 leading-relaxed max-w-[300px] mx-auto">
+          Kelola informasi dan program kerja Humas HMMAL UNDIP dengan mudah.
         </p>
       </div>
 
-      <!-- Container Message Box Alert Unobtrusive -->
-      <div id="errorAlert" class="hidden text-xs text-red-600 bg-red-50/90 border border-red-200/60 p-3 rounded-2xl text-center leading-snug"></div>
+      <!-- Container Message Box Alert -->
+      <div id="errorAlert" class="hidden text-xs text-rose-200 bg-rose-950/60 border border-rose-500/30 p-3 rounded-2xl text-center leading-snug backdrop-blur-md"></div>
 
       <!-- Form Login -->
-      <form id="loginForm" class="space-y-3.5 text-left pt-1">
+      <form id="loginForm" class="space-y-4 text-left pt-1">
 
         <!-- Input Email -->
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-slate-300/90 pl-1">Email</label>
+          <div class="relative">
+            <input 
+              type="email" 
+              id="email" 
+              required 
+              placeholder="Enter your email" 
+              class="w-full px-4 py-3.5 rounded-2xl text-xs font-medium transition-all glass-input focus:outline-none"
+            >
           </div>
-          <input 
-            type="email" 
-            id="email" 
-            required
-            placeholder="Email Admin" 
-            class="w-full pl-10 pr-4 py-3 bg-slate-100/80 border border-transparent rounded-2xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-rose-800/20 focus:ring-4 focus:ring-rose-950/5 transition-all"
-          >
         </div>
 
         <!-- Input Password -->
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-slate-300/90 pl-1">Password</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password" 
+              required 
+              placeholder="Enter your password" 
+              class="w-full pl-4 pr-11 py-3.5 rounded-2xl text-xs font-medium transition-all glass-input focus:outline-none"
+            >
+            <!-- Button Toggle Password View -->
+            <button 
+              type="button" 
+              id="togglePassword" 
+              aria-label="Tampilkan atau sembunyikan kata sandi" 
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200 transition cursor-pointer"
+            >
+              <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+            </button>
           </div>
-          <input 
-            type="password" 
-            id="password" 
-            required
-            placeholder="Password" 
-            class="w-full pl-10 pr-10 py-3 bg-slate-100/80 border border-transparent rounded-2xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-rose-800/20 focus:ring-4 focus:ring-rose-950/5 transition-all"
-          >
-          <!-- Button Toggle Password View -->
-          <button 
-            type="button" 
-            id="togglePassword"
-            aria-label="Tampilkan atau sembunyikan kata sandi"
-            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition"
-          >
-            <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-          </button>
         </div>
-
-        <!-- Tombol Masuk Utama -->
+        
+        <!-- Tombol Masuk Utama (Pill-shaped White Button) -->
         <button 
           type="submit" 
           id="btnLogin" 
-          class="w-full py-3.5 px-4 bg-[#212429] hover:bg-[#15171a] text-white text-xs font-semibold rounded-2xl shadow-lg shadow-slate-900/10 transition duration-200 active:scale-[0.98] disabled:opacity-70 cursor-pointer mt-2"
+          class="w-full py-3.5 px-6 bg-white hover:bg-slate-100 text-slate-950 text-xs font-bold rounded-full shadow-lg transition duration-200 active:scale-[0.98] disabled:opacity-70 cursor-pointer mt-2"
         >
-          Masuk Sekarang
+          Log In
         </button>
+        
+        <!-- Footer Info -->
+        <div class="pt-2">
+            <p class="text-[11px] text-slate-400 text-center leading-relaxed">
+                © Bidang Hubungan Masyarakat - HMMAL UNDIP
+            </p>
+        </div>
+
       </form>
-
-      <!-- Footer Minimalis Dalam Card -->
-      <div class="pt-2">
-        <p class="text-[11px] text-slate-400 font-medium">HMMAL UNDIP &copy; 2026</p>
-      </div>
-
     </div>
   </main>
 
@@ -171,9 +192,9 @@
       });
 
       if (error) {
-        errorAlert.innerText = 'Gagal Login: ' + error.message;
+        errorAlert.innerText = 'Gagal masuk: ' + error.message;
         errorAlert.classList.remove('hidden');
-        btn.innerText = 'Masuk Sekarang';
+        btn.innerText = 'Log In';
         btn.disabled = false;
       } else {
         window.location.replace('dashboard.html');
