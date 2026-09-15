@@ -18,7 +18,7 @@
     ::-webkit-scrollbar-thumb:hover { background: #6B1D2F; }
   </style>
 </head>
-<body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 min-h-screen relative selection:bg-rose-900 selection:text-white" style="display: none;">
+<body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 min-h-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
 
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-40 right-0 w-[600px] h-[600px] bg-gradient-to-b from-rose-200/40 via-rose-100/20 to-transparent rounded-full blur-3xl opacity-70"></div>
@@ -79,61 +79,60 @@
     </div>
   </header>
 
-  <!-- Perubahan pada atribut class: mengganti `min-h-screen sticky top-0` menjadi `h-screen fixed top-0 left-0 overflow-y-auto` -->
-    <aside class="hidden md:flex flex-col w-64 h-screen fixed top-0 left-0 z-40 justify-between shrink-0 bg-white/80 backdrop-blur-xl border-r border-rose-100/80 p-5 shadow-sm overflow-y-auto">
-        <div class="space-y-6">
-        <!-- Brand Logo -->
-        <div class="flex items-center gap-3 px-2 py-1">
-            <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
-                <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
-            </div>
-            <div>
-            <h1 class="text-sm font-bold text-slate-900 leading-tight">Dashboard Admin</h1>
-            <p class="text-[11px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
-            </div>
+  <aside class="hidden md:flex flex-col w-64 min-h-screen bg-white/80 backdrop-blur-xl border-r border-rose-100/80 p-5 sticky top-0 z-40 justify-between shrink-0 shadow-sm">
+    <div class="space-y-6">
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 px-2 py-1">
+        <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
+            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
         </div>
-
-        <!-- Left Sidebar Navigation Items -->
-        <nav class="space-y-1.5 pt-2">
-            <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
-
-            <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50 border border-rose-200/50 shadow-sm transition" data-tab="program-kerja">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-            <span>Program Kerja</span>
-            </button>
-
-            <button onclick="switchTab('tentang-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="tentang-kami">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Tentang Kami</span>
-            </button>
-
-            <button onclick="switchTab('anggota')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="anggota">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-            <span>Anggota</span>
-            </button>
-
-            <button onclick="switchTab('aktivitas')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="aktivitas">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Aktivitas</span>
-            </button>
-        </nav>
+        <div>
+          <h1 class="text-sm font-bold text-slate-900 leading-tight">CMS Dashboard</h1>
+          <p class="text-[11px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
         </div>
+      </div>
 
-        <!-- Sidebar Bottom Action Buttons -->
-        <div class="space-y-2 pt-6 border-t border-slate-100">
-        <a href="../index.html" target="_blank" class="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100/80 hover:bg-slate-200/80 transition">
-            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            <span>Lihat Website</span>
-        </a>
+      <!-- Left Sidebar Navigation Items -->
+      <nav class="space-y-1.5 pt-2">
+        <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
 
-        <button id="btnLogout" onclick="handleLogout()" class="w-full flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold rounded-xl border border-rose-200/60 transition cursor-pointer">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-            <span>Keluar</span>
+        <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50 border border-rose-200/50 shadow-sm transition" data-tab="program-kerja">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          <span>Program Kerja</span>
         </button>
-        </div>
-    </aside>
 
-    <main class="relative z-10 md:ml-64 w-full md:w-[calc(100%-16rem)] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-8 space-y-6">
+        <button onclick="switchTab('tentang-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="tentang-kami">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Tentang Kami</span>
+        </button>
+
+        <button onclick="switchTab('anggota')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="anggota">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span>Anggota</span>
+        </button>
+
+        <button onclick="switchTab('aktivitas')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="aktivitas">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Aktivitas</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Bottom Action Buttons -->
+    <div class="space-y-2 pt-6 border-t border-slate-100">
+      <a href="../index.html" target="_blank" class="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100/80 hover:bg-slate-200/80 transition">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        <span>Lihat Website</span>
+      </a>
+
+      <button id="btnLogout" onclick="handleLogout()" class="w-full flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold rounded-xl border border-rose-200/60 transition cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+        <span>Keluar</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
 
     <!-- TAB VIEW 1: PROGRAM KERJA (MAIN CMS) -->
     <section id="tab-program-kerja" class="tab-content space-y-8">
@@ -147,8 +146,7 @@
           </div>
           <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Program Kerja Unggulan</h2>
           <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
-            Tambah, perbarui, dan atur tata letak agenda kegiatan Humas HMMAL UNDIP
-            <br> Konten terbaru akan tampil paling atas.
+            Tambah, perbarui, dan atur tata letak agenda kegiatan Humas HMMAL UNDIP. Konten terbaru akan tampil paling atas.
           </p>
         </div>
 
@@ -298,92 +296,102 @@
 
     <!-- TAB VIEW 2: TENTANG KAMI (DIRECT EDIT FORM FOR SUPABASE) -->
     <section id="tab-tentang-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-        
-        <!-- Header Banner Maroon/Merah -->
-        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-            <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
-            <div class="space-y-1 relative z-10">
-                <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
-                    Manajemen Konten
-                </div>
-                <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Profil & Tentang Kami</h2>
-                <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
-                    Atur Sekilas Humas, Foto Profil Divisi, Visi Utama, dan Misi Strategis 
-                    <br> Humas HMMAL UNDIP secara real-time. 
-                </p>
-            </div>
-
-            <div class="flex items-center gap-3 relative z-10">
+      
+      <!-- Header Banner -->
+      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+        <div class="space-y-1 relative z-10">
+          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
+            Manajemen Konten
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Profil & Tentang Kami</h2>
+          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
+            Atur Sekilas Humas, Foto Profil Divisi, Visi Utama, dan Misi Strategis Humas HMMAL UNDIP secara real-time.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 relative z-10">
                 <button type="button" onclick="loadTentangKamiData()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-2xl transition cursor-pointer">
                     <svg class="w-3.5 h-3.5 text-rose-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                     <span>Refresh Data</span>
                 </button>
             </div>
+
+        
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 sm:p-8 space-y-8">
+        
+        <!-- Header & Toolbar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+              <span class="w-1.5 h-5 rounded-full bg-[#6B1D2F]"></span>
+              Kelola Profil & Tentang Kami
+            </h2>
+            <p class="text-xs text-slate-500 mt-1 pl-4">Atur Sekilas Humas, Foto Profil, Visi Utama, dan Misi Strategis.</p>
+          </div>
         </div>
 
-        <!-- Form Konten Utama -->
-        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 sm:p-8 space-y-8">
-            <form id="formTentangKami" class="space-y-8">
+        <form id="formTentangKami" class="space-y-8">
+          
+          <!-- Foto Profil / Bagan & Deskripsi Sekilas Humas -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-bold tracking-wider text-slate-400 ">
+              1. Foto Profil & Deskripsi Ringkas
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+              <!-- Upload Image Preview Box -->
+              <div class="md:col-span-5 space-y-3">
+                <label class="block text-xs font-semibold text-slate-700">Foto Profil / Divisi</label>
+                <div class="relative group overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-xs">
+                  <img id="previewGambar" src="https://placehold.co/400x300/6B1D2F/ffffff?text=Loading..." class="w-full aspect-[16/9] object-cover transition duration-300 group-hover:scale-102">
+                </div>
                 
-                <!-- Foto Profil / Bagan & Deskripsi Sekilas Humas -->
-                <div class="space-y-4">
-                    <h3 class="text-sm font-bold tracking-wider text-slate-400">
-                        1. Foto Profil & Deskripsi Ringkas
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-                        <!-- Upload Image Preview Box -->
-                        <div class="md:col-span-5 space-y-3">
-                            <label class="block text-xs font-semibold text-slate-700">Foto Profil / Divisi</label>
-                            <div class="relative group overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-xs">
-                                <img id="previewGambar" src="https://placehold.co/400x300/6B1D2F/ffffff?text=Loading..." class="w-full aspect-[16/9] object-cover transition duration-300 group-hover:scale-102">
-                            </div>
-                            
-                            <input type="file" id="inputGambar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer transition">
-                            <p class="text-[11px] text-slate-400">Format yang didukung: JPG, PNG, WEBP.</p>
-                        </div>
+                <input type="file" id="inputGambar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer transition">
+                <p class="text-[11px] text-slate-400">Format yang didukung: JPG, PNG, WEBP.</p>
+              </div>
 
-                        <!-- Deskripsi Area -->
-                        <div class="md:col-span-7 space-y-2">
-                            <label class="block text-xs font-semibold text-slate-700">Sekilas Humas (Deskripsi Ringkas)</label>
-                            <textarea id="inputDeskripsi" rows="7" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="Tuliskan deskripsi profil bidang..."></textarea>
-                        </div>
-                    </div>
-                </div>
+              <!-- Deskripsi Area -->
+              <div class="md:col-span-7 space-y-2">
+                <label class="block text-xs font-semibold text-slate-700">Sekilas Humas (Deskripsi Ringkas)</label>
+                <textarea id="inputDeskripsi" rows="7" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="Tuliskan deskripsi profil bidang..."></textarea>
+              </div>
+            </div>
+          </div>
 
-                <hr class="border-slate-100" />
+          <hr class="border-slate-100" />
 
-                <!-- Visi Utama -->
-                <div class="space-y-2">
-                    <h3 class="text-sm font-bold tracking-wider text-slate-400">
-                        2. Visi Utama
-                    </h3>
-                    <textarea id="inputVisi" rows="3" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="Tuliskan narasi visi utama bidang..."></textarea>
-                </div>
+          <!-- Visi Utama -->
+          <div class="space-y-2">
+            <h3 class="text-sm font-bold tracking-wider text-slate-400">
+              2. Visi Utama
+            </h3>
+            <textarea id="inputVisi" rows="3" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="Tuliskan narasi visi utama bidang..."></textarea>
+          </div>
 
-                <hr class="border-slate-100" />
+          <hr class="border-slate-100" />
 
-                <!-- Misi Strategis -->
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-sm font-bold tracking-wider text-slate-400">
-                            3. Misi Strategis
-                        </h3>
-                        <span class="text-[11px] text-slate-400">1 poin misi per baris (Tekan Enter)</span>
-                    </div>
-                    <textarea id="inputMisi" rows="5" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="1. Mengoptimalkan peran dan kinerja...&#10;2. Menjadi jembatan komunikasi...&#10;3. Membangun serta menjaga hubungan..."></textarea>
-                </div>
+          <!-- Misi Strategis -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold tracking-wider text-slate-400">
+                3. Misi Strategis
+              </h3>
+              <span class="text-[11px] text-slate-400">1 poin misi per baris (Tekan Enter)</span>
+            </div>
+            <textarea id="inputMisi" rows="5" class="w-full p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-1 focus:ring-[#6B1D2F] outline-none transition-all leading-relaxed resize-y" placeholder="1. Mengoptimalkan peran dan kinerja...&#10;2. Menjadi jembatan komunikasi...&#10;3. Membangun serta menjaga hubungan..."></textarea>
+          </div>
 
-                <!-- Action Buttons -->
-                <div class="flex items-center justify-end pt-4 border-t border-slate-100">
-                    <button type="submit" id="btnSaveTentangKami" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#541624] text-white text-xs font-semibold rounded-xl shadow-xs hover:shadow transition-all active:scale-[0.99] cursor-pointer flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        <span>Simpan Perubahan</span>
-                    </button>
-                </div>
+          <!-- Action Buttons -->
+          <div class="flex items-center justify-end pt-4 border-t border-slate-100">
+            <button type="submit" id="btnSaveTentangKami" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#541624] text-white text-xs font-semibold rounded-xl shadow-xs hover:shadow transition-all active:scale-[0.99] cursor-pointer flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Simpan Perubahan</span>
+            </button>
+          </div>
 
-            </form>
-        </div>
+        </form>
+      </div>
     </section>
 
     <!-- TAB VIEW 3: ANGGOTA (FULLY FUNCTIONAL CMS) -->
@@ -686,64 +694,33 @@
       list.prepend(logItem);
     }
 
-        // Durasi inaktif: 10 Menit (10 * 60 * 1000 ms)
-    const IDLE_TIMEOUT = 10 * 60 * 1000;
-    let idleTimer;
-
-    // Fungsi Menjalankan Auto Logout
-    function startIdleTimer() {
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(async () => {
-        alert("Sesi Anda telah berakhir karena tidak ada aktivitas selama 10 menit.");
-        await supabaseClient.auth.signOut();
-        safeRedirect('login.html');
-    }, IDLE_TIMEOUT);
-    }
-
-    // Deteksi Aktivitas Pengguna
-    function initIdleListener() {
-    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(eventType => {
-        window.addEventListener(eventType, startIdleTimer, { passive: true });
-    });
-    startIdleTimer();
-    }
-
     async function checkAuth() {
-    try {
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
 
-        // Jika terjadi error dari server atau tidak ada sesi
-        if (error || !session) {
-        if (window.location.protocol === 'blob:') {
+        if (!session) {
+          if (window.location.protocol === 'blob:') {
             document.getElementById('dashboardContent').style.display = 'flex';
             loadProkerjaData();
             return;
-        }
-        safeRedirect('login.html');
-        return;
+          }
+          safeRedirect('login.html');
+          return;
         }
 
-        // Berhasil Login: Tampilkan Dashboard & Jalankan Listener Auto Logout
         document.getElementById('dashboardContent').style.display = 'flex';
         loadProkerjaData();
-        initIdleListener();
 
-        // Listener Real-time Perubahan Status Auth
         supabaseClient.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_OUT' || !session) {
+          if (event === 'SIGNED_OUT' || !session) {
             safeRedirect('login.html');
-        }
+          }
         });
-
-    } catch (err) {
-        console.error('Auth Check Error:', err);
-        // Keamanan Ketat: Tendang ke login jika terjadi kegagalan sistem
-        if (window.location.protocol !== 'blob:') {
-        safeRedirect('login.html');
-        }
+      } catch (err) {
+        document.getElementById('dashboardContent').style.display = 'flex';
+        loadProkerjaData();
+      }
     }
-    }
-
     checkAuth();
 
     async function handleLogout() {
