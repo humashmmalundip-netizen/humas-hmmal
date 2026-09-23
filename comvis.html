@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pembayaran HTM Company Visit 2 HMMAL 2026">
+  <title>Pembayaran HTM Company Visit 2 2026</title>
+  
+  <!-- Tailwind CSS & Lucide Icons CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png/webp" href="/assets/logo-humas.webp" />
+    <link rel="stylesheet" href="assets/output.css" />
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+    tailwind.config = {
+        theme: {
+        extend: {
+            fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+            brand: {
+                50: '#fdf2f2',   /* Maroon sangat terang (background tint) */
+                100: '#fde8e8',  /* Maroon terang (badge & accent) */
+                500: '#9b1c1c',  /* Maroon sedang */
+                600: '#800020',  /* Classic Maroon / Burgundy (Primary) */
+                700: '#6b001a',  /* Maroon agak gelap (Hover state) */
+                800: '#580015',  /* Maroon gelap */
+                900: '#400010',  /* Maroon sangat gelap (Header gradient) */
+            }
+            }
+        }
+        }
+    }
+    </script>
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #fcf8f8 0%, #f0e2e2 100%);
+      min-height: 100vh;
+      
+    }
+
+    /* Ambient Animated Background Orbs in Warm Maroon Glow */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.55;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 18s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(128, 0, 32, 0.4) 0%, rgba(225, 29, 72, 0.25) 100%);
+            top: 500px;
+            left: -120px;
+        }
+
+        .orb-2 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(190, 18, 60, 0.35) 0%, rgba(251, 113, 133, 0.2) 100%);
+            top: 1200px;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(88, 0, 22, 0.3) 0%, rgba(253, 164, 175, 0.25) 100%);
+            bottom: 400px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(30px, 40px) scale(1.06); }
+            100% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+    
+
+    /* Frosted Glass Panels with Maroon Accents */
+    .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 20px 40px -15px rgba(88, 0, 22, 0.06), 0 0 15px rgba(255, 255, 255, 0.6) inset;
+        }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .glass-nav {
+            background: rgba(20, 2, 6, 0.45);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+    .glass-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(255, 255, 255, 1);
+            box-shadow: 0 25px 50px -12px rgba(128, 0, 32, 0.18);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(128, 0, 32, 0.15);
+        }
+
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #800020;
+            outline: none;
+        }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e1cbcb;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b89694;
+    }
+  </style>
+</head>
+<body class="mt-12 sm:mt-14 relative min-h-screen text-slate-800 antialiased py-6 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-full mx-auto space-y-6">
+
+      <!-- Floating Glass Navigation Bar -->
+  <header class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-6xl z-50">
+      <nav class="glass-nav rounded-full px-4 sm:px-6 py-3 flex items-center justify-between transition-all duration-300 relative z-50">
+          
+          <!-- BRAND LOGO -->
+          <a href="#" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+              <img src="assets/logo-humas.webp" loading="lazy" alt="Logo Bidang" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover shadow-md shadow-maroon-900/30 group-hover:scale-105 transition-transform border border-white/20" onerror="this.src='https://via.placeholder.com/100'">
+              <div class="flex flex-col min-w-0">
+                  <span class="font-extrabold text-white tracking-tight text-xs sm:text-base leading-none truncate">Hubungan Masyarakat</span>
+                  <span class="text-[9px] sm:text-[10px] text-maroon-200 font-medium tracking-[1.5px] sm:tracking-[2px] uppercase mt-0.5">HMMAL UNDIP</span>
+              </div>
+          </a>
+
+          <!-- Desktop Menu: Diubah ke lg:flex agar tablet tidak berantakan -->
+          <div class="hidden lg:flex items-center gap-1 lg:gap-2">
+              <a href="/" class="px-3 xl:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all">Beranda</a>
+              <a href="/#profil" class="px-3 xl:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all">Profil</a>
+              <a href="/#divisi" class="px-3 xl:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all">Divisi</a>
+              <a href="/#anggota" class="px-3 xl:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all">Anggota</a>
+              <a href="/#proker" class="px-3 xl:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all">Program Kerja</a>
+              <a href="/#partnership" class="px-3 xl:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold text-white/90 hover:text-white hover:bg-white/15 transition-all">Partnership</a>
+          </div>
+
+          <!-- CTA Button & Mobile/Tablet Menu Toggle -->
+          <div class="flex items-center gap-2 shrink-0 relative z-50">
+              <a href="#kontak" class="hidden lg:flex px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-maroon-950 hover:bg-maroon-100 hover:shadow-lg hover:shadow-white/20 transition-all duration-300 items-center gap-2">
+                  <span>Kontak Kami</span>
+                  <i class="fa-solid fa-arrow-down text-xs"></i>
+              </a>
+              
+              <!-- Tombol muncul di Mobile & Tablet (lg:hidden) -->
+              <button id="mobile-menu-btn" 
+                      type="button"
+                      onclick="toggleMobileMenu(event)" 
+                      class="lg:hidden w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center hover:bg-white/30 active:scale-95 focus:outline-none shrink-0 cursor-pointer relative z-50">
+                  <i id="menu-icon" class="fa-solid fa-bars text-base pointer-events-none"></i>
+              </button>
+          </div>
+      </nav>
+
+      <!-- Mobile & Tablet Menu Dropdown (lg:hidden) -->
+      <div id="mobile-menu" class="hidden lg:hidden mt-2 rounded-3xl p-4 flex flex-col gap-2 shadow-2xl transition-all border border-white/20 bg-maroon-950/90 text-white backdrop-blur-xl">
+          <a href="/" onclick="closeMobileMenu()" class="mobile-link px-4 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition-colors">Beranda</a>
+          <a href="/#profil" onclick="closeMobileMenu()" class="mobile-link px-4 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition-colors">Profil</a>
+          <a href="/#divisi" onclick="closeMobileMenu()" class="mobile-link px-4 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition-colors">Divisi</a>
+          <a href="/#anggota" onclick="closeMobileMenu()" class="mobile-link px-4 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition-colors">Anggota Bidang</a>
+          <a href="/#proker" onclick="closeMobileMenu()" class="mobile-link px-4 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition-colors">Program Kerja</a>
+          <a href="/#partnership" onclick="closeMobileMenu()" class="mobile-link px-4 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition-colors">Partnership</a>
+          <a href="/#kontak" onclick="closeMobileMenu()" class="mobile-link flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-white text-maroon-950 hover:bg-maroon-100 transition-all mt-1">
+              <span>Kontak Kami</span>
+              <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+      </div>
+  </header>
+
+    <!-- Header Banner Gabungan (Logo Atas + Info Bawah Maroon) -->
+    <header class="overflow-hidden rounded-2xl shadow-xl border border-slate-200/80 bg-white">
+      
+      <!-- 1. Bagian Atas: Background Putih dengan Logo (Editable) -->
+      <div class="bg-white p-6 sm:p-8 flex items-center justify-center min-h-[120px] sm:min-h-[140px]">
+        <!-- Ganti src di bawah ini dengan URL logo/gambar yang Anda inginkan -->
+        <img src="assets/logo-sidomuncul.webp" 
+             alt="Logo Perusahaan" 
+             class="max-h-20 sm:max-h-24 w-auto object-contain transition-transform duration-300 hover:scale-105">
+      </div>
+
+      <!-- 2. Bagian Bawah: Background Maroon Gradient dengan Informasi Event -->
+      <div class="relative overflow-hidden bg-gradient-to-r from-brand-900 via-brand-800 to-rose-950 text-white p-6 sm:p-8">
+        <!-- Efek Cahaya Background Maroon -->
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-rose-500/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-10 -top-10 w-48 h-48 bg-brand-500/20 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <div class="relative z-10 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-brand-100 border border-white/20 mb-3">
+              Registration & Payment
+            </span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              Company Visit HMMAL
+              <br class="block sm:hidden"> Goes to PT. SIDOMUNCUL
+            </h1>
+            <p class="mt-2 text-sm text-brand-100 max-w-xl">
+              Selesaikan konfirmasi pendaftaran dengan mengunggah bukti pembayaran. Pastikan data diri dan nominal transfer sesuai.
+            </p>
+          </div>
+          
+          <div class="w-full sm:w-auto flex-shrink-0 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center min-w-[140px]">
+            <span class="text-xs text-brand-200 block font-medium">HTM Event</span>
+            <span class="text-2xl font-bold text-white tracking-wide">Rp 50.000</span>
+            <span class="text-[10px] text-brand-200 block mt-0.5">/ Peserta</span>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Detail Pembayaran & QRIS Card -->
+      <section class="lg:col-span-5 flex flex-col gap-6">
+        <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200/80 transition-all duration-300">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <div class="p-2 bg-brand-50 text-brand-600 rounded-lg">
+                <i data-lucide="qr-code" class="w-5 h-5 pointer-events-none"></i>
+              </div>
+              <h2 class="font-bold text-slate-800 text-lg">Metode Pembayaran</h2>
+            </div>
+          </div>
+
+          <!-- QRIS Image Box -->
+          <div class="bg-gradient-to-b from-slate-50 to-slate-100 p-4 rounded-xl border border-slate-200 text-center relative group">
+            <p class="text-xs font-medium text-slate-500 mb-2">Scan QRIS All Payment / e-Wallet / Bank</p>
+            
+            <div class="relative inline-block overflow-hidden rounded-lg bg-white p-2 border border-slate-200 shadow-sm">
+              <!-- Editable QRIS Image -->
+              <img id="qrisDisplay" src="assets/qriszoom-marini.webp" 
+                   alt="QRIS Company Visit" 
+                   class="w-48 h-48 sm:w-56 sm:h-56 object-contain mx-auto transition-transform duration-300 group-hover:scale-105">
+              
+              <button onclick="openModal()" type="button" 
+                      class="absolute inset-0 bg-slate-900/40 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2 font-medium text-sm rounded-lg">
+                <i data-lucide="maximize-2" class="w-4 h-4 pointer-events-none"></i> Perbesar
+              </button>
+            </div>
+
+            <div class="mt-3 flex items-center justify-center gap-2">
+              <button onclick="openModal()" type="button" class="text-xs text-brand-600 hover:text-brand-700 font-medium inline-flex items-center gap-1">
+                <i data-lucide="zoom-in" class="w-3.5 h-3.5 pointer-events-none"></i> Lihat Lebih Jelas
+              </button>
+            </div>
+          </div>
+
+          <!-- Rincian Transfer alternatif -->
+          <div class="mt-5 space-y-3">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Atau Transfer Manual </h3>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/60 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-slate-500">SEABANK</p>
+                <p class="text-sm font-bold text-slate-800" id="rekNum">9010 5454 9080</p>
+                <p class="text-[11px] text-slate-500">a.n. Rifki Nur Hasan</p>
+              </div>
+              <button onclick="copyRekening()" type="button" class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-medium rounded-lg border border-slate-200 transition-colors flex items-center gap-1">
+                <i data-lucide="copy" class="w-3.5 h-3.5 pointer-events-none"></i> Salin
+              </button>
+            </div>
+          </div>
+
+          <!-- Petunjuk Singkat -->
+          <div class="mt-5 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1.5">
+            <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Pastikan nominal transfer pas Rp 50.000</p>
+            <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Biaya admin ditanggung oleh peserta</p>
+            <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Simpan resi/bukti pembayaran setelah transfer</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Form Registrasi & Upload -->
+      <section class="lg:col-span-7">
+        <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 transition-all duration-300">
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-slate-800">Formulir Pendaftaran</h2>
+            <p class="text-sm text-slate-500 mt-1">Lengkapi data diri dan unggah bukti transfer di bawah ini.</p>
+          </div>
+
+          <form id="paymentForm" class="space-y-5">
+
+            <!-- 1. Nama Lengkap -->
+            <div>
+              <label for="nama" class="block text-sm font-semibold text-slate-700 mb-1">
+                Nama Lengkap <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <i data-lucide="user" class="w-4 h-4 pointer-events-none"></i>
+                </div>
+                <input type="text" id="nama" name="nama" required 
+                       placeholder="Contoh: Iqro Al Bahri" 
+                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-sm bg-white transition-all">
+              </div>
+            </div>
+
+            <!-- 2. NIM -->
+            <div>
+              <label for="nim" class="block text-sm font-semibold text-slate-700 mb-1">
+                NIM <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <i data-lucide="file-text" class="w-4 h-4 pointer-events-none"></i>
+                </div>
+                <input type="text" id="nim" name="nim" required 
+                       placeholder="Contoh: 4001132467890" 
+                       class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-sm bg-white transition-all">
+              </div>
+            </div>
+
+            <!-- Grid 3 Column for Angkatan & Bidang -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- 2. Angkatan -->
+              <div>
+                <label for="angkatan" class="block text-sm font-semibold text-slate-700 mb-1">
+                  Angkatan <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="user-group" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                  <select id="angkatan" name="angkatan" required
+                          class="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-sm bg-white transition-all appearance-none cursor-pointer">
+                    <option value="" disabled selected>Pilih Angkatan</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="chevron-down" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label for="kelas" class="block text-sm font-semibold text-slate-700 mb-1">
+                  Kelas <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="graduation-cap" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                  <select id="kelas" name="kelas" required
+                          class="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-sm bg-white transition-all appearance-none cursor-pointer">
+                    <option value="" disabled selected>Pilih Kelas</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="chevron-down" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Bidang -->
+              <div>
+                <label for="bidang" class="block text-sm font-semibold text-slate-700 mb-1">
+                  Bidang <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="briefcase" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                  <select id="bidang" name="bidang" required
+                          class="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-sm bg-white transition-all appearance-none cursor-pointer">
+                    <option value="" disabled selected>Pilih Bidang/Unit</option>
+                    <option value="BPH">BPH</option>
+                    <option value="PI">PI</option>
+                    <option value="KMI">KMI</option>
+                    <option value="Humas">Humas</option>
+                    <option value="Mikat">Mikat</option>
+                    <option value="Riskel">Riskel</option>
+                    <option value="Kesma">Kesma</option>
+                    <option value="Ekotif">Ekotif</option>
+                    <option value="PSDM">PSDM</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="chevron-down" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Upload Bukti Pembayaran -->
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">
+                Bukti Pembayaran <span class="text-red-500">*</span>
+              </label>
+              
+              <!-- Drag and Drop Box -->
+              <div id="dropzone" 
+                   class="border-2 border-dashed border-slate-300 hover:border-brand-600 transition-colors rounded-2xl p-5 text-center cursor-pointer bg-slate-50/50 hover:bg-brand-50/30 relative">
+                
+                <input type="file" id="bukti" name="bukti" accept="image/*"  class="hidden">
+                
+                <!-- Default Upload View -->
+                <div id="uploadPlaceholder" class="space-y-2">
+                  <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mx-auto">
+                    <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    <span class="font-semibold text-brand-600">Klik untuk upload</span> atau drag and drop gambar di sini
+                  </div>
+                  <p class="text-[11px] text-slate-400">PNG, JPG, atau WEBP (Maksimal 5MB)</p>
+                </div>
+
+                <!-- Preview State (Hidden by Default) -->
+                <div id="previewContainer" class="hidden flex-col items-center gap-3">
+                  <div class="relative max-w-[200px] group">
+                    <img id="imagePreview" src="" alt="Preview Bukti" class="max-h-36 rounded-lg border border-slate-200 shadow-sm object-cover mx-auto">
+                    <button type="button" onclick="removeImage(event)" 
+                            class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-md transition-colors">
+                      <i data-lucide="x" class="w-3.5 h-3.5 pointer-events-none"></i>
+                    </button>
+                  </div>
+                  <p id="fileName" class="text-xs font-medium text-slate-600 truncate max-w-[220px]"></p>
+                  <span class="text-[10px] text-brand-600 font-semibold bg-brand-50 px-2 py-0.5 rounded-full">Klik untuk mengganti</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Submit Button (Maroon Gradient) -->
+            <div class="pt-3">
+              <button type="submit" id="submitBtn"
+                      class="w-full bg-gradient-to-r from-brand-600 to-rose-800 hover:from-brand-700 hover:to-rose-900 text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+                <i data-lucide="send" class="w-4 h-4 pointer-events-none"></i>
+                <span>Kirim Form Pembayaran</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Modal QRIS Full View -->
+  <div id="qrisModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4 transition-opacity">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl relative animate-in fade-in zoom-in duration-200">
+      <button onclick="closeModal()" type="button" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100">
+        <i data-lucide="x" class="w-5 h-5 pointer-events-none"></i>
+      </button>
+      <h3 class="font-bold text-slate-800 text-lg mb-1">QRIS Pembayaran</h3>
+      <p class="text-xs text-slate-500 mb-4">Scan kode QR ini menggunakan e-wallet atau m-Banking Anda</p>
+      
+      <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl mb-4">
+        <img id="modalQrisImg" src="assets/qris-marini.webp" alt="QRIS Full" class="w-full h-auto rounded-lg mx-auto">
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeModal()" type="button" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 max-w-md w-full px-4 sm:px-0">
+    <div id="toastContent" class="flex items-center gap-3 p-4 rounded-xl shadow-xl text-sm font-medium border bg-white">
+      <div id="toastIcon" class="p-1 rounded-full"></div>
+      <div id="toastMessage" class="flex-1 text-slate-700"></div>
+    </div>
+  </div>
+
+</body>
+
+  <script>
+    // ==========================================
+    // KONFIGURASI SCRIPT
+    // ==========================================
+    // Ganti URL di bawah ini dengan Deployment URL Google Apps Script Anda
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPtR0SzorA11PZ-IT6iY-G2Zx2XTQWaOZFTNpoK5G8yff1pe5s-LqheMAeYNHZxXS2/exec";
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Elements
+    const paymentForm = document.getElementById('paymentForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('bukti');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const previewContainer = document.getElementById('previewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const fileName = document.getElementById('fileName');
+
+    // Drag and Drop Handling
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropzone.classList.add('border-brand-500', 'bg-brand-50/50');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-brand-500', 'bg-brand-50/50');
+      }, false);
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        handleFileSelect(files[0]);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+
+    function handleFileSelect(file) {
+      if (!file.type.startsWith('image/')) {
+        showToast('error', 'Silakan pilih file gambar (JPG, PNG, WEBP).');
+        fileInput.value = '';
+        return;
+      }
+
+      // Check max size 5MB
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('error', 'Ukuran file maksimal adalah 5MB.');
+        fileInput.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        fileName.textContent = file.name;
+        uploadPlaceholder.classList.add('hidden');
+        previewContainer.classList.remove('hidden');
+        previewContainer.classList.add('flex');
+      }
+      reader.readAsDataURL(file);
+    }
+
+    function removeImage(e) {
+      e.stopPropagation();
+      fileInput.value = '';
+      imagePreview.src = '';
+      fileName.textContent = '';
+      previewContainer.classList.add('hidden');
+      previewContainer.classList.remove('flex');
+      uploadPlaceholder.classList.remove('hidden');
+    }
+
+    // Modal QRIS
+    function openModal() {
+      document.getElementById('qrisModal').classList.remove('hidden');
+      document.getElementById('qrisModal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('qrisModal').classList.add('hidden');
+      document.getElementById('qrisModal').classList.remove('flex');
+    }
+
+    // Copy Rekening
+    function copyRekening() {
+      const rek = document.getElementById('rekNum').innerText.replace(/\s+/g, '');
+      const tempInput = document.createElement("input");
+      tempInput.value = rek;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      
+      showToast('success', 'Nomor rekening berhasil disalin!');
+    }
+
+
+    // Toast Function
+    function showToast(type, message) {
+      const toast = document.getElementById('toast');
+      const toastContent = document.getElementById('toastContent');
+      const toastIcon = document.getElementById('toastIcon');
+      const toastMessage = document.getElementById('toastMessage');
+
+      if (type === 'success') {
+        toastContent.className = "flex items-center gap-3 p-4 rounded-xl shadow-xl text-sm font-medium border bg-emerald-50 border-emerald-200 text-emerald-800";
+        toastIcon.className = "p-1 rounded-full bg-emerald-100 text-emerald-600";
+        toastIcon.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5 pointer-events-none"></i>`;
+      } else {
+        toastContent.className = "flex items-center gap-3 p-4 rounded-xl shadow-xl text-sm font-medium border bg-rose-50 border-rose-200 text-rose-800";
+        toastIcon.className = "p-1 rounded-full bg-rose-100 text-rose-600";
+        toastIcon.innerHTML = `<i data-lucide="alert-circle" class="w-5 h-5 pointer-events-none"></i>`;
+      }
+
+      toastMessage.textContent = message;
+      lucide.createIcons();
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 4000);
+    }
+
+    paymentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const file = fileInput.files[0];
+      if (!file) {
+        showToast('error', 'Mohon unggah bukti pembayaran!');
+        return;
+      }
+
+      // UI Loading State
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+      submitBtn.innerHTML = `
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Mengirim Data...</span>
+      `;
+
+      const reader = new FileReader();
+      reader.onload = function() {
+        const base64File = reader.result.split(',')[1];
+
+        const payload = {
+          nama: document.getElementById('nama').value,
+          nim: document.getElementById('nim').value,
+          angkatan: document.getElementById('angkatan').value,
+          kelas: document.getElementById('kelas').value,
+          bidang: document.getElementById('bidang').value,
+          filename: file.name,
+          mimeType: file.type,
+          fileData: base64File
+        };
+
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(() => {
+          showToast('success', 'Formulir berhasil dikirim! Terima kasih.');
+          
+          // Reset Form State
+          paymentForm.reset();
+          removeImage(new Event('click'));
+
+          // Restore Button
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+          submitBtn.innerHTML = `
+            <i data-lucide="send" class="w-4 h-4 pointer-events-none"></i>
+            <span>Kirim Form Pembayaran</span>
+          `;
+          lucide.createIcons();
+        })
+        .catch(error => {
+          console.error(error);
+          showToast('error', 'Terjadi kesalahan saat mengirim data. Coba lagi.');
+          
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+          submitBtn.innerHTML = `
+            <i data-lucide="send" class="w-4 h-4 pointer-events-none"></i>
+            <span>Kirim Form Pembayaran</span>
+          `;
+          lucide.createIcons();
+        });
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Fungsi Buka / Tutup Menu
+    function toggleMobileMenu(event) {
+        if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        }
+        
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        if (!mobileMenu) return;
+
+        const isHidden = mobileMenu.classList.contains('hidden');
+
+        if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        if (menuIcon) {
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-xmark');
+        }
+        } else {
+        closeMobileMenu();
+        }
+    }
+
+    // Fungsi Menutup Menu
+    function closeMobileMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        if (mobileMenu) {
+        mobileMenu.classList.add('hidden');
+        }
+        if (menuIcon) {
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+        }
+    }
+
+    // Tutup menu jika mengklik di luar area header
+    document.addEventListener('click', function(e) {
+        const header = document.querySelector('header');
+        if (header && !header.contains(e.target)) {
+        closeMobileMenu();
+        }
+    });
+    </script>
+</body>
+</html>
