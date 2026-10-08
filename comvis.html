@@ -242,7 +242,7 @@
           
           <div class="w-full sm:w-auto flex-shrink-0 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center min-w-[140px]">
             <span class="text-xs text-brand-200 block font-medium">HTM Event</span>
-            <span class="text-2xl font-bold text-white tracking-wide">Rp 50.000</span>
+            <span class="text-2xl font-bold text-white tracking-wide">Rp 55.000</span>
             <span class="text-[10px] text-brand-200 block mt-0.5">/ Peserta</span>
           </div>
         </div>
@@ -304,7 +304,7 @@
 
           <!-- Petunjuk Singkat -->
           <div class="mt-5 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1.5">
-            <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Pastikan nominal transfer pas Rp 50.000</p>
+            <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Pastikan nominal transfer sesuai</p>
             <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Biaya admin ditanggung oleh peserta</p>
             <p class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 pointer-events-none"></i> Simpan resi/bukti pembayaran setelah transfer</p>
           </div>
@@ -425,6 +425,27 @@
                 </div>
               </div>
             </div>
+
+            <!-- 4. Termin -->
+              <div>
+                <label for="termin" class="block text-sm font-semibold text-slate-700 mb-1">
+                  Termin Pembayaran<span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="hand-coins" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                  <select id="termin" name="termin" required
+                          class="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-sm bg-white transition-all appearance-none cursor-pointer">
+                    <option value="" disabled selected>Pilih Termin</option>
+                    <option value="Termin 1">Termin 1 (Rp. 30.000)</option>
+                    <option value="Pelunasan Langsung">Pelunasan Langsung (Rp. 55.000)</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                    <i data-lucide="chevron-down" class="w-4 h-4 pointer-events-none"></i>
+                  </div>
+                </div>
+              </div>
 
             <!-- 5. Upload Bukti Pembayaran -->
             <div>
@@ -683,6 +704,7 @@
           angkatan: document.getElementById('angkatan').value,
           kelas: document.getElementById('kelas').value,
           bidang: document.getElementById('bidang').value,
+          termin: document.getElementById('termin').value,
           filename: file.name,
           mimeType: file.type,
           fileData: base64File
