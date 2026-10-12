@@ -27,7 +27,7 @@
         .marquee-container {
             display: flex;
             width: max-content;
-            animation: marquee 150s linear infinite;
+            
         }
         
         /* Kelas tambahan untuk menjeda animasi saat card diklik/ditahan */
@@ -977,6 +977,61 @@
                     const walk = (x - startX) * 2; 
                     slider.scrollLeft = scrollLeft - walk;
                 });
+
+                // ===== TAMBAHAN: LOOP TANPA HENTI (auto-scroll + wrap-around) =====
+                const SPEED = 48; // kecepatan auto-scroll (px per detik)
+                let isTouching = false;
+                let pos = null;
+                let lastSet = 0;
+                let lastTime = performance.now();
+
+                slider.addEventListener('touchstart', () => { isTouching = true; }, { passive: true });
+                slider.addEventListener('touchend', () => { isTouching = false; }, { passive: true });
+                slider.addEventListener('touchcancel', () => { isTouching = false; }, { passive: true });
+
+                // Lebar satu set kartu (jarak kartu pertama ke kartu pertama set berikutnya)
+                const getSetWidth = () => {
+                    const n = membersData.length;
+                    const cards = container.children;
+                    if (!n || cards.length < n * 2) return 0;
+                    return cards[n].offsetLeft - cards[0].offsetLeft;
+                };
+
+                // Jaga posisi selalu di rentang set ke-2 [w, 2w) supaya kiri & kanan selalu terisi kartu
+                const normalize = (value, w) => ((value - w) % w + w) % w + w;
+
+                const tick = (now) => {
+                    const dt = Math.min(now - lastTime, 100) / 1000;
+                    lastTime = now;
+                    const w = getSetWidth();
+
+                    if (w) {
+                        if (pos === null) {
+                            slider.scrollLeft = w;
+                            pos = slider.scrollLeft;
+                            lastSet = pos;
+                        }
+
+                        const current = slider.scrollLeft;
+                        const userMoved = Math.abs(current - lastSet) > 1.5; // di-scroll/drag/momentum user
+
+                        if (userMoved || isDown || isTouching) {
+                            // Saat user berinteraksi: ikuti posisi user, hanya lakukan wrap-around
+                            pos = current;
+                            if (pos < w || pos >= w * 2) {
+                                pos = normalize(pos, w);
+                                slider.scrollLeft = pos;
+                            }
+                        } else {
+                            // Auto-scroll normal
+                            pos = normalize(pos + SPEED * dt, w);
+                            slider.scrollLeft = pos;
+                        }
+                        lastSet = slider.scrollLeft;
+                    }
+                    requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
             }
         });
 
