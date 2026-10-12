@@ -253,7 +253,7 @@
             </p>
 
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="https://forms.gle/jdKNQkDdPAvcx3zt8" class="px-8 py-3.5 rounded-full bg-white text-maroon-950 font-bold text-sm hover:bg-maroon-50 shadow-xl shadow-black/20 transition-all duration-300">
+                <a href="comvis.html" class="px-8 py-3.5 rounded-full bg-white text-maroon-950 font-bold text-sm hover:bg-maroon-50 shadow-xl shadow-black/20 transition-all duration-300">
                     Registrasi Comvis
                 </a>
                 <a href="#partnership" class="px-8 py-3.5 rounded-full bg-black/30 backdrop-blur-md border border-white/30 text-white font-bold text-sm hover:bg-white/20 transition-all duration-300">
@@ -567,19 +567,19 @@
                     </div>
                 </div>
 
-                <p class="text-xs sm:text-sm text-gray-500 leading-relaxed max-w-md">
+                <p id="footer-desc" class="text-xs sm:text-sm text-gray-500 leading-relaxed max-w-md">
                     Membangun kebanggaan kolektif mahasiswa melalui pilar komunikasi kehumasan yang tangguh, terarah, dan terhubung untuk masa depan yang lebih gemilang.
                 </p>
 
                 <!-- Social Media Buttons -->
                 <div class="flex items-center gap-3 pt-1">
-                    <a href="https://www.instagram.com/humas.hmmal/" aria-label="instagram-humas" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
+                    <a href="https://www.instagram.com/humas.hmmal/" id="footer-ig"aria-label="instagram-humas" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
                         <i class="fa-brands fa-instagram text-sm"></i>
                     </a>
-                    <a href="https://www.youtube.com/@hmmanajemendanadministrasi9490" aria-label="youtube-hmmal" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
+                    <a href="https://www.youtube.com/@hmmanajemendanadministrasi9490" id="footer-yt" aria-label="youtube-hmmal" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
                         <i class="fa-brands fa-youtube text-sm"></i>
                     </a>
-                    <a href="https://www.tiktok.com/@hmmalundip?_r=1&_t=ZS-99BX7bSbHEX" aria-label="tiktok-hmmal" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
+                    <a href="https://www.tiktok.com/@hmmalundip?_r=1&_t=ZS-99BX7bSbHEX" id="footer-tt" aria-label="tiktok-hmmal" class="w-10 h-10 rounded-2xl bg-gray-50 hover:bg-maroon-800 hover:text-white border border-gray-200 flex items-center justify-center text-gray-600 transition-all shadow-sm hover:-translate-y-0.5">
                         <i class="fa-brands fa-tiktok text-sm"></i>
                     </a>
                 </div>
@@ -615,7 +615,7 @@
                 <p class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Hubungi Kami</p>
                 
                 <!-- Email Card -->
-                <a href="mailto:humashmmalundip@gmail.com" aria-label="email-humas" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-maroon-800 hover:bg-maroon-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
+                <a href="mailto:humashmmalundip@gmail.com" id="footer-email"aria-label="email-humas" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-maroon-800 hover:bg-maroon-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
                     <div class="w-10 h-10 rounded-2xl bg-rose-100/70 group-hover:bg-maroon-800 text-maroon-800 group-hover:text-white flex items-center justify-center shrink-0 transition-colors duration-300">
                         <i class="fa-regular fa-envelope text-sm"></i>
                     </div>
@@ -626,7 +626,7 @@
                 </a>
 
                 <!-- WhatsApp Card -->
-                <a href="https://wa.me/6281617591588" aria-label="whatsapp-humas" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-emerald-600 hover:bg-emerald-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
+                <a href="https://wa.me/6281617591588" id="footer-whatsapp" aria-label="whatsapp-humas" class="p-4 rounded-3xl border border-gray-200/80 bg-gray-50/50 flex items-center gap-3.5 shadow-sm hover:shadow-md hover:border-emerald-600 hover:bg-emerald-50/40 hover:-translate-y-1 transition-all duration-300 group w-full block">
                     <div class="w-10 h-10 rounded-2xl bg-sky-100/70 group-hover:bg-emerald-600 text-sky-700 group-hover:text-white flex items-center justify-center shrink-0 transition-colors duration-300">
                         <i class="fa-brands fa-whatsapp text-base"></i>
                     </div>
@@ -813,101 +813,62 @@
             `).join('');
         }
 
-        // DATA ANGGOTA TIM LOKAL
-        const membersData = [
-            { id: 1, 
-            name: "Rifki Nur Hasan", 
-            role: "KETUA BIDANG HUMAS", 
-            category: "bph", 
-            photo: "assets/rifki.webp", 
-            badge: "BPH", 
-            division: "Badan Pengurus Harian", 
-            MAL: "2024", 
-            subDept: "Humas HMMAL 2026", 
-            quote: "Memimpin dengan empati, menghubungkan ide dengan aksi nyata.", 
-            instagram: "rifkiinhs" },
+        // 2. FETCH DATA ANGGOTA DARI SUPABASE
+        let membersData = [];
 
-            { id: 2, 
-            name: "Yosi Novianti", 
-            role: "WAKIL KETUA BIDANG HUMAS", 
-            category: "bph", 
-            photo: "assets/yosi.webp", 
-            badge: "BPH", 
-            division: "Badan Pengurus Harian", 
-            MAL: "2024", 
-            subDept: "Humas HMMAL 2026", 
-            quote: "Harmoni dalam komunikasi adalah kunci sinergi organisasi.", 
-            instagram: "yswngurr" },
+        async function loadMembersFromSupabase() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('anggota_humas')
+                    .select('*')
+                    .order('id', { ascending: true });
 
-            { id: 3, 
-            name: "Nawla Hibna Jamma", 
-            role: "Ketua Divisi SR", 
-            category: "bph", 
-            photo: "assets/nawla.webp", 
-            badge: "BPH", 
-            division: "Social Responsibility", 
-            MAL: "2024", 
-            subDept: "Humas HMMAL 2026", 
-            quote: "Menjadi kebaikan sekecil apapun adalah langkah awal perubahan.", 
-            instagram: "naw.laa_" },
+                if (error) {
+                    console.error("Gagal mengambil data anggota:", error.message);
+                    return;
+                }
 
-            { id: 4, 
-            name: "Muhammad Iqro Al Bahri", 
-            role: "Ketua Divisi PNP", 
-            category: "bph", 
-            photo: "assets/iqro.webp", 
-            badge: "BPH", 
-            division: "Planning Networking & Partnership", 
-            MAL: "2024", 
-            subDept: "Humas HMMAL 2026", 
-            quote: "Jejaring luar adalah gerbang pembuka potensi tanpa batas.", 
-            instagram: "iqroalbahri" },
-
-            { id: 5, 
-            name: "Marini", 
-            role: "Staff Divisi SR", 
-            category: "sr", 
-            photo: "assets/marini.webp", 
-            badge: "STAFF", 
-            division: "Social Responsibility",
-            MAL: "2025", 
-            subDept: "Humas HMMAL 2026", 
-            quote: "Bekerja tulus demi mengabdi pada sesama.", 
-            instagram: "marinii_26" },
-
-            { id: 6, 
-            name: "Nakeisha Medina Mecca", 
-            role: "Staff Divisi SR", 
-            category: "sr", 
-            photo: "assets/nakei.webp", 
-            badge: "STAFF", 
-            division: "Social Responsibility", 
-            MAL: "2025", 
-            subDept: "Humas HMMAL 2026", 
-            quote: "Setiap aksi sosial membawa senyum baru.", 
-            instagram: "nakeishc" },
-
-            { id: 7, name: "Dhurifa Nayla Salsabila", role: "Staff Divisi SR", category: "sr", photo: "assets/nayla.webp", badge: "STAFF", division: "Social Responsibility", MAL: "2025", subDept: "Humas HMMAL 2026", quote: "Keberlanjutan lingkungan adalah tanggung jawab kita bersama.", instagram: "sfclnay" },
-            { id: 8, name: "Niko Filarian Pranata", role: "Staff Divisi SR", category: "sr", photo: "assets/niko.webp", badge: "STAFF", division: "Social Responsibility", MAL: "2025", subDept: "Humas HMMAL 2026", quote: "Menebar dampak positif melalui kepedulian.", instagram: "filarianiko" },
-            { id: 9, name: "Kanaya Laqisha Sandhy", role: "Staff Divisi PNP", category: "pnp", photo: "assets/acha.webp", badge: "STAFF", division: "Planning Networking & Partnership", MAL: "2025", subDept: "Humas HMMAL 2026", quote: "Satu kemitraan, ribuan peluang berkembang.", instagram: "kalayishaa" },
-            { id: 10, name: "Fizza Raisyah", role: "Staff Divisi PNP", category: "pnp", photo: "assets/fizza.webp", badge: "STAFF", division: "Planning Networking & Partnership", MAL: "2025", subDept: "Humas HMMAL 2026", quote: "Menghubungkan potensi mahasiswa dengan dunia luar.", instagram: "nadolce189" },
-            { id: 11, name: "Talitha Zattaya Rahayu", role: "Staff Divisi PNP", category: "pnp", photo: "assets/talitha.webp", badge: "STAFF", division: "Planning Networking & Partnership", MAL: "2025", subDept: "Humas HMMAL 2026", quote: "Negosiasi dan kolaborasi unggul.", instagram: "talithazattaya" },
-            { id: 12, name: "Faza Azmi Al Mubarak", role: "Staff Divisi PNP", category: "pnp", photo: "assets/faza.webp", badge: "STAFF", division: "Planning Networking & Partnership", MAL: "2025", subDept: "Humas HMMAL 2026", quote: "Perluas jangkauan, bangun sinergi tanpa batas.", instagram: "fazazmii" }
-        ];
+                if (data && data.length > 0) {
+                    // Mapping data dari Supabase agar sesuai dengan format render card
+                    membersData = data.map(item => ({
+                        id: item.id,
+                        name: item.nama,
+                        role: item.jabatan,
+                        category: item.category || 'staff',
+                        photo: item.foto_url || 'assets/humas26.webp',
+                        badge: item.badge || 'STAFF',
+                        division: item.division || 'Humas HMMAL',
+                        MAL: item.mal || '2025',
+                        subDept: item.sub_dept || 'Humas HMMAL 2026',
+                        quote: item.quote || 'Berkontribusi aktif untuk kebaikan bersama.',
+                        instagram: item.instagram || 'humas.hmmal'
+                    }));
+                }
+            } catch (err) {
+                console.error("Error koneksi anggota:", err);
+            }
+            
+            renderMembers();
+        }
 
         function renderMembers() {
             const grid = document.getElementById('members-grid');
             if (!grid) return;
             grid.innerHTML = '';
 
-            // Melipatgandakan data (4 kali) agar perputaran animasi sangat panjang dan tidak pernah kosong/berhenti di tengah
+            // Jika database kosong, beri informasi placeholder
+            if (!membersData || membersData.length === 0) {
+                grid.innerHTML = `<p class="text-center text-gray-500 py-4 w-full">Tunggu yaaa <3</p>`;
+                return;
+            }
+
+            // Melipatgandakan data agar perputaran marquee mulus
             const repeatedMembers = [...membersData, ...membersData, ...membersData, ...membersData];
 
             repeatedMembers.forEach(member => {
                 const card = document.createElement('div');
                 card.className = 'glass-card rounded-3xl overflow-hidden border border-white/95 cursor-pointer flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:border-maroon-500/50 hover:shadow-xl hover:shadow-maroon-900/10 shrink-0 w-[260px] sm:w-[280px]';
                 
-                // Ketika card diklik, buka modal detail anggota
                 card.onclick = (e) => {
                     if (isDragged) return;
                     openMemberModal(member.id);
@@ -943,6 +904,40 @@
         let startX;
         let scrollLeft;
         let isDragged = false;
+
+        // 4. FETCH DATA KONTAK WEBSITE (DENGAN JUDUL DINAMIS & URUTAN TERBARU DI KIRI ATAS)
+        async function loadKontakWebsite() {
+        const { data, error } = await supabaseClient.from('kontak_kami').select('*').eq('id', 1).maybeSingle();
+        if (error || !data) return;
+
+        // Deskripsi footer
+        const descEl = document.getElementById('footer-desc');
+        if (descEl) descEl.innerText = data.deskripsi_footer;
+
+        // Sosial media
+        const igEl = document.getElementById('footer-ig');
+        if (igEl) igEl.href = data.instagram;
+
+        const ytEl = document.getElementById('footer-yt');
+        if (ytEl) ytEl.href = data.youtube;
+
+        const ttEl = document.getElementById('footer-tt');
+        if (ttEl) ttEl.href = data.tiktok;
+
+        // Email
+        const emailEl = document.getElementById('footer-email');
+        if (emailEl) {
+            emailEl.href = `mailto:${data.email}`;
+            emailEl.querySelector('.truncate').innerText = data.email;
+        }
+
+        // WhatsApp
+        const waEl = document.getElementById('footer-whatsapp');
+        if (waEl) {
+            waEl.href = `https://wa.me/${data.whatsapp_nomor}`;
+            waEl.querySelector('.truncate').innerText = `+${data.whatsapp_nomor.replace(/(\d{2})(\d{3})(\d{4})(\d+)/, '$1 $2-$3-$4')} (${data.whatsapp_nama})`;
+        }
+    }
 
         document.addEventListener('DOMContentLoaded', () => {
             const slider = document.querySelector('.marquee-wrapper');
@@ -1089,6 +1084,9 @@
         // EVENT LISTENERS INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
             loadProkerjaSection();
+            loadMembersFromSupabase(); // Memuat data anggota dari Supabase
+            loadProfilSection();
+            loadKontakWebsite();
             renderMembers();
 
             // Mobile Menu Toggle
