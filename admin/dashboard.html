@@ -94,6 +94,11 @@
             <span>Anggota</span>
           </button>
 
+          <button onclick="switchTab('kontak-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="kontak-kami">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>Kontak Kami</span>
+          </button>
+
           <button onclick="switchTab('aktivitas')" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="aktivitas">
             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             <span>Aktivitas</span>
@@ -151,6 +156,11 @@
           <button onclick="switchTab('anggota')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="anggota">
             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             <span>Anggota</span>
+          </button>
+
+          <button onclick="switchTab('kontak-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="kontak-kami">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>Kontak Kami</span>
           </button>
 
           <button onclick="switchTab('aktivitas')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="aktivitas">
@@ -492,29 +502,211 @@
 
     <!-- TAB VIEW 3: ANGGOTA (FULLY FUNCTIONAL CMS) -->
     <section id="tab-anggota" class="tab-content hidden space-y-8 !mt-0 !pt-0">
-      <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
-          <div>
-            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-2.5 h-6 rounded-full bg-[#6B1D2F] inline-block"></span>
-              Kelola Data Anggota & Pengurus
-            </h2>
-            <p class="text-xs text-slate-500 mt-1">Daftar staf, kepala divisi, dan fungsionaris Humas HMMAL UNDIP.</p>
+      
+      <!-- Header Banner Anggota -->
+      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+        <div class="space-y-1 relative z-10">
+          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
+            Manajemen Konten
           </div>
-          <button onclick="openAnggotaModal()" class="px-4 py-2.5 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2 self-start sm:self-auto cursor-pointer">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            <span>Tambah Anggota Baru</span>
-          </button>
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Data Anggota & Pengurus</h2>
+          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
+            Tambah, perbarui, dan atur daftar anggota serta pengurus Humas HMMAL UNDIP yang terintegrasi dengan Card Anggota pada halaman utama.
+          </p>
         </div>
 
-        <!-- Members Grid Container -->
-        <div id="anggotaGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Rendered dynamically -->
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 px-4 py-3 rounded-2xl text-center min-w-[100px]">
+            <span class="block text-xl font-extrabold text-white" id="statAnggotaCount">0</span>
+            <span class="text-[10px] uppercase font-semibold text-rose-200">Total Anggota</span>
+          </div>
         </div>
+      </div>
+
+      <!-- Layout Grid: Form Tambah Anggota di Kiri, Daftar Tabel/Card di Kanan -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Kolom Kiri: Form Tambah Anggota (Disesuaikan dengan Card Anggota index.html) -->
+        <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+          <div class="border-b border-slate-100 pb-4">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+              Tambah Anggota Baru
+            </h3>
+            <p class="text-xs text-slate-500 mt-1">Lengkapi informasi profil anggota sesuai standar Card Website.</p>
+          </div>
+
+          <form id="anggotaForm" class="space-y-4">
+            <!-- INPUT TERSEMBUNYI UNTUK EDIT -->
+            <input type="hidden" id="editAnggotaId">
+            <input type="hidden" id="angOldGambarUrl">
+            
+            <!-- Nama Lengkap -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
+              <input type="text" id="angNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="Contoh: Rifki Nur Hasan" required>
+            </div>
+
+            <!-- Role / Jabatan Utama -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
+              <input type="text" id="angJabatan" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="Contoh: KETUA BIDANG HUMAS" required>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Kategori Filter -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
+                <select id="angCategory" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
+                  <option value="bph">BPH</option>
+                  <option value="sr">Social Responsibility (SR)</option>
+                  <option value="pnp">Planning Networking & Partnership (PNP)</option>
+                </select>
+              </div>
+
+              <!-- Badge Label -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
+                <select id="angBadge" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
+                  <option value="BPH">BPH</option>
+                  <option value="STAFF">STAFF</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Divisi / Penempatan -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Divisi</label>
+                <input type="text" id="angDivision" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Badan Pengurus Harian" required>
+              </div>
+
+              <!-- Angkatan MAL -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
+                <input type="text" id="angMal" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="2024" required>
+              </div>
+            </div>
+
+            <!-- Sub Departemen -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-700">Bidang / Periode</label>
+              <input type="text" id="angSubDept" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Humas HMMAL 2026" required>
+            </div>
+
+            <!-- Motto / Quote -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
+              <textarea id="angQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none" placeholder="Memimpin dengan empati..."></textarea>
+            </div>
+
+            <!-- Instagram Username -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
+              <input type="text" id="angIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="rifkiinhs">
+            </div>
+
+            <!-- Foto Anggota -->
+            <div class="space-y-1">
+              <label class="block text-xs font-semibold text-slate-700">Foto Anggota (Potret)</label>
+              <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" required>
+              </div>
+            </div>
+
+            <!-- Tombol Submit -->
+            <button type="submit" id="btnSaveAnggota" class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2 mt-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>Simpan & Upload Anggota</span>
+            </button>
+          </form>
+        </section>
+
+        <!-- Kolom Kanan: Daftar List Anggota Tersimpan -->
+        <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+                Daftar Anggota di Database
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">Daftar pengurus dan staf yang terdaftar di tabel Supabase.</p>
+            </div>
+            <button onclick="loadAnggotaData()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition cursor-pointer border border-slate-200/60" title="Refresh Data">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
+          </div>
+
+          <!-- Grid Daftar Anggota -->
+          <div id="anggotaGridContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
       </div>
     </section>
 
-    <!-- TAB VIEW 4: AKTIVITAS (SYSTEM LOGS) -->
+    <!-- TAB VIEW 4: KONTAK KAMI -->
+    <section id="tab-kontak-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
+      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="space-y-1 relative z-10">
+          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">Manajemen Konten</div>
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Kontak & Sosial Media</h2>
+          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">Ubah nomor WhatsApp narahubung, tautan sosial media, dan informasi footer website.</p>
+        </div>
+      </div>
+
+      <form id="formKontakKami" class="space-y-6">
+        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Email Resmi</label>
+              <input type="email" id="kontakEmail" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="humashmmalundip@gmail.com">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Narahubung WhatsApp</label>
+              <input type="text" id="kontakWaNama" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="Yosi">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WhatsApp (Format Internasional Tanpa +)</label>
+              <input type="text" id="kontakWaNomor" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="6281617591588">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Link Instagram</label>
+              <input type="text" id="kontakIg" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="https://www.instagram.com/humas.hmmal/">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Link YouTube</label>
+              <input type="text" id="kontakYt" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="https://www.youtube.com/@hmmanajemendanadministrasi9490">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Link TikTok</label>
+              <input type="text" id="kontakTt" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="https://www.tiktok.com/@hmmalundip">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Footer</label>
+            <textarea id="kontakFooter" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F] resize-none"></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="submit" id="btnSaveKontak" class="px-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer">
+            Simpan Perubahan Kontak
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- TAB VIEW 5: AKTIVITAS (SYSTEM LOGS) -->
     <section id="tab-aktivitas" class="tab-content hidden space-y-6 !mt-0 !pt-0">
       <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -648,6 +840,104 @@
     </div>
   </div>
 
+  <!-- Modal Edit Anggota -->
+  <div id="editAnggotaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">Edit Data Anggota</h3>
+        <button onclick="closeEditAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="editAnggotaForm" class="space-y-4">
+        <input type="hidden" id="editAngId">
+        <input type="hidden" id="editAngOldFotoUrl">
+
+        <!-- Nama Lengkap -->
+        <div class="space-y-1">
+          <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
+          <input type="text" id="editAngNama" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+        </div>
+
+        <!-- Role / Jabatan -->
+        <div class="space-y-1">
+          <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
+          <input type="text" id="editAngJabatan" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Kategori Filter ID -->
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
+            <select id="editAngCategory" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
+              <option value="bph">BPH</option>
+              <option value="sr">Social Responsibility (SR)</option>
+              <option value="pnp">Planning Networking & Partnership (PNP)</option>
+            </select>
+          </div>
+
+          <!-- Badge Card -->
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
+            <select id="editAngBadge" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
+              <option value="BPH">BPH</option>
+              <option value="STAFF">STAFF</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Divisi -->
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-slate-700">Divisi</label>
+            <input type="text" id="editAngDivision" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+          </div>
+
+          <!-- MAL (Tahun/Angkatan) -->
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
+            <input type="text" id="editAngMal" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+          </div>
+        </div>
+
+        <!-- Sub Departemen -->
+        <div class="space-y-1">
+          <label class="block text-xs font-semibold text-slate-700">Sub Departemen / Keterangan</label>
+          <input type="text" id="editAngSubDept" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+        </div>
+
+        <!-- Motto / Quote -->
+        <div class="space-y-1">
+          <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
+          <textarea id="editAngQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none"></textarea>
+        </div>
+
+        <!-- Username Instagram -->
+        <div class="space-y-1">
+          <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
+          <input type="text" id="editAngIg" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition">
+        </div>
+
+        <!-- Ganti Foto -->
+        <div class="space-y-1">
+          <label class="block text-xs font-semibold text-slate-700">Ganti Foto Anggota (Opsional)</label>
+          <input type="file" id="editAngFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer">
+          <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah foto.</p>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeEditAnggotaModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+            Batal
+          </button>
+          <button type="submit" id="btnUpdateAnggota" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Confirmation Delete Modal -->
   <div id="deleteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
     <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-slate-100">
@@ -736,6 +1026,7 @@
 
       if (tabId === 'tentang-kami') loadTentangKamiData();
       if (tabId === 'anggota') loadAnggotaData();
+      if (tabId === 'kontak-kami') loadKontakData();
     }
 
     function toggleMobileMenu() {
@@ -865,7 +1156,7 @@
       const { data, error } = await supabaseClient
         .from('program_kerja')
         .select('*')
-        .order('id', { ascending: false });
+        .order('id', { ascending: true }); // Menggunakan ascending agar urutan sesuai waktu ditambah
 
       if (error) {
         showToast('Gagal memuat data: ' + error.message, 'error');
@@ -893,12 +1184,16 @@
                 </td>
                 <td class="py-3.5 px-3 text-slate-500 font-medium">${item.waktu}</td>
                 <td class="py-3.5 px-3 text-right whitespace-nowrap">
-                  <button onclick="openEditModal(${item.id})" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-[11px] font-semibold mr-1 transition shadow-sm cursor-pointer">
-                    Edit
-                  </button>
-                  <button onclick="askDeleteProkerja(${item.id})" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[11px] font-semibold transition shadow-sm cursor-pointer">
-                    Hapus
-                  </button>
+                  <div class="flex items-center justify-end gap-1">
+                    <!-- Tombol Edit (Ikon Pensil) -->
+                    <button onclick="openEditModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit Program Kerja">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </button>
+                    <!-- Tombol Hapus (Ikon Sampah) -->
+                    <button onclick="askDeleteProkerja(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus Program Kerja">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                  </div>
                 </td>
               </tr>
             `;
@@ -914,18 +1209,18 @@
           listProgramKerja.forEach((item) => {
             mobileContainer.innerHTML += `
               <div class="bg-slate-50/80 border border-slate-200/60 p-3.5 rounded-2xl flex items-center justify-between gap-3">
-                <img src="${item.gambar_url || 'https://placehold.co/100x70/6B1D2F/ffffff?text=No+Image'}" class="w-16 h-12 object-cover rounded-xl shadow-sm">
+                <img src="${item.gambar_url || 'https://placehold.co/100x70/6B1D2F/ffffff?text=No+Image'}" class="w-16 h-12 object-cover rounded-xl shadow-sm shrink-0">
                 <div class="flex-1 min-w-0">
                   <div class="font-bold text-slate-900 text-xs truncate">${item.judul}</div>
                   <div class="text-[10px] text-rose-800 font-semibold truncate">${item.kategori}</div>
                   <div class="text-[10px] text-slate-400">${item.waktu}</div>
                 </div>
-                <div class="flex flex-col gap-1">
-                  <button onclick="openEditModal(${item.id})" class="px-2.5 py-1 bg-amber-500 text-white rounded-lg text-[10px] font-semibold cursor-pointer">
-                    Edit
+                <div class="flex items-center gap-1 shrink-0">
+                  <button onclick="openEditModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                   </button>
-                  <button onclick="askDeleteProkerja(${item.id})" class="px-2.5 py-1 bg-rose-600 text-white rounded-lg text-[10px] font-semibold cursor-pointer">
-                    Hapus
+                  <button onclick="askDeleteProkerja(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                   </button>
                 </div>
               </div>
@@ -1137,74 +1432,222 @@
     });
 
     /* =========================================
-       3. ANGGOTA FUNCTIONS
+       3. ANGGOTA FUNCTIONS (UPDATED INTEGRATION)
        ========================================= */
     async function loadAnggotaData() {
       const container = document.getElementById('anggotaGridContainer');
+      const statAnggota = document.getElementById('statAnggotaCount');
       if (!container) return;
 
       const { data, error } = await supabaseClient
         .from('anggota_humas')
         .select('*')
-        .order('id', { ascending: false });
+        .order('id', { ascending: true });
 
       if (error) {
-        container.innerHTML = `
-          <div class="col-span-full p-6 text-center bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2">
-            <p class="text-xs text-slate-500">Klik "Tambah Anggota Baru" untuk menambahkan pengurus divisi Humas.</p>
-          </div>
-        `;
+        container.innerHTML = `<div class="col-span-full p-6 text-center text-xs text-rose-800">Gagal memuat data anggota: ${error.message}</div>`;
         return;
       }
 
       listAnggota = data || [];
+      if (statAnggota) statAnggota.innerText = listAnggota.length;
       container.innerHTML = '';
 
       if (listAnggota.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center py-6 text-slate-400 text-xs">Belum ada data anggota.</div>`;
+        container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400 text-xs">Belum ada data anggota di database.</div>`;
       } else {
         listAnggota.forEach(item => {
           container.innerHTML += `
-            <div class="bg-slate-50 border border-slate-200/70 p-4 rounded-2xl flex items-center gap-3">
-              <img src="${item.foto_url || 'https://placehold.co/80x80/6B1D2F/ffffff?text=User'}" class="w-12 h-12 rounded-full object-cover shadow-sm">
-              <div class="flex-1 min-w-0">
-                <h4 class="font-bold text-slate-900 text-xs truncate">${item.nama}</h4>
-                <p class="text-[11px] text-rose-800 font-semibold truncate">${item.jabatan}</p>
+            <div class="bg-slate-50 border border-slate-200/70 p-3.5 rounded-2xl flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0 flex-1">
+                <img src="${item.foto_url || item.photo || 'https://placehold.co/80x80/6B1D2F/ffffff?text=User'}" class="w-12 h-12 rounded-full object-cover shadow-sm shrink-0 border border-white">
+                <div class="min-w-0 flex-1">
+                  <span class="inline-block px-2 py-0.5 bg-rose-100 text-maroon-900 text-[9px] font-extrabold rounded uppercase">${item.badge || 'STAFF'}</span>
+                  <h4 class="font-bold text-slate-900 text-xs truncate mt-0.5">${item.nama || item.name}</h4>
+                  <p class="text-[10px] text-slate-500 truncate">${item.jabatan || item.role} • MAL ${item.mal || item.MAL || ''}</p>
+                </div>
               </div>
-              <button onclick="askDeleteAnggota(${item.id})" class="p-1.5 text-rose-600 hover:bg-rose-100 rounded-lg transition">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-              </button>
+
+              <!-- Bagian 2 Tombol Aksi: Edit & Hapus -->
+              <div class="flex items-center gap-1 shrink-0">
+                <button onclick="openEditAnggotaModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit Anggota">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </button>
+                <button onclick="askDeleteAnggota(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus Anggota">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
             </div>
           `;
         });
       }
     }
 
-    function openAnggotaModal() {
-      document.getElementById('anggotaForm').reset();
-      const modal = document.getElementById('anggotaModal');
+    /* =========================================
+       4. KONTAK FUNCTIONS (UPDATED INTEGRATION)
+       ========================================= */
+    let existingKontakData = {};
+
+async function loadKontakData() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('kontak_kami')
+      .select('*')
+      .eq('id', 1)
+      .maybeSingle();
+
+    if (error || !data) return;
+
+    existingKontakData = data;
+
+    // Menampilkan data tersimpan ke dalam kolom input
+    if (document.getElementById('kontakEmail')) document.getElementById('kontakEmail').value = data.email || '';
+    if (document.getElementById('kontakWaNomor')) document.getElementById('kontakWaNomor').value = data.whatsapp_nomor || '';
+    if (document.getElementById('kontakWaNama')) document.getElementById('kontakWaNama').value = data.whatsapp_nama || '';
+    if (document.getElementById('kontakIg')) document.getElementById('kontakIg').value = data.instagram || '';
+    if (document.getElementById('kontakYt')) document.getElementById('kontakYt').value = data.youtube || '';
+    if (document.getElementById('kontakTt')) document.getElementById('kontakTt').value = data.tiktok || '';
+    if (document.getElementById('kontakFooter')) document.getElementById('kontakFooter').value = data.deskripsi_footer || '';
+  } catch (err) {
+    console.error('Gagal memuat data kontak:', err);
+  }
+}
+
+    document.getElementById('formKontakKami').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSaveKontak');
+      btn.innerText = 'Menyimpan...';
+      btn.disabled = true;
+
+      document.addEventListener('DOMContentLoaded', () => {
+  loadKontakData(); // Mengambil data terbaru dari Supabase ke formulir
+});
+
+      try {
+        const { error } = await supabaseClient.from('kontak_kami').upsert({
+          id: 1,
+          email: document.getElementById('kontakEmail').value,
+          whatsapp_nomor: document.getElementById('kontakWaNomor').value,
+          whatsapp_nama: document.getElementById('kontakWaNama').value,
+          instagram: document.getElementById('kontakIg').value,
+          youtube: document.getElementById('kontakYt').value,
+          tiktok: document.getElementById('kontakTt').value,
+          deskripsi_footer: document.getElementById('kontakFooter').value,
+          updated_at: new Date().toISOString()
+        });
+
+        if (error) throw error;
+        showToast('Kontak berhasil diperbarui!', 'success');
+        addLog('Memperbarui data Kontak Kami & Sosial Media', 'Kontak');
+      } catch (err) {
+        showToast('Gagal menyimpan: ' + err.message, 'error');
+      } finally {
+        btn.innerText = 'Simpan Perubahan Kontak';
+        btn.disabled = false;
+      }
+    });
+
+    // Panggil loadKontakData saat tab 'kontak-kami' dibuka di switchTab(tabId)
+    // Tambahkan di fungsi switchTab: if (tabId === 'kontak-kami') loadKontakData();
+
+    // 4 Fungsi untuk membuka Modal Edit dan Mengisi Form dengan Data Lama
+    function openEditAnggotaModal(id) {
+      const item = listAnggota.find(a => Number(a.id) === Number(id));
+      if (!item) return;
+
+      document.getElementById('editAngId').value = item.id;
+      document.getElementById('editAngNama').value = item.nama || item.name || '';
+      document.getElementById('editAngJabatan').value = item.jabatan || item.role || '';
+      document.getElementById('editAngCategory').value = item.category || 'bph';
+      document.getElementById('editAngBadge').value = item.badge || 'STAFF';
+      document.getElementById('editAngDivision').value = item.division || '';
+      document.getElementById('editAngMal').value = item.mal || item.MAL || '';
+      document.getElementById('editAngSubDept').value = item.sub_dept || item.subDept || '';
+      document.getElementById('editAngQuote').value = item.quote || '';
+      document.getElementById('editAngIg').value = item.instagram || '';
+      document.getElementById('editAngOldFotoUrl').value = item.foto_url || item.photo || '';
+      document.getElementById('editAngFile').value = '';
+
+      const modal = document.getElementById('editAnggotaModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
 
-    function closeAnggotaModal() {
-      const modal = document.getElementById('anggotaModal');
+    // Fungsi untuk Menutup Modal Edit
+    function closeEditAnggotaModal() {
+      const modal = document.getElementById('editAnggotaModal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
     }
 
-    document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
+    // Handler Event Submit untuk Mengupdate Data Anggota ke Supabase
+    document.getElementById('editAnggotaForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = document.getElementById('btnSaveAnggota');
+      const btn = document.getElementById('btnUpdateAnggota');
       btn.innerText = 'Menyimpan...';
       btn.disabled = true;
 
       try {
-        const fileInput = document.getElementById('angFile');
-        let photoUrl = 'https://placehold.co/80x80/6B1D2F/ffffff?text=User';
+        const id = document.getElementById('editAngId').value;
+        const fileInput = document.getElementById('editAngFile');
+        let photoUrl = document.getElementById('editAngOldFotoUrl').value;
 
+        // Jika ada foto baru yang diunggah
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
+          const fileName = `anggota_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+          const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+          if (uploadError) throw uploadError;
+
+          const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+          photoUrl = pubData.publicUrl;
+        }
+
+        // Update ke Tabel Database Supabase
+        const { error } = await supabaseClient
+          .from('anggota_humas')
+          .update({
+            nama: document.getElementById('editAngNama').value,
+            jabatan: document.getElementById('editAngJabatan').value,
+            category: document.getElementById('editAngCategory').value,
+            badge: document.getElementById('editAngBadge').value,
+            division: document.getElementById('editAngDivision').value,
+            mal: document.getElementById('editAngMal').value,
+            sub_dept: document.getElementById('editAngSubDept').value,
+            quote: document.getElementById('editAngQuote').value,
+            instagram: document.getElementById('editAngIg').value,
+            foto_url: photoUrl
+          })
+          .eq('id', id);
+
+        if (error) throw error;
+
+        showToast('Data anggota berhasil diperbarui!', 'success');
+        addLog(`Memperbarui data anggota: ${document.getElementById('editAngNama').value}`, 'Anggota');
+        closeEditAnggotaModal();
+        loadAnggotaData(); // Refresh tampilan list anggota
+
+      } catch (err) {
+        showToast('Gagal memperbarui data: ' + err.message, 'error');
+      } finally {
+        btn.innerText = 'Simpan Perubahan';
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnSaveAnggota');
+      btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> <span>Menyimpan...</span>`;
+      btn.disabled = true;
+
+      try {
+        const fileInput = document.getElementById('angFile');
+        const file = fileInput.files[0];
+        let photoUrl = 'https://placehold.co/200x250/6B1D2F/ffffff?text=User';
+
+        if (file) {
           const fileName = `anggota_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
           const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
           if (uploadError) throw uploadError;
@@ -1216,21 +1659,27 @@
         const { error } = await supabaseClient.from('anggota_humas').insert([{
           nama: document.getElementById('angNama').value,
           jabatan: document.getElementById('angJabatan').value,
+          category: document.getElementById('angCategory').value,
+          badge: document.getElementById('angBadge').value,
+          division: document.getElementById('angDivision').value,
+          mal: document.getElementById('angMal').value,
+          sub_dept: document.getElementById('angSubDept').value,
+          quote: document.getElementById('angQuote').value,
           instagram: document.getElementById('angIg').value,
           foto_url: photoUrl
         }]);
 
         if (error) throw error;
 
-        showToast('Anggota berhasil ditambahkan!', 'success');
-        addLog(`Menambahkan pengurus: ${document.getElementById('angNama').value}`, 'Anggota');
-        closeAnggotaModal();
+        showToast('Data anggota berhasil ditambahkan!', 'success');
+        addLog(`Menambahkan anggota: ${document.getElementById('angNama').value}`, 'Anggota');
+        document.getElementById('anggotaForm').reset();
         loadAnggotaData();
 
       } catch (err) {
         showToast('Gagal menambah anggota: ' + err.message, 'error');
       } finally {
-        btn.innerText = 'Simpan Anggota';
+        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> <span>Simpan & Upload Anggota</span>`;
         btn.disabled = false;
       }
     });
