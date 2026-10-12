@@ -4,121 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Login Admin Humas HMMAL UNDIP - Kelola informasi dan program kerja Humas HMMAL UNDIP dengan mudah.">
-    <title>Login Admin CMS - HMMAL UNDIP</title>
+    <title>Login Admin CMS - Humas HMMAL UNDIP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    </noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../assets/logo-humas.webp" />
 
     <style>
       body { 
-        font-family: 'Plus Jakarta Sans', sans-serif; 
+        font-family: 'Inter', sans-serif; 
       }
-      /* Custom frosted glass style matching the sample image */
-      .glass-card {
-        background: rgba(254, 254, 255, 0.097);
-        backdrop-filter: blur(28px);
-        -webkit-backdrop-filter: blur(28px);
-        border: 1px solid rgba(255, 255, 255, 0.485);
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
-      }
-      .glass-input {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.599);
-        backdrop-filter: blur(12px);
-        color: #ffffff;
-      }
-      .glass-input::placeholder {
-        color: #f7f8f984;
-      }
-      .glass-input:focus {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.35);
-        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
-      }
-      .glass-btn-secondary {
-        background: rgba(194, 3, 3, 0.07);
-        border: 1px solid rgba(240, 0, 0, 0.14);
-        backdrop-filter: blur(10px);
-      }
-      .glass-btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.14);
+      /* Kartu Glassmorphism Terang & Elegan */
+      .light-glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 25px 50px -12px rgba(107, 29, 47, 0.15);
       }
     </style>
 </head>
-<body class="min-h-screen relative flex items-center justify-center text-slate-100 overflow-x-hidden select-none p-4">
+<body class="min-h-screen relative flex items-center justify-center text-slate-800 overflow-x-hidden select-none p-4">
 
-  <!-- Background Image with Dark Atmospheric Overlay -->
+  <!-- Background Foto dengan Overlay Terang & Blur -->
   <div class="fixed inset-0 z-0">
     <img 
       src="../assets/humas26.webp" 
-      alt="Atmospheric Twilight Scenery" 
-      class="w-full h-full object-cover scale-105"
+      alt="Background Humas HMMAL UNDIP" 
+      class="w-full h-full object-cover scale-105 filter brightness-95"
     />
-    <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-white-950/80 via-slate-900/30 to-white-950/40"></div>
+    <div class="absolute inset-0 bg-slate-100/40 backdrop-blur-[4px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-tr from-rose-100/60 via-white/50 to-rose-50/70"></div>
   </div>
 
   <!-- Card Login Utama -->
   <main class="w-full max-w-[420px] relative z-10 my-auto py-10">
-    <div class="glass-card rounded-2xl p-8 sm:p-10 text-center space-y-6">
+    <div class="light-glass-card rounded-3xl p-8 sm:p-10 text-center space-y-6">
 
-      <!-- Top Sun/Sparkle Icon (Sesuai contoh sampel foto) -->
-      <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/15 shadow-inner mx-auto text-white/90">
-        <svg class="w-6 h-6 stroke-current" fill="none" stroke-width="1.75" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
-        </svg>
+      <!-- Logo Organisasi Resmi -->
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white shadow-md border border-rose-100 mx-auto overflow-hidden p-1">
+        <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover rounded-xl">
       </div>
 
       <!-- Header Titles -->
-      <div class="space-y-2">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Welcome back!</h1>
-        <p class="text-xs text-slate-300/90 leading-relaxed max-w-[300px] mx-auto">
-          Kelola informasi dan program kerja Humas HMMAL UNDIP dengan mudah.
+      <div class="space-y-1.5">
+        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Selamat Datang Admin!</h1>
+        <p class="text-xs text-slate-500 leading-relaxed max-w-[280px] mx-auto font-medium">
+          Kelola informasi dan program kerja Humas HMMAL UNDIP dengan aman.
         </p>
       </div>
 
       <!-- Container Message Box Alert -->
-      <div id="errorAlert" class="hidden text-xs text-rose-200 bg-rose-950/60 border border-rose-500/30 p-3 rounded-2xl text-center leading-snug backdrop-blur-md"></div>
+      <div id="errorAlert" class="hidden text-xs text-rose-800 bg-rose-50 border border-rose-200 p-3 rounded-2xl text-center leading-snug font-semibold"></div>
 
       <!-- Form Login -->
       <form id="loginForm" class="space-y-4 text-left pt-1">
 
         <!-- Input Email -->
-        <div class="space-y-1.5">
-          <label class="text-[11px] font-medium text-slate-300/90 pl-1">Email</label>
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700 pl-1">Email</label>
           <div class="relative">
             <input 
               type="email" 
               id="email" 
               required 
-              placeholder="Enter your email" 
-              class="w-full px-4 py-3.5 rounded-2xl text-xs font-medium transition-all glass-input focus:outline-none"
+              placeholder="admin@humas.com" 
+              class="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition"
             >
           </div>
         </div>
 
         <!-- Input Password -->
-        <div class="space-y-1.5">
-          <label class="text-[11px] font-medium text-slate-300/90 pl-1">Password</label>
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700 pl-1">Password</label>
           <div class="relative">
             <input 
               type="password" 
               id="password" 
               required 
-              placeholder="Enter your password" 
-              class="w-full pl-4 pr-11 py-3.5 rounded-2xl text-xs font-medium transition-all glass-input focus:outline-none"
+              placeholder="••••••••" 
+              class="w-full pl-4 pr-11 py-3 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition"
             >
             <!-- Button Toggle Password View -->
             <button 
               type="button" 
               id="togglePassword" 
               aria-label="Tampilkan atau sembunyikan kata sandi" 
-              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200 transition cursor-pointer"
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition cursor-pointer"
             >
               <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -128,19 +100,19 @@
           </div>
         </div>
         
-        <!-- Tombol Masuk Utama (Pill-shaped White Button) -->
+        <!-- Tombol Masuk Utama (Warna Marun Senada Dashboard) -->
         <button 
           type="submit" 
           id="btnLogin" 
-          class="w-full py-3.5 px-6 bg-white hover:bg-slate-100 text-slate-950 text-xs font-bold rounded-full shadow-lg transition duration-200 active:scale-[0.98] disabled:opacity-70 cursor-pointer mt-2"
+          class="w-full py-3 px-6 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-2xl shadow-lg shadow-rose-950/15 transition duration-200 active:scale-[0.98] disabled:opacity-70 cursor-pointer mt-3"
         >
           Log In
         </button>
         
         <!-- Footer Info -->
-        <div class="pt-2">
-            <p class="text-[11px] text-slate-400 text-center leading-relaxed">
-                © Bidang Hubungan Masyarakat - HMMAL UNDIP
+        <div class="pt-3 border-t border-slate-200/60">
+            <p class="text-[11px] text-slate-400 text-center font-medium leading-relaxed">
+                © Bidang Hubungan Masyarakat — HMMAL UNDIP
             </p>
         </div>
 
@@ -149,13 +121,11 @@
   </main>
 
   <script>
-    // 1. INISIALISASI SUPABASE CLIENT
     const SUPABASE_URL = 'https://gaslxxrrhvwtsnwzvhej.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdhc2x4eHJyaHZ3dHNud3p2aGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTM3MzEsImV4cCI6MjEwNDg2OTczMX0.WdsQoA11wTIKETeA-SThAd5PQjSGPO1wdI2G3F4w8l8';
 
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // 2. CEK SESI (Jika sudah login, langsung ke dashboard)
     async function checkSession() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
@@ -164,42 +134,46 @@
     }
     checkSession();
 
-    // 3. LOGIKA TOGGLE VISIBILITAS PASSWORD (Show / Hide)
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
 
-    togglePassword.addEventListener('click', () => {
-      const isPassword = passwordInput.getAttribute('type') === 'password';
-      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-    });
-
-    // 4. LOGIKA PROSES LOGIN
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('btnLogin');
-      const errorAlert = document.getElementById('errorAlert');
-      
-      errorAlert.classList.add('hidden');
-      btn.innerText = 'Memproses...';
-      btn.disabled = true;
-
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
+    if (togglePassword && passwordInput) {
+      togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
       });
+    }
 
-      if (error) {
-        errorAlert.innerText = 'Gagal masuk: ' + error.message;
-        errorAlert.classList.remove('hidden');
-        btn.innerText = 'Log In';
-        btn.disabled = false;
-      } else {
-        window.location.replace('dashboard.html');
-      }
-    });
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btnLogin');
+        const errorAlert = document.getElementById('errorAlert');
+        
+        errorAlert.classList.add('hidden');
+        btn.innerText = 'Memproses...';
+        btn.disabled = true;
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          errorAlert.innerText = 'Gagal masuk: ' + error.message;
+          errorAlert.classList.remove('hidden');
+          btn.innerText = 'Log In';
+          btn.disabled = false;
+        } else {
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.replace('dashboard.html');
+        }
+      });
+    }
   </script>
 </body>
 </html>
