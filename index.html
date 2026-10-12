@@ -543,7 +543,7 @@
                     </div>
                 </div>
 
-                <a href="https://wa.me/6281617591588" target="_blank" class="px-4 py-2 rounded-full text-xs font-bold bg-white text-maroon-950 hover:bg-maroon-100 transition-colors shrink-0">
+                <a href="https://wa.me/6281617591588" id="partnership-wa-btn"target="_blank" class="px-4 py-2 rounded-full text-xs font-bold bg-white text-maroon-950 hover:bg-maroon-100 transition-colors shrink-0">
                     Ajukan Sekarang
                 </a>
             </div>
@@ -932,10 +932,22 @@
         }
 
         // WhatsApp
+        // 1. Otomatis mengubah link pada Tombol "Ajukan Sekarang" (Banner Partnership)
+        const partnershipWaBtn = document.getElementById('partnership-wa-btn');
+        if (partnershipWaBtn) {
+            partnershipWaBtn.href = `https://wa.me/${data.whatsapp_nomor}`;
+        }
+        
         const waEl = document.getElementById('footer-whatsapp');
         if (waEl) {
             waEl.href = `https://wa.me/${data.whatsapp_nomor}`;
-            waEl.querySelector('.truncate').innerText = `+${data.whatsapp_nomor.replace(/(\d{2})(\d{3})(\d{4})(\d+)/, '$1 $2-$3-$4')} (${data.whatsapp_nama})`;
+            const rawNo = data.whatsapp_nomor || '';
+            let formattedNo = rawNo;
+            if (rawNo.length > 10) {
+                formattedNo = `+${rawNo.slice(0,2)} ${rawNo.slice(2,5)}-${rawNo.slice(5,9)}-${rawNo.slice(9)}`;
+            }
+            
+            waEl.querySelector('.truncate').innerText = `${formattedNo} (${data.whatsapp_nama})`;
         }
     }
 
