@@ -50,13 +50,13 @@
     </div>
   </header>
 
-  <!-- Mobile Slide-over Drawer dari Samping Kanan (Di luar header agar menutupi layar penuh) -->
-  <div id="mobileDropdownMenu" class="fixed inset-0 z-50 hidden transition-colors duration-300">
-    <!-- Backdrop Gelap Transparan di sebelah kiri -->
-    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-xs" onclick="toggleMobileMenu()"></div>
+  <!-- Mobile Slide-over Drawer -->
+  <div id="mobileDropdownMenu" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 ease-in-out">
+    <!-- Backdrop Gelap Transparan dengan Animasi Fade -->
+    <div id="menuBackdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-xs opacity-0 transition-opacity duration-300 ease-in-out" onclick="toggleMobileMenu()"></div>
 
-    <!-- Panel Sidebar dari Kanan -->
-    <div class="absolute top-0 right-0 bottom-0 w-72 bg-white shadow-2xl p-5 flex flex-col justify-between transform transition-transform duration-300 ease-in-out">
+    <!-- Panel Sidebar dari Kanan dengan Animasi Slide -->
+    <div id="menuPanel" class="absolute top-0 right-0 bottom-0 w-72 bg-white shadow-2xl p-5 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out">
       
       <div class="space-y-6">
         <!-- Header Drawer -->
@@ -70,36 +70,36 @@
               <p class="text-[10px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
             </div>
           </div>
-          <button onclick="toggleMobileMenu()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg">
+          <button onclick="toggleMobileMenu()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
-        <!-- Navigasi Menu Mobile -->
+        <!-- Navigasi Menu Mobile (Gunakan kelas tombol yang sudah disesuaikan sebelumnya) -->
         <nav class="space-y-1.5">
           <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
 
-          <button onclick="switchTab('program-kerja')" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50/80 transition" data-tab="program-kerja">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          <button onclick="switchTab('program-kerja'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="program-kerja">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
             <span>Program Kerja</span>
           </button>
 
-          <button onclick="switchTab('tentang-kami')" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="tentang-kami">
+          <button onclick="switchTab('tentang-kami'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="tentang-kami">
             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span>Tentang Kami</span>
           </button>
 
-          <button onclick="switchTab('anggota')" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="anggota">
+          <button onclick="switchTab('anggota'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="anggota">
             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             <span>Anggota</span>
           </button>
 
-          <button onclick="switchTab('kontak-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="kontak-kami">
+          <button onclick="switchTab('kontak-kami'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="kontak-kami">
             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             <span>Kontak Kami</span>
           </button>
 
-          <button onclick="switchTab('aktivitas')" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="aktivitas">
+          <button onclick="switchTab('aktivitas'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="aktivitas">
             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             <span>Aktivitas</span>
           </button>
@@ -117,6 +117,9 @@
           <span>Keluar</span>
         </button>
       </div>
+
+    </div>
+  </div>
 
     </div>
   </div>
@@ -143,7 +146,7 @@
         <nav class="space-y-1.5 pt-2">
           <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
 
-          <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50 border border-rose-200/50 shadow-sm transition" data-tab="program-kerja">
+          <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="program-kerja">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
             <span>Program Kerja</span>
           </button>
@@ -254,8 +257,9 @@
                   class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition cursor-pointer appearance-none"
                   required
                 >
-                  <option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option>
-                  <option value="Social Responsibility">Social Responsibility</option>
+                    <option value="" disabled selected>Pilih Kategori Program</option>  
+                    <option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option>
+                    <option value="Social Responsibility">Social Responsibility</option>
                 </select>
                 <span class="absolute right-3.5 text-slate-400 pointer-events-none">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -551,27 +555,52 @@
             <!-- Role / Jabatan Utama -->
             <div class="space-y-1">
               <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
-              <input type="text" id="angJabatan" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="Contoh: KETUA BIDANG HUMAS" required>
+              <div class="relative flex items-center">
+                <select id="angJabatan" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                  <option value="" disabled selected>Pilih Role / Jabatan</option>
+                  <option value="KETUA BIDANG HUMAS">KETUA BIDANG HUMAS</option>
+                  <option value="WAKIL KETUA BIDANG HUMAS">WAKIL KETUA BIDANG HUMAS</option>
+                  <option value="KETUA DIVISI SR">KETUA DIVISI SR</option>
+                  <option value="KETUA DIVISI PNP">KETUA DIVISI PNP</option>
+                  <option value="STAFF DIVISI SR">STAFF DIVISI SR</option>
+                  <option value="STAFF DIVISI PNP">STAFF DIVISI PNP</option>
+                </select>
+                <span class="absolute right-3 text-slate-400 pointer-events-none">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </span>
+              </div>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
               <!-- Kategori Filter -->
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
-                <select id="angCategory" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
-                  <option value="bph">BPH</option>
-                  <option value="sr">Social Responsibility (SR)</option>
-                  <option value="pnp">Planning Networking & Partnership (PNP)</option>
-                </select>
+                <div class="relative flex items-center">
+                  <select id="angCategory" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                    <option value="" disabled selected>Pilih Kategori ID</option>
+                    <option value="bph">BPH</option>
+                    <option value="sr">Social Responsibility (SR)</option>
+                    <option value="pnp">Planning Networking & Partnership (PNP)</option>
+                  </select>
+                  <span class="absolute right-3 text-slate-400 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </span>
+                </div>
               </div>
 
               <!-- Badge Label -->
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
-                <select id="angBadge" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
-                  <option value="BPH">BPH</option>
-                  <option value="STAFF">STAFF</option>
-                </select>
+                <div class="relative flex items-center">
+                  <select id="angBadge" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                    <option value="" disabled selected>Pilih Badge Card</option>
+                    <option value="BPH">BPH</option>
+                    <option value="STAFF">STAFF</option>
+                  </select>
+                  <span class="absolute right-3 text-slate-400 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -579,7 +608,17 @@
               <!-- Divisi / Penempatan -->
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Divisi</label>
-                <input type="text" id="angDivision" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Badan Pengurus Harian" required>
+                <div class="relative flex items-center">
+                  <select id="angDivision" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                    <option value="" disabled selected>Pilih Divisi</option>
+                    <option value="Badan Pengurus Harian">Badan Pengurus Harian</option>
+                    <option value="Social Responsibility">Social Responsibility</option>
+                    <option value="Planning, Networking, & Partnership">Planning, Networking, & Partnership</option>
+                  </select>
+                  <span class="absolute right-3 text-slate-400 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </span>
+                </div>
               </div>
 
               <!-- Angkatan MAL -->
@@ -659,43 +698,57 @@
 
       <form id="formKontakKami" class="space-y-6">
         <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <!-- Baris 1: Email Resmi & Nama Narahubung (Desktop: Berdampingan, Mobile: Menumpuk) -->
+          <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Email Resmi</label>
-              <input type="email" id="kontakEmail" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="humashmmalundip@gmail.com">
+              <input type="email" id="kontakEmail" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="humashmmalundip@gmail.com">
             </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Narahubung WhatsApp</label>
-              <input type="text" id="kontakWaNama" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="Yosi">
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WhatsApp (Format Internasional Tanpa +)</label>
-              <input type="text" id="kontakWaNomor" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="6281617591588">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Link Instagram</label>
-              <input type="text" id="kontakIg" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="https://www.instagram.com/humas.hmmal/">
+            <!-- Di Mobile, Nama Narahubung ini disembunyikan karena dipindah agar berdampingan dengan No WhatsApp -->
+            <div class="max-sm:hidden">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Narahubung WhatsApp</label>
+              <input type="text" id="kontakWaNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="Yosi">
             </div>
           </div>
 
+          <!-- Baris 2: Nomor WhatsApp & Link Instagram (Desktop: Berdampingan, Mobile: Berdampingan khusus Nama Narahubung & No WhatsApp) -->
+          <div class="grid grid-cols-2 max-sm:grid-cols-2 gap-4">
+            <!-- Di Mobile, elemen pertama ini menampilkan 'Nama Narahubung' agar berdampingan dengan No WhatsApp -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Narahubung WhatsApp</label>
+              <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Nomor WhatsApp</label>
+              <input type="text" id="kontakWaNamaMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition sm:hidden" placeholder="Yosi" oninput="document.getElementById('kontakWaNama').value = this.value">
+              <input type="text" id="kontakWaNomor" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition hidden sm:block" placeholder="6281617591588">
+            </div>
+
+            <!-- Di Mobile, menampilkan 'Nomor WhatsApp' -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Nomor WhatsApp</label>
+              <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Link Instagram</label>
+              <input type="text" id="kontakWaNomorMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition sm:hidden" placeholder="6281617591588" oninput="document.getElementById('kontakWaNomor').value = this.value">
+              <input type="text" id="kontakIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition hidden sm:block" placeholder="https://www.instagram.com/humas.hmmal/">
+            </div>
+          </div>
+
+          <!-- Baris 3 Desktop: Link YouTube & Link TikTok -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Link YouTube</label>
-              <input type="text" id="kontakYt" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="https://www.youtube.com/@hmmanajemendanadministrasi9490">
+              <input type="text" id="kontakYt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="https://www.youtube.com/@hmmanajemendanadministrasi9490">
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-700 mb-1">Link TikTok</label>
-              <input type="text" id="kontakTt" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F]" placeholder="https://www.tiktok.com/@hmmalundip">
+              <input type="text" id="kontakTt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="https://www.tiktok.com/@hmmalundip">
             </div>
           </div>
 
+          <!-- Baris: Deskripsi Footer -->
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Footer</label>
-            <textarea id="kontakFooter" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-[#6B1D2F] resize-none"></textarea>
+            <textarea id="kontakFooter" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition resize-none"></textarea>
           </div>
+
         </div>
 
         <div class="flex justify-end">
@@ -843,6 +896,8 @@
   <!-- Modal Edit Anggota -->
   <div id="editAnggotaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
     <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Header Modal -->
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-900">Edit Data Anggota</h3>
         <button onclick="closeEditAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
@@ -850,6 +905,7 @@
         </button>
       </div>
 
+      <!-- Form Edit -->
       <form id="editAnggotaForm" class="space-y-4">
         <input type="hidden" id="editAngId">
         <input type="hidden" id="editAngOldFotoUrl">
@@ -863,27 +919,52 @@
         <!-- Role / Jabatan -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
-          <input type="text" id="editAngJabatan" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+          <div class="relative flex items-center">
+            <select id="editAngJabatan" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+              <option value="" disabled selected>Pilih Role / Jabatan</option>
+              <option value="KETUA BIDANG HUMAS">KETUA BIDANG HUMAS</option>
+              <option value="WAKIL KETUA BIDANG HUMAS">WAKIL KETUA BIDANG HUMAS</option>
+              <option value="KETUA DIVISI SR">KETUA DIVISI SR</option>
+              <option value="KETUA DIVISI PNP">KETUA DIVISI PNP</option>
+              <option value="STAFF DIVISI SR">STAFF DIVISI SR</option>
+              <option value="STAFF DIVISI PNP">STAFF DIVISI PNP</option>
+            </select>
+            <span class="absolute right-3 text-slate-400 pointer-events-none">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <!-- Kategori Filter ID -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
-            <select id="editAngCategory" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
-              <option value="bph">BPH</option>
-              <option value="sr">Social Responsibility (SR)</option>
-              <option value="pnp">Planning Networking & Partnership (PNP)</option>
-            </select>
+            <div class="relative flex items-center">
+              <select id="editAngCategory" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                <option value="" disabled selected>Pilih Kategori ID</option>
+                <option value="bph">BPH</option>
+                <option value="sr">Social Responsibility (SR)</option>
+                <option value="pnp">Planning Networking & Partnership (PNP)</option>
+              </select>
+              <span class="absolute right-3 text-slate-400 pointer-events-none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </div>
           </div>
 
           <!-- Badge Card -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
-            <select id="editAngBadge" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer" required>
-              <option value="BPH">BPH</option>
-              <option value="STAFF">STAFF</option>
-            </select>
+            <div class="relative flex items-center">
+              <select id="editAngBadge" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                <option value="" disabled selected>Pilih Badge Card</option>
+                <option value="BPH">BPH</option>
+                <option value="STAFF">STAFF</option>
+              </select>
+              <span class="absolute right-3 text-slate-400 pointer-events-none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -891,7 +972,17 @@
           <!-- Divisi -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Divisi</label>
-            <input type="text" id="editAngDivision" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
+            <div class="relative flex items-center">
+              <select id="editAngDivision" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                <option value="" disabled selected>Pilih Divisi</option>
+                <option value="Badan Pengurus Harian">Badan Pengurus Harian</option>
+                <option value="Social Responsibility">Social Responsibility</option>
+                <option value="Planning, Networking, & Partnership">Planning, Networking, & Partnership</option>
+              </select>
+              <span class="absolute right-3 text-slate-400 pointer-events-none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </div>
           </div>
 
           <!-- MAL (Tahun/Angkatan) -->
@@ -973,12 +1064,12 @@
     let deleteTargetId = null;
     let deleteTargetType = 'prokerja'; // 'prokerja' | 'anggota'
     let inactivityTimer;
-    // 1. Perbaikan Variabel Inactivity (5 Menit)
     const inactivityLimit = 5 * 60 * 1000; // 5 menit dalam milidetik
 
     function logoutDueToInactivity() {
         supabaseClient.auth.signOut().catch(() => {});
         localStorage.removeItem('isLoggedIn');
+        addLog('Sesi berakhir otomatis karena tidak ada aktivitas', 'Sistem');
         alert('Sesi Anda telah berakhir karena tidak ada aktivitas. Silakan login kembali.');
         safeRedirect('login.html');
     }
@@ -988,7 +1079,6 @@
         inactivityTimer = setTimeout(logoutDueToInactivity, inactivityLimit);
     }
 
-    // Event pendeteksi aktivitas
     window.onload = resetInactivityTimer;
     window.onmousemove = resetInactivityTimer;
     window.onmousedown = resetInactivityTimer;
@@ -996,52 +1086,57 @@
     window.onscroll = resetInactivityTimer;
     window.onkeypress = resetInactivityTimer;
 
-    // 2. Fungsi Navigasi Tab & Menu
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       
-      const target = document.getElementById(`tab-${tabId}`);
-      if (target) target.classList.remove('hidden');
+      const targetTab = document.getElementById(`tab-${tabId}`);
+      if (targetTab) targetTab.classList.remove('hidden');
 
-      document.querySelectorAll('.nav-desktop-btn').forEach(btn => {
-        if (btn.dataset.tab === tabId) {
-          btn.className = 'nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50 border border-rose-200/50 shadow-sm transition';
+      document.querySelectorAll('.nav-desktop-btn, .nav-mobile-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('bg-rose-50', 'text-[#6B1D2F]', 'border', 'border-rose-200/50', 'shadow-sm');
+          btn.classList.remove('text-slate-600', 'hover:bg-slate-100/80', 'hover:bg-slate-50');
+          const svgIcon = btn.querySelector('svg');
+          if (svgIcon) svgIcon.classList.remove('text-slate-400');
         } else {
-          btn.className = 'nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition';
+          btn.classList.remove('bg-rose-50', 'text-[#6B1D2F]', 'border', 'border-rose-200/50', 'shadow-sm');
+          btn.classList.add('text-slate-600', 'hover:bg-slate-100/80', 'hover:bg-slate-50');
+          const svgIcon = btn.querySelector('svg');
+          if (svgIcon) svgIcon.classList.add('text-slate-400');
         }
       });
 
-      document.querySelectorAll('.nav-mobile-btn').forEach(btn => {
-        if (btn.dataset.tab === tabId) {
-          btn.className = 'nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#6B1D2F] bg-rose-50/80 transition';
-        } else {
-          btn.className = 'nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition';
-        }
-      });
-
-      const mobileMenu = document.getElementById('mobileDropdownMenu');
-      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        toggleMobileMenu();
-      }
-
+      if (tabId === 'program-kerja') loadProkerjaData();
       if (tabId === 'tentang-kami') loadTentangKamiData();
       if (tabId === 'anggota') loadAnggotaData();
       if (tabId === 'kontak-kami') loadKontakData();
+
+      localStorage.setItem('activeDashboardTab', tabId);
     }
 
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileDropdownMenu');
+      const backdrop = document.getElementById('menuBackdrop');
+      const panel = document.getElementById('menuPanel');
       const iconOpen = document.getElementById('iconMenuOpen');
       const iconClose = document.getElementById('iconMenuClose');
 
       if (menu.classList.contains('hidden')) {
         menu.classList.remove('hidden');
-        menu.classList.add('flex');
+        setTimeout(() => {
+          menu.classList.remove('opacity-0');
+          backdrop.classList.remove('opacity-0');
+          panel.classList.remove('translate-x-full');
+        }, 10);
         if (iconOpen) iconOpen.classList.add('hidden');
         if (iconClose) iconClose.classList.remove('hidden');
       } else {
-        menu.classList.add('hidden');
-        menu.classList.remove('flex');
+        menu.classList.add('opacity-0');
+        backdrop.classList.add('opacity-0');
+        panel.classList.add('translate-x-full');
+        setTimeout(() => {
+          menu.classList.add('hidden');
+        }, 300);
         if (iconOpen) iconOpen.classList.remove('hidden');
         if (iconClose) iconClose.classList.add('hidden');
       }
@@ -1054,10 +1149,7 @@
 
     function safeRedirect(url) {
       try {
-        if (window.location.protocol === 'blob:') {
-          console.warn('Redirect skipped in preview environment:', url);
-          return;
-        }
+        if (window.location.protocol === 'blob:') return;
         window.location.replace(url);
       } catch (e) {
         console.error('Redirect error:', e);
@@ -1084,19 +1176,20 @@
       }, 3500);
     }
 
-    function addLog(activityMessage, category = 'konten') {
+    // FUNGSI PEREKAM LOG AKTIVITAS
+    function addLog(activityMessage, category = 'Konten') {
       const list = document.getElementById('activityLogsList');
       if (!list) return;
 
-      const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
       const logItem = document.createElement('div');
-      logItem.className = 'p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs';
+      logItem.className = 'p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs transition animate-fade-in';
       logItem.innerHTML = `
         <div class="flex items-center gap-3">
           <span class="w-2 h-2 rounded-full bg-rose-600"></span>
           <div>
             <p class="font-bold text-slate-800">${activityMessage}</p>
-            <p class="text-[11px] text-slate-500">Tipe: ${category}</p>
+            <p class="text-[11px] text-slate-500">Kategori: ${category}</p>
           </div>
         </div>
         <span class="text-[10px] font-semibold text-slate-400">${time}</span>
@@ -1104,7 +1197,6 @@
       list.prepend(logItem);
     }
 
-    // 3. Pemeriksaan Auth Utama yang Bersih (Hanya via Supabase)
     async function checkAuth() {
       try {
         const { data: { session }, error } = await supabaseClient.auth.getSession();
@@ -1123,6 +1215,7 @@
         const dashboardEl = document.getElementById('dashboardContent');
         if (dashboardEl) dashboardEl.style.display = 'flex';
         loadProkerjaData();
+        addLog('Admin berhasil masuk ke Dashboard CMS', 'Sistem');
 
         supabaseClient.auth.onAuthStateChange((event, session) => {
           if (event === 'SIGNED_OUT' || !session) {
@@ -1135,13 +1228,13 @@
         loadProkerjaData();
       }
     }
-    
-    // Jalankan pemeriksaan otentikasi
-    checkAuth();
 
     async function handleLogout() {
-      try { await supabaseClient.auth.signOut(); } catch (err) {}
+      try { 
+        await supabaseClient.auth.signOut(); 
+      } catch (err) {}
       localStorage.removeItem('isLoggedIn');
+      addLog('Admin keluar (Logout) dari sesi Dashboard', 'Sistem');
       safeRedirect('login.html');
     }
 
@@ -1156,7 +1249,7 @@
       const { data, error } = await supabaseClient
         .from('program_kerja')
         .select('*')
-        .order('id', { ascending: true }); // Menggunakan ascending agar urutan sesuai waktu ditambah
+        .order('id', { ascending: true });
 
       if (error) {
         showToast('Gagal memuat data: ' + error.message, 'error');
@@ -1185,12 +1278,10 @@
                 <td class="py-3.5 px-3 text-slate-500 font-medium">${item.waktu}</td>
                 <td class="py-3.5 px-3 text-right whitespace-nowrap">
                   <div class="flex items-center justify-end gap-1">
-                    <!-- Tombol Edit (Ikon Pensil) -->
-                    <button onclick="openEditModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit Program Kerja">
+                    <button onclick="openEditModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
-                    <!-- Tombol Hapus (Ikon Sampah) -->
-                    <button onclick="askDeleteProkerja(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus Program Kerja">
+                    <button onclick="askDeleteProkerja(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
                   </div>
@@ -1245,9 +1336,10 @@
         if (uploadError) throw uploadError;
 
         const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+        const judulVal = document.getElementById('proJudul').value;
 
         const { error } = await supabaseClient.from('program_kerja').insert([{
-          judul: document.getElementById('proJudul').value,
+          judul: judulVal,
           kategori: document.getElementById('proKategori').value,
           waktu: document.getElementById('proWaktu').value,
           deskripsi: document.getElementById('proDeskripsi').value,
@@ -1258,7 +1350,7 @@
         if (error) throw error;
 
         showToast('Program kerja berhasil ditambahkan!', 'success');
-        addLog(`Menambahkan program kerja: ${document.getElementById('proJudul').value}`, 'Program Kerja');
+        addLog(`Menambahkan program kerja baru: "${judulVal}"`, 'Program Kerja');
         document.getElementById('prokerjaForm').reset();
         loadProkerjaData();
 
@@ -1271,7 +1363,6 @@
     });
 
     function openEditModal(id) {
-      // Pastikan pencarian ID menggunakan konversi angka agar akurat
       const item = listProgramKerja.find(p => Number(p.id) === Number(id));
       if (!item) return;
 
@@ -1279,8 +1370,6 @@
       document.getElementById('editProJudul').value = item.judul || '';
       document.getElementById('editProKategori').value = item.kategori || 'Planning, Networking, and Partnership';
       document.getElementById('editProWaktu').value = item.waktu || '';
-    
-
       document.getElementById('editProDeskripsi').value = item.deskripsi || '';
       document.getElementById('editProOldGambarUrl').value = item.gambar_url || '';
       document.getElementById('editProFile').value = '';
@@ -1332,7 +1421,7 @@
         if (error) throw error;
 
         showToast('Program kerja berhasil diperbarui!', 'success');
-        addLog(`Memperbarui program kerja ID ${id}`, 'Program Kerja');
+        addLog(`Memperbarui data Program Kerja ID ${id}`, 'Program Kerja');
         closeEditModal();
         loadProkerjaData();
 
@@ -1345,7 +1434,7 @@
     });
 
     /* =========================================
-       2. TENTANG KAMI FUNCTIONS (SUPABASE ID = 1)
+       2. TENTANG KAMI FUNCTIONS
        ========================================= */
     async function loadTentangKamiData() {
       try {
@@ -1373,15 +1462,23 @@
       }
     }
 
-    // Pratinjau gambar saat berkas dipilih
     document.getElementById('inputGambar').addEventListener('change', (e) => {
       const file = e.target.files[0];
+      const cancelBtn = document.getElementById('btnCancelImage');
       if (file) {
         document.getElementById('previewGambar').src = URL.createObjectURL(file);
+        if (cancelBtn) cancelBtn.classList.remove('hidden');
       }
     });
 
-    // Simpan data Tentang Kami ke Supabase
+    function cancelSelectedImage() {
+      const fileInput = document.getElementById('inputGambar');
+      const cancelBtn = document.getElementById('btnCancelImage');
+      fileInput.value = '';
+      document.getElementById('previewGambar').src = currentGambarUrl || 'https://placehold.co/400x250/6B1D2F/ffffff?text=No+Image';
+      if (cancelBtn) cancelBtn.classList.add('hidden');
+    }
+
     document.getElementById('formTentangKami').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btnSaveTentangKami');
@@ -1420,19 +1517,19 @@
 
         currentGambarUrl = finalGambarUrl;
         showToast('Data Tentang Kami berhasil diperbarui!', 'success');
-        addLog('Memperbarui data Profil, Visi, dan Misi', 'Tentang Kami');
+        addLog('Memperbarui informasi Profil, Visi, dan Misi (Tentang Kami)', 'Tentang Kami');
         loadTentangKamiData();
 
       } catch (err) {
         showToast('Gagal menyimpan: ' + err.message, 'error');
       } finally {
-        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Simpan Perubahan Tentang Kami</span>`;
+        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span>Simpan Perubahan</span>`;
         btn.disabled = false;
       }
     });
 
     /* =========================================
-       3. ANGGOTA FUNCTIONS (UPDATED INTEGRATION)
+       3. ANGGOTA FUNCTIONS
        ========================================= */
     async function loadAnggotaData() {
       const container = document.getElementById('anggotaGridContainer');
@@ -1467,13 +1564,11 @@
                   <p class="text-[10px] text-slate-500 truncate">${item.jabatan || item.role} • MAL ${item.mal || item.MAL || ''}</p>
                 </div>
               </div>
-
-              <!-- Bagian 2 Tombol Aksi: Edit & Hapus -->
               <div class="flex items-center gap-1 shrink-0">
-                <button onclick="openEditAnggotaModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit Anggota">
+                <button onclick="openEditAnggotaModal(${item.id})" class="p-2 text-amber-600 hover:bg-amber-100/80 rounded-xl transition cursor-pointer" title="Edit">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </button>
-                <button onclick="askDeleteAnggota(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus Anggota">
+                <button onclick="askDeleteAnggota(${item.id})" class="p-2 text-rose-600 hover:bg-rose-100/80 rounded-xl transition cursor-pointer" title="Hapus">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
               </div>
@@ -1483,74 +1578,55 @@
       }
     }
 
-    /* =========================================
-       4. KONTAK FUNCTIONS (UPDATED INTEGRATION)
-       ========================================= */
-    let existingKontakData = {};
-
-async function loadKontakData() {
-  try {
-    const { data, error } = await supabaseClient
-      .from('kontak_kami')
-      .select('*')
-      .eq('id', 1)
-      .maybeSingle();
-
-    if (error || !data) return;
-
-    existingKontakData = data;
-
-    // Menampilkan data tersimpan ke dalam kolom input
-    if (document.getElementById('kontakEmail')) document.getElementById('kontakEmail').value = data.email || '';
-    if (document.getElementById('kontakWaNomor')) document.getElementById('kontakWaNomor').value = data.whatsapp_nomor || '';
-    if (document.getElementById('kontakWaNama')) document.getElementById('kontakWaNama').value = data.whatsapp_nama || '';
-    if (document.getElementById('kontakIg')) document.getElementById('kontakIg').value = data.instagram || '';
-    if (document.getElementById('kontakYt')) document.getElementById('kontakYt').value = data.youtube || '';
-    if (document.getElementById('kontakTt')) document.getElementById('kontakTt').value = data.tiktok || '';
-    if (document.getElementById('kontakFooter')) document.getElementById('kontakFooter').value = data.deskripsi_footer || '';
-  } catch (err) {
-    console.error('Gagal memuat data kontak:', err);
-  }
-}
-
-    document.getElementById('formKontakKami').addEventListener('submit', async (e) => {
+    document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = document.getElementById('btnSaveKontak');
-      btn.innerText = 'Menyimpan...';
+      const btn = document.getElementById('btnSaveAnggota');
+      btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> <span>Menyimpan...</span>`;
       btn.disabled = true;
 
-      document.addEventListener('DOMContentLoaded', () => {
-  loadKontakData(); // Mengambil data terbaru dari Supabase ke formulir
-});
-
       try {
-        const { error } = await supabaseClient.from('kontak_kami').upsert({
-          id: 1,
-          email: document.getElementById('kontakEmail').value,
-          whatsapp_nomor: document.getElementById('kontakWaNomor').value,
-          whatsapp_nama: document.getElementById('kontakWaNama').value,
-          instagram: document.getElementById('kontakIg').value,
-          youtube: document.getElementById('kontakYt').value,
-          tiktok: document.getElementById('kontakTt').value,
-          deskripsi_footer: document.getElementById('kontakFooter').value,
-          updated_at: new Date().toISOString()
-        });
+        const fileInput = document.getElementById('angFile');
+        const file = fileInput.files[0];
+        let photoUrl = 'https://placehold.co/200x250/6B1D2F/ffffff?text=User';
+
+        if (file) {
+          const fileName = `anggota_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+          const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+          if (uploadError) throw uploadError;
+
+          const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+          photoUrl = pubData.publicUrl;
+        }
+
+        const namaVal = document.getElementById('angNama').value;
+        const { error } = await supabaseClient.from('anggota_humas').insert([{
+          nama: namaVal,
+          jabatan: document.getElementById('angJabatan').value,
+          category: document.getElementById('angCategory').value,
+          badge: document.getElementById('angBadge').value,
+          division: document.getElementById('angDivision').value,
+          mal: document.getElementById('angMal').value,
+          sub_dept: document.getElementById('angSubDept').value,
+          quote: document.getElementById('angQuote').value,
+          instagram: document.getElementById('angIg').value,
+          foto_url: photoUrl
+        }]);
 
         if (error) throw error;
-        showToast('Kontak berhasil diperbarui!', 'success');
-        addLog('Memperbarui data Kontak Kami & Sosial Media', 'Kontak');
+
+        showToast('Data anggota berhasil ditambahkan!', 'success');
+        addLog(`Menambahkan anggota baru: "${namaVal}"`, 'Anggota');
+        document.getElementById('anggotaForm').reset();
+        loadAnggotaData();
+
       } catch (err) {
-        showToast('Gagal menyimpan: ' + err.message, 'error');
+        showToast('Gagal menambah anggota: ' + err.message, 'error');
       } finally {
-        btn.innerText = 'Simpan Perubahan Kontak';
+        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> <span>Simpan & Upload Anggota</span>`;
         btn.disabled = false;
       }
     });
 
-    // Panggil loadKontakData saat tab 'kontak-kami' dibuka di switchTab(tabId)
-    // Tambahkan di fungsi switchTab: if (tabId === 'kontak-kami') loadKontakData();
-
-    // 4 Fungsi untuk membuka Modal Edit dan Mengisi Form dengan Data Lama
     function openEditAnggotaModal(id) {
       const item = listAnggota.find(a => Number(a.id) === Number(id));
       if (!item) return;
@@ -1573,14 +1649,12 @@ async function loadKontakData() {
       modal.classList.add('flex');
     }
 
-    // Fungsi untuk Menutup Modal Edit
     function closeEditAnggotaModal() {
       const modal = document.getElementById('editAnggotaModal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
     }
 
-    // Handler Event Submit untuk Mengupdate Data Anggota ke Supabase
     document.getElementById('editAnggotaForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btnUpdateAnggota');
@@ -1592,7 +1666,6 @@ async function loadKontakData() {
         const fileInput = document.getElementById('editAngFile');
         let photoUrl = document.getElementById('editAngOldFotoUrl').value;
 
-        // Jika ada foto baru yang diunggah
         if (fileInput.files.length > 0) {
           const file = fileInput.files[0];
           const fileName = `anggota_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
@@ -1604,11 +1677,11 @@ async function loadKontakData() {
           photoUrl = pubData.publicUrl;
         }
 
-        // Update ke Tabel Database Supabase
+        const namaVal = document.getElementById('editAngNama').value;
         const { error } = await supabaseClient
           .from('anggota_humas')
           .update({
-            nama: document.getElementById('editAngNama').value,
+            nama: namaVal,
             jabatan: document.getElementById('editAngJabatan').value,
             category: document.getElementById('editAngCategory').value,
             badge: document.getElementById('editAngBadge').value,
@@ -1624,9 +1697,9 @@ async function loadKontakData() {
         if (error) throw error;
 
         showToast('Data anggota berhasil diperbarui!', 'success');
-        addLog(`Memperbarui data anggota: ${document.getElementById('editAngNama').value}`, 'Anggota');
+        addLog(`Memperbarui data anggota: "${namaVal}"`, 'Anggota');
         closeEditAnggotaModal();
-        loadAnggotaData(); // Refresh tampilan list anggota
+        loadAnggotaData();
 
       } catch (err) {
         showToast('Gagal memperbarui data: ' + err.message, 'error');
@@ -1636,56 +1709,69 @@ async function loadKontakData() {
       }
     });
 
-    document.getElementById('anggotaForm').addEventListener('submit', async (e) => {
+    /* =========================================
+       4. KONTAK FUNCTIONS
+       ========================================= */
+    let existingKontakData = {};
+
+    async function loadKontakData() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('kontak_kami')
+          .select('*')
+          .eq('id', 1)
+          .maybeSingle();
+
+        if (error || !data) return;
+
+        existingKontakData = data;
+
+        if (document.getElementById('kontakEmail')) document.getElementById('kontakEmail').value = data.email || '';
+        if (document.getElementById('kontakWaNama')) document.getElementById('kontakWaNama').value = data.whatsapp_nama || '';
+        if (document.getElementById('kontakWaNamaMobileAlias')) document.getElementById('kontakWaNamaMobileAlias').value = data.whatsapp_nama || '';
+        if (document.getElementById('kontakWaNomor')) document.getElementById('kontakWaNomor').value = data.whatsapp_nomor || '';
+        if (document.getElementById('kontakWaNomorMobileAlias')) document.getElementById('kontakWaNomorMobileAlias').value = data.whatsapp_nomor || '';
+        if (document.getElementById('kontakIg')) document.getElementById('kontakIg').value = data.instagram || '';
+        if (document.getElementById('kontakYt')) document.getElementById('kontakYt').value = data.youtube || '';
+        if (document.getElementById('kontakTt')) document.getElementById('kontakTt').value = data.tiktok || '';
+        if (document.getElementById('kontakFooter')) document.getElementById('kontakFooter').value = data.deskripsi_footer || '';
+      } catch (err) {
+        console.error('Gagal memuat data kontak:', err);
+      }
+    }
+
+    document.getElementById('formKontakKami').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = document.getElementById('btnSaveAnggota');
-      btn.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> <span>Menyimpan...</span>`;
+      const btn = document.getElementById('btnSaveKontak');
+      btn.innerText = 'Menyimpan...';
       btn.disabled = true;
 
       try {
-        const fileInput = document.getElementById('angFile');
-        const file = fileInput.files[0];
-        let photoUrl = 'https://placehold.co/200x250/6B1D2F/ffffff?text=User';
-
-        if (file) {
-          const fileName = `anggota_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-          const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
-          if (uploadError) throw uploadError;
-
-          const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
-          photoUrl = pubData.publicUrl;
-        }
-
-        const { error } = await supabaseClient.from('anggota_humas').insert([{
-          nama: document.getElementById('angNama').value,
-          jabatan: document.getElementById('angJabatan').value,
-          category: document.getElementById('angCategory').value,
-          badge: document.getElementById('angBadge').value,
-          division: document.getElementById('angDivision').value,
-          mal: document.getElementById('angMal').value,
-          sub_dept: document.getElementById('angSubDept').value,
-          quote: document.getElementById('angQuote').value,
-          instagram: document.getElementById('angIg').value,
-          foto_url: photoUrl
-        }]);
+        const { error } = await supabaseClient.from('kontak_kami').upsert({
+          id: 1,
+          email: document.getElementById('kontakEmail').value,
+          whatsapp_nomor: document.getElementById('kontakWaNomor').value,
+          whatsapp_nama: document.getElementById('kontakWaNama').value,
+          instagram: document.getElementById('kontakIg').value,
+          youtube: document.getElementById('kontakYt').value,
+          tiktok: document.getElementById('kontakTt').value,
+          deskripsi_footer: document.getElementById('kontakFooter').value,
+          updated_at: new Date().toISOString()
+        });
 
         if (error) throw error;
-
-        showToast('Data anggota berhasil ditambahkan!', 'success');
-        addLog(`Menambahkan anggota: ${document.getElementById('angNama').value}`, 'Anggota');
-        document.getElementById('anggotaForm').reset();
-        loadAnggotaData();
-
+        showToast('Kontak berhasil diperbarui!', 'success');
+        addLog('Memperbarui data Kontak Narahubung & Tautan Sosial Media', 'Kontak');
       } catch (err) {
-        showToast('Gagal menambah anggota: ' + err.message, 'error');
+        showToast('Gagal menyimpan: ' + err.message, 'error');
       } finally {
-        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> <span>Simpan & Upload Anggota</span>`;
+        btn.innerText = 'Simpan Perubahan Kontak';
         btn.disabled = false;
       }
     });
 
     /* =========================================
-       4. DELETE CONFIRMATION FUNCTIONS
+       5. DELETE & INITIALIZATION FUNCTIONS
        ========================================= */
     function askDeleteProkerja(id) {
       deleteTargetId = id;
@@ -1723,7 +1809,7 @@ async function loadKontakData() {
         if (error) throw error;
 
         showToast('Data berhasil dihapus', 'info');
-        addLog(`Hapus data ${deleteTargetType} (ID: ${deleteTargetId})`, 'Hapus');
+        addLog(`Menghapus data ${deleteTargetType} (ID: ${deleteTargetId})`, 'Hapus Data');
         closeDeleteModal();
 
         if (deleteTargetType === 'prokerja') loadProkerjaData();
@@ -1734,29 +1820,11 @@ async function loadKontakData() {
       }
     });
 
-    // Tangani perubahan saat file gambar dipilih
-    document.getElementById('inputGambar').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      const cancelBtn = document.getElementById('btnCancelImage');
-      
-      if (file) {
-        document.getElementById('previewGambar').src = URL.createObjectURL(file);
-        if (cancelBtn) cancelBtn.classList.remove('hidden'); // Tampilkan tombol hapus
-      }
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTab = localStorage.getItem('activeDashboardTab') || 'program-kerja';
+      switchTab(savedTab);
+      checkAuth();
     });
-
-    // Fungsi untuk membatalkan/menghapus pilihan gambar baru
-    function cancelSelectedImage() {
-      const fileInput = document.getElementById('inputGambar');
-      const cancelBtn = document.getElementById('btnCancelImage');
-      
-      fileInput.value = ''; // Reset input file
-      
-      // Kembalikan pratinjau ke URL gambar lama yang tersimpan di database
-      document.getElementById('previewGambar').src = currentGambarUrl || 'https://placehold.co/400x250/6B1D2F/ffffff?text=No+Image';
-      
-      if (cancelBtn) cancelBtn.classList.add('hidden'); // Sembunyikan kembali tombol hapus
-    }
   </script>
 </body>
 </html>
