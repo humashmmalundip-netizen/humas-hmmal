@@ -34,6 +34,21 @@
     ::-webkit-scrollbar-track { background: #FAF6F6; }
     ::-webkit-scrollbar-thumb { background: #e2d8d8; border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #6B1D2F; }
+
+    /* ===== MOBILE HOME (hanya layar < 768px) ===== */
+    #mobileHome, #mobileHomeHeader, #mobileBottomNav { display: none; }
+    #btnMobileBack { display: none; }
+    @media (max-width: 767px) {
+      body.mobile-home-active #mobileHome { display: block; }
+      body.mobile-home-active #mobileHomeHeader { display: block; }
+      body.mobile-home-active #mobileBottomNav { display: flex; }
+      /* Header lama (logo + hamburger) disembunyikan saat di beranda */
+      body.mobile-home-active > header:not(#mobileHomeHeader) { display: none; }
+      /* Semua tab disembunyikan saat di beranda */
+      body.mobile-home-active .tab-content { display: none !important; }
+      /* Tombol kembali muncul saat berada di dalam menu */
+      body:not(.mobile-home-active) #btnMobileBack { display: flex; }
+    }
   </style>
 </head>
 <body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 h-screen w-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
@@ -46,6 +61,9 @@
   <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-100 shadow-sm shrink-0">
     <div class="px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
+        <button id="btnMobileBack" onclick="showMobileHome()" class="items-center justify-center w-8 h-8 -ml-1 text-slate-700 hover:bg-rose-50 rounded-xl transition cursor-pointer" aria-label="Kembali ke beranda">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
         <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
             <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
         </div>
@@ -59,6 +77,17 @@
       <button id="btnMobileMenuToggle" class="p-2 text-slate-700 hover:bg-rose-50 rounded-xl transition cursor-pointer" aria-label="Toggle Navigation">
         <svg id="iconMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         <svg id="iconMenuClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- HEADER BERANDA MOBILE (hanya tampil di beranda mobile) -->
+  <header id="mobileHomeHeader" class="sticky top-0 z-50 bg-[#6B1D2F] shadow-md shrink-0">
+    <div class="relative px-4 py-4 flex items-center justify-center">
+      <h1 class="text-sm font-bold text-white">Beranda Admin</h1>
+      <button onclick="openMobileTab('aktivitas')" class="absolute right-3 p-2 text-white hover:bg-white/10 rounded-xl transition cursor-pointer" aria-label="Aktivitas">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        <span id="mobileBellDot" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-amber-400 border-2 border-[#6B1D2F]"></span>
       </button>
     </div>
   </header>
@@ -191,6 +220,91 @@
 
     <!-- BAGIAN KANAN (Hanya area ini yang dapat di-scroll secara halus) -->
     <main class="flex-1 h-full overflow-y-auto p-6 pb-12">
+      <!-- BERANDA MOBILE (hanya tampil di mobile saat pertama dibuka) -->
+            <!-- BERANDA MOBILE (hanya tampil di mobile saat pertama dibuka) -->
+      <section id="mobileHome" class="space-y-5 pb-20">
+
+        <!-- Kartu Profil -->
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-5 text-white shadow-xl shadow-rose-950/10 flex items-center gap-4 relative overflow-hidden">
+          <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+          <div class="w-16 h-16 rounded-full bg-white/15 border-2 border-white/30 overflow-hidden shrink-0 relative z-10">
+            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+          </div>
+          <div class="relative z-10 min-w-0">
+            <span class="inline-block px-2.5 py-0.5 bg-white/15 rounded-full text-[10px] font-bold uppercase tracking-wider mb-1">Admin CMS</span>
+            <h2 class="text-base font-extrabold leading-tight">HUMAS HMMAL UNDIP</h2>
+            <p class="text-[11px] text-rose-200 mt-0.5">Sekolah Vokasi Universitas Diponegoro</p>
+          </div>
+        </div>
+
+        <!-- Menu Pengelolaan -->
+        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-5">
+            <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Menu Pengelolaan</h3>
+            <span class="text-[10px] font-bold text-slate-400">CMS Panel</span>
+          </div>
+          <div class="grid grid-cols-3 gap-x-2 gap-y-5">
+
+            <button onclick="openMobileTab('program-kerja')" class="flex flex-col items-center gap-2 cursor-pointer group">
+              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              </span>
+              <span class="text-[11px] font-semibold text-slate-700">Prokerja</span>
+            </button>
+
+            <button onclick="openMobileTab('tentang-kami')" class="flex flex-col items-center gap-2 cursor-pointer group">
+              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </span>
+              <span class="text-[11px] font-semibold text-slate-700">Tentang</span>
+            </button>
+
+            <button onclick="openMobileTab('anggota')" class="flex flex-col items-center gap-2 cursor-pointer group">
+              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              </span>
+              <span class="text-[11px] font-semibold text-slate-700">Anggota</span>
+            </button>
+
+            <button onclick="openMobileTab('kontak-kami')" class="flex flex-col items-center gap-2 cursor-pointer group">
+              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </span>
+              <span class="text-[11px] font-semibold text-slate-700">Kontak</span>
+            </button>
+
+            <button onclick="openMobileTab('aktivitas')" class="flex flex-col items-center gap-2 cursor-pointer group">
+              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </span>
+              <span class="text-[11px] font-semibold text-slate-700">Aktivitas</span>
+            </button>
+
+            <a href="../index.html" target="_blank" class="flex flex-col items-center gap-2 cursor-pointer group">
+              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </span>
+              <span class="text-[11px] font-semibold text-slate-700">Website</span>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Ringkasan Sistem -->
+        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
+          <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-4">Ringkasan Sistem</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-rose-50 border border-rose-100 rounded-2xl py-3 text-center">
+              <p class="text-[10px] font-bold text-slate-500 uppercase">Program Kerja</p>
+              <p id="mobileStatProker" class="text-2xl font-extrabold text-[#6B1D2F]">0</p>
+            </div>
+            <div class="bg-rose-50 border border-rose-100 rounded-2xl py-3 text-center">
+              <p class="text-[10px] font-bold text-slate-500 uppercase">Total Anggota</p>
+              <p id="mobileStatAnggota" class="text-2xl font-extrabold text-[#6B1D2F]">0</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- TAB VIEW 1: PROGRAM KERJA (MAIN CMS) -->
       <section id="tab-program-kerja" class="tab-content space-y-8">
@@ -747,6 +861,23 @@
     </main>
   </div>
 
+    <!-- BOTTOM NAV BERANDA MOBILE -->
+  <nav id="mobileBottomNav" class="fixed bottom-0 inset-x-0 z-40 h-16 bg-white border-t border-slate-100 items-center justify-between px-10 shadow-[0_-4px_16px_rgba(107,29,47,0.08)]">
+    <button onclick="showMobileHome()" class="flex flex-col items-center gap-0.5 text-[#6B1D2F] cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg>
+      <span class="text-[10px] font-bold">Beranda</span>
+    </button>
+
+    <button onclick="handleLogout()" class="absolute left-1/2 -translate-x-1/2 -top-6 w-14 h-14 rounded-full bg-[#6B1D2F] text-white flex items-center justify-center shadow-xl shadow-rose-950/30 ring-4 ring-white cursor-pointer" aria-label="Keluar">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+    </button>
+
+    <button onclick="openMobileTab('aktivitas')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#6B1D2F] cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      <span class="text-[10px] font-bold">Aktivitas</span>
+    </button>
+  </nav>
+
   <!-- Edit Program Kerja Modal -->
   <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
     <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
@@ -987,6 +1118,7 @@
     window.onkeypress = resetInactivityTimer;
 
     function switchTab(tabId) {
+      document.body.classList.remove('mobile-home-active'); // <-- TAMBAHAN: keluar dari beranda mobile
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       
       const targetTab = document.getElementById(`tab-${tabId}`);
@@ -1012,6 +1144,44 @@
       if (tabId === 'kontak-kami') loadKontakData();
 
       localStorage.setItem('activeDashboardTab', tabId);
+    }
+
+        // ===== BERANDA MOBILE =====
+    function isMobileView() {
+      return window.matchMedia('(max-width: 767px)').matches;
+    }
+
+    function showMobileHome() {
+      document.body.classList.add('mobile-home-active');
+      const mainEl = document.querySelector('main');
+      if (mainEl) mainEl.scrollTop = 0;
+      refreshMobileSummary();
+    }
+
+    // Ringkasan Sistem di beranda mobile: memakai fungsi load yang sudah ada
+    async function refreshMobileSummary() {
+      try {
+        await Promise.all([loadProkerjaData(), loadAnggotaData()]);
+      } catch (e) {
+        console.error('Gagal memuat ringkasan:', e);
+      }
+      const p = document.getElementById('statTotalCount');
+      const a = document.getElementById('statAnggotaCount');
+      const mp = document.getElementById('mobileStatProker');
+      const ma = document.getElementById('mobileStatAnggota');
+      if (p && mp) mp.innerText = p.innerText;
+      if (a && ma) ma.innerText = a.innerText;
+
+      // Titik kuning di ikon lonceng muncul jika ada log aktivitas baru
+      const logs = document.getElementById('activityLogsList');
+      const dot = document.getElementById('mobileBellDot');
+      if (dot) dot.classList.toggle('hidden', !(logs && logs.children.length > 1));
+    }
+
+    function openMobileTab(tabId) {
+      switchTab(tabId);
+      const mainEl = document.querySelector('main');
+      if (mainEl) mainEl.scrollTop = 0;
     }
 
     function toggleMobileMenu() {
@@ -1735,6 +1905,9 @@
       
       // Panggil switchTab agar konten langsung tampil tidak blank
       switchTab(defaultTab);
+
+      // TAMBAHAN: di mobile, tampilan awal selalu beranda grid menu
+      if (isMobileView()) showMobileHome();
       
       // Jalankan cek autentikasi
       checkAuth();
