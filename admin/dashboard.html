@@ -18,16 +18,11 @@
       overscroll-behavior-y: none;
     }
     body {
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch;
+      font-family: 'Inter', sans-serif;
+      background: #FAF6F6;
+      color: #2a080c;
+      overflow: hidden; /* Mengunci scroll body utama agar sidebar tetap diam */
     }
-    
-    body {
-            font-family: 'Inter', sans-serif;
-            background: #fdf8f8;
-            color: #2a080c;
-            overflow-x: hidden;
-        }
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #FAF6F6; }
@@ -35,14 +30,14 @@
     ::-webkit-scrollbar-thumb:hover { background: #6B1D2F; }
   </style>
 </head>
-<body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 min-h-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
+<body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 h-screen w-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
 
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
     <div class="absolute -top-40 right-0 w-[600px] h-[600px] bg-gradient-to-b from-rose-200/40 via-rose-100/20 to-transparent rounded-full blur-3xl opacity-70"></div>
     <div class="absolute bottom-0 -left-20 w-[500px] h-[500px] bg-rose-100/50 rounded-full blur-3xl opacity-60"></div>
   </div>
 
-  <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-100 shadow-sm">
+  <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-100 shadow-sm shrink-0">
     <div class="px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
@@ -64,14 +59,10 @@
 
   <!-- Mobile Slide-over Drawer -->
   <div id="mobileDropdownMenu" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 ease-in-out">
-    <!-- Backdrop Gelap Transparan dengan Animasi Fade -->
     <div id="menuBackdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-xs opacity-0 transition-opacity duration-300 ease-in-out" onclick="toggleMobileMenu()"></div>
 
-    <!-- Panel Sidebar dari Kanan dengan Animasi Slide -->
     <div id="menuPanel" class="absolute top-0 right-0 bottom-0 w-72 bg-white shadow-2xl p-5 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out">
-      
       <div class="space-y-6">
-        <!-- Header Drawer -->
         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter overflow-hidden">
@@ -87,7 +78,6 @@
           </button>
         </div>
 
-        <!-- Navigasi Menu Mobile (Gunakan kelas tombol yang sudah disesuaikan sebelumnya) -->
         <nav class="space-y-1.5">
           <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
 
@@ -118,7 +108,6 @@
         </nav>
       </div>
 
-      <!-- Footer Tombol Aksi Bawah Drawer -->
       <div class="space-y-2 pt-4 border-t border-slate-100">
         <a href="../index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">
           <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -129,680 +118,628 @@
           <span>Keluar</span>
         </button>
       </div>
-
     </div>
   </div>
-
-    </div>
-  </div>
-  </header>
 
   <!-- Pembungkus Utama Layar Penuh -->
-<div class="flex flex-col md:flex-row min-h-screen w-full bg-slate-50">
+  <div class="flex flex-col md:flex-row flex-1 overflow-hidden w-full bg-slate-50">
 
-  <!-- ASIDE ANDA (Sudah disesuaikan agar diam & pas di tinggi layar) -->
-  <aside class="hidden md:flex flex-col w-64 h-full bg-white/85 backdrop-blur-xl border-r border-rose-100/80 p-5 z-40 justify-between shrink-0 shadow-sm">
-      <div class="space-y-6">
-        <!-- Brand Logo -->
-        <div class="flex items-center gap-3 px-2 py-1">
-          <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
-              <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+    <!-- ASIDE (Diam/Fixed di Tinggi Layar) -->
+    <aside class="hidden md:flex flex-col w-64 h-full bg-white/85 backdrop-blur-xl border-r border-rose-100/80 p-5 z-40 justify-between shrink-0 shadow-sm">
+        <div class="space-y-6">
+          <!-- Brand Logo -->
+          <div class="flex items-center gap-3 px-2 py-1">
+            <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
+                <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h1 class="text-sm font-bold text-slate-900 leading-tight">CMS Dashboard</h1>
+              <p class="text-[11px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
+            </div>
           </div>
-          <div>
-            <h1 class="text-sm font-bold text-slate-900 leading-tight">CMS Dashboard</h1>
-            <p class="text-[11px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
-          </div>
+
+          <!-- Left Sidebar Navigation Items -->
+          <nav class="space-y-1.5 pt-2">
+            <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
+
+            <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="program-kerja">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              <span>Program Kerja</span>
+            </button>
+
+            <button onclick="switchTab('tentang-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="tentang-kami">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Tentang Kami</span>
+            </button>
+
+            <button onclick="switchTab('anggota')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="anggota">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Anggota</span>
+            </button>
+
+            <button onclick="switchTab('kontak-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="kontak-kami">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>Kontak Kami</span>
+            </button>
+
+            <button onclick="switchTab('aktivitas')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="aktivitas">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>Aktivitas</span>
+            </button>
+          </nav>
         </div>
 
-        <!-- Left Sidebar Navigation Items -->
-        <nav class="space-y-1.5 pt-2">
-          <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
+        <!-- Sidebar Bottom Action Buttons (Keluar & Lihat Website tetap di sini secara statis) -->
+        <div class="space-y-2 pt-6 border-t border-slate-100">
+          <a href="../index.html" target="_blank" class="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100/80 hover:bg-slate-200/80 transition">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            <span>Lihat Website</span>
+          </a>
 
-          <button onclick="switchTab('program-kerja')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="program-kerja">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-            <span>Program Kerja</span>
+          <button id="btnLogout" onclick="handleLogout()" class="w-full flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold rounded-xl border border-rose-200/60 transition cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+            <span>Keluar</span>
           </button>
-
-          <button onclick="switchTab('tentang-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="tentang-kami">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Tentang Kami</span>
-          </button>
-
-          <button onclick="switchTab('anggota')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="anggota">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-            <span>Anggota</span>
-          </button>
-
-          <button onclick="switchTab('kontak-kami')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="kontak-kami">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            <span>Kontak Kami</span>
-          </button>
-
-          <button onclick="switchTab('aktivitas')" class="nav-desktop-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100/80 transition" data-tab="aktivitas">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Aktivitas</span>
-          </button>
-        </nav>
-      </div>
-
-      <!-- Sidebar Bottom Action Buttons -->
-      <div class="space-y-2 pt-6 border-t border-slate-100">
-        <a href="../index.html" target="_blank" class="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100/80 hover:bg-slate-200/80 transition">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          <span>Lihat Website</span>
-        </a>
-
-        <button id="btnLogout" onclick="handleLogout()" class="w-full flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-bold rounded-xl border border-rose-200/60 transition cursor-pointer">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-          <span>Keluar</span>
-        </button>
-      </div>
-  </aside>
-
-  <main class="flex-1 h-full overflow-y-auto p-6 pb-6">
-
-    <!-- TAB VIEW 1: PROGRAM KERJA (MAIN CMS) -->
-    <section id="tab-program-kerja" class="tab-content space-y-8">
-      
-      <!-- Header Banner -->
-      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
-        <div class="space-y-1 relative z-10">
-          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
-            Manajemen Konten
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Program Kerja Unggulan</h2>
-          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
-            Tambah, perbarui, dan atur tata letak agenda kegiatan Humas HMMAL UNDIP. Konten terbaru akan tampil paling atas.
-          </p>
         </div>
+    </aside>
 
-        <div class="flex items-center gap-3 sm:gap-4 relative z-10">
-          <div class="bg-white/10 backdrop-blur-md border border-white/15 px-4 py-3 rounded-2xl text-center min-w-[100px]">
-            <span class="block text-xl font-extrabold text-white" id="statTotalCount">0</span>
-            <span class="text-[10px] uppercase font-semibold text-rose-200">Program Kerja</span>
-          </div>
-        </div>
-      </div>
+    <!-- BAGIAN KANAN (Hanya area ini yang dapat di-scroll secara halus) -->
+    <main class="flex-1 h-full overflow-y-auto p-6 pb-12">
 
-      <!-- Layout Grid: Form on Left, Table/List on Right -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- TAB VIEW 1: PROGRAM KERJA (MAIN CMS) -->
+      <section id="tab-program-kerja" class="tab-content space-y-8">
         
-        <!-- Bagian Kiri: Form Tambah/Edit Program Kerja -->
-        <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
-          <div class="border-b border-slate-100 pb-4">
-            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
-              Tambah Program Kerja Baru
-            </h3>
-            <p class="text-xs text-slate-500 mt-1">Pilih kategori dan unggah kegiatan baru Anda.</p>
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+          <div class="space-y-1 relative z-10">
+            <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
+              Manajemen Konten
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Program Kerja Unggulan</h2>
+            <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
+              Tambah, perbarui, dan atur tata letak agenda kegiatan Humas HMMAL UNDIP. Konten terbaru akan tampil paling atas.
+            </p>
           </div>
 
-          <form id="prokerjaForm" class="space-y-4">
-            
-            <!-- Judul Program -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Judul Program</label>
-              <div class="relative flex items-center">
-                <span class="absolute left-3.5 text-slate-400">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </span>
-                <input 
-                  type="text" 
-                  id="proJudul" 
-                  class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" 
-                  placeholder="Contoh: Abdi Masyarakat" 
-                  required
-                >
-              </div>
+          <div class="flex items-center gap-3 sm:gap-4 relative z-10">
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 px-4 py-3 rounded-2xl text-center min-w-[100px]">
+              <span class="block text-xl font-extrabold text-white" id="statTotalCount">0</span>
+              <span class="text-[10px] uppercase font-semibold text-rose-200">Program Kerja</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layout Grid: Form on Left, Table/List on Right -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Bagian Kiri: Form Tambah/Edit Program Kerja -->
+          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+            <div class="border-b border-slate-100 pb-4">
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+                Tambah Program Kerja Baru
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">Pilih kategori dan unggah kegiatan baru Anda.</p>
             </div>
 
-            <!-- Kategori Program -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Kategori Program</label>
-              <div class="relative flex items-center">
-                <span class="absolute left-3.5 text-slate-400 pointer-events-none">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                </span>
-                <select 
-                  id="proKategori" 
-                  class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition cursor-pointer appearance-none"
-                  required
-                >
-                    <option value="" disabled selected>Pilih Kategori Program</option>  
-                    <option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option>
-                    <option value="Social Responsibility">Social Responsibility</option>
-                </select>
-                <span class="absolute right-3.5 text-slate-400 pointer-events-none">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </span>
-              </div>
-            </div>
-
-            <!-- Waktu -->
+            <form id="prokerjaForm" class="space-y-4">
+              
+              <!-- Judul Program -->
               <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">Waktu Pelaksanaan</label>
+                <label class="block text-xs font-semibold text-slate-700">Judul Program</label>
                 <div class="relative flex items-center">
                   <span class="absolute left-3.5 text-slate-400">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                   </span>
                   <input 
                     type="text" 
-                    id="proWaktu" 
+                    id="proJudul" 
                     class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" 
-                    placeholder="Oktober 2026" 
+                    placeholder="Contoh: Abdi Masyarakat" 
                     required
                   >
                 </div>
               </div>
 
-            <!-- Deskripsi Singkat -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Deskripsi Singkat Program</label>
-              <textarea 
-                id="proDeskripsi" 
-                rows="3" 
-                class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition resize-none" 
-                placeholder="Jelaskan secara ringkas mengenai latar belakang dan tujuan agenda..."
-                required
-              ></textarea>
+              <!-- Kategori Program -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Kategori Program</label>
+                <div class="relative flex items-center">
+                  <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                  </span>
+                  <select 
+                    id="proKategori" 
+                    class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition cursor-pointer appearance-none"
+                    required
+                  >
+                      <option value="" disabled selected>Pilih Kategori Program</option>  
+                      <option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option>
+                      <option value="Social Responsibility">Social Responsibility</option>
+                  </select>
+                  <span class="absolute right-3.5 text-slate-400 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Waktu -->
+                <div class="space-y-1">
+                  <label class="block text-xs font-semibold text-slate-700">Waktu Pelaksanaan</label>
+                  <div class="relative flex items-center">
+                    <span class="absolute left-3.5 text-slate-400">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </span>
+                    <input 
+                      type="text" 
+                      id="proWaktu" 
+                      class="w-full pl-10 pr-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" 
+                      placeholder="Oktober 2026" 
+                      required
+                    >
+                  </div>
+                </div>
+
+              <!-- Deskripsi Singkat -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Deskripsi Singkat Program</label>
+                <textarea 
+                  id="proDeskripsi" 
+                  rows="3" 
+                  class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition resize-none" 
+                  placeholder="Jelaskan secara ringkas mengenai latar belakang dan tujuan agenda..."
+                  required
+                ></textarea>
+              </div>
+
+              <!-- Foto Kegiatan / File Upload -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Foto Kegiatan</label>
+                <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                  <input 
+                    type="file" 
+                    id="proFile" 
+                    accept="image/*" 
+                    class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" 
+                    required
+                  >
+                </div>
+              </div>
+
+              <!-- Tombol Simpan -->
+              <button 
+                type="submit" 
+                id="btnSavePro" 
+                class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md shadow-rose-950/10 transition active:scale-[0.98] disabled:opacity-70 cursor-pointer flex items-center justify-center gap-2 mt-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Upload Program Kerja</span>
+              </button>
+            </form>
+          </section>
+
+          <!-- Bagian Kanan: Daftar Program Kerja & Tabel -->
+          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+                  Daftar Program Kerja
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">Daftar agenda terbit disortir otomatis berdasarkan waktu unggah.</p>
+              </div>
+              <button onclick="loadProkerjaData()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition cursor-pointer border border-slate-200/60" title="Refresh Data">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              </button>
             </div>
 
-            <!-- Foto Kegiatan / File Upload -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Foto Kegiatan</label>
-              <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
-                <input 
-                  type="file" 
-                  id="proFile" 
-                  accept="image/*" 
-                  class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" 
-                  required
-                >
+            <!-- Table View for Desktop -->
+            <div class="hidden sm:block overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                    <th class="py-3 px-3 text-center w-12 rounded-l-xl">No</th>
+                    <th class="py-3 px-3">Gambar</th>
+                    <th class="py-3 px-3">Judul & Kategori</th>
+                    <th class="py-3 px-3">Waktu</th>
+                    <th class="py-3 px-3 text-right rounded-r-xl">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="prokerjaTableBody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                  <!-- Rendered dynamically by existing JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Card View for Mobile -->
+            <div id="prokerjaMobileCards" class="block sm:hidden space-y-3">
+              <!-- Rendered dynamically by existing JS -->
+            </div>
+
+          </section>
+
+        </div>
+      </section>
+
+      <!-- TAB VIEW 2: TENTANG KAMI -->
+      <section id="tab-tentang-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
+        <div class="bg-gradient-to-r from-[#6B1D2F] via-[#7D2238] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+          <div class="space-y-1 relative z-10">
+            <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
+              Manajemen Konten
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Profil & Tentang Kami</h2>
+            <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl leading-relaxed">
+              Atur Sekilas Humas, Foto Profil Divisi, Visi Utama, dan Misi Strategis Humas HMMAL UNDIP secara real-time.
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-3 relative z-10 shrink-0">
+            <button type="button" onclick="loadTentangKamiData()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-2xl transition active:scale-95 cursor-pointer shadow-sm">
+              <svg class="w-4 h-4 text-rose-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              <span>Refresh Data</span>
+            </button>
+          </div>
+        </div>
+
+        <form id="formTentangKami" class="space-y-6">
+          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">1</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900">Foto Profil & Deskripsi Ringkas</h3>
+                  <p class="text-xs text-slate-500">Foto pengurus divisi dan informasi gambaran umum Humas.</p>
+                </div>
               </div>
             </div>
 
-            <!-- Tombol Simpan -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+              <div class="md:col-span-5 space-y-3">
+                <label class="block text-xs font-semibold text-slate-700">Foto Profil / Divisi</label>
+                <div class="relative group overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-sm transition hover:shadow-md">
+                  <img id="previewGambar" src="https://placehold.co/400x300/6B1D2F/ffffff?text=Loading..." class="w-full aspect-[16/10] object-cover transition duration-500 group-hover:scale-105">
+                  <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <span class="px-3 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-[11px] font-bold text-slate-800 shadow-sm">Pratinjau Foto</span>
+                  </div>
+                </div>
+                <div class="p-2 bg-slate-50 border border-slate-200 rounded-2xl flex items-center gap-2">
+                  <input type="file" id="inputGambar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer transition">
+                  <button type="button" id="btnCancelImage" onclick="cancelSelectedImage()" class="hidden px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0" title="Batalkan Pilihan">
+                    Hapus
+                  </button>
+                </div>
+                <p class="text-[11px] text-slate-400 pl-1">Format yang didukung: JPG, PNG, WEBP (Rasio ideal 16:9 atau 16:10).</p>
+              </div>
+
+              <div class="md:col-span-7 space-y-2">
+                <label class="block text-xs font-semibold text-slate-700">Sekilas Humas (Deskripsi Ringkas)</label>
+                <textarea 
+                  id="inputDeskripsi" 
+                  rows="8" 
+                  class="w-full p-4 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition-all leading-relaxed resize-none" 
+                  placeholder="Tuliskan deskripsi profil bidang..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
+            <div class="flex items-center gap-2.5 border-b border-slate-100 pb-4">
+              <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">2</span>
+              <div>
+                <h3 class="text-sm sm:text-base font-bold text-slate-900">Visi Utama</h3>
+                <p class="text-xs text-slate-500">Cita-cita dan tujuan jangka panjang bidang Humas HMMAL UNDIP.</p>
+              </div>
+            </div>
+            <div class="space-y-1">
+              <textarea 
+                id="inputVisi" 
+                rows="3" 
+                class="w-full p-4 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition-all leading-relaxed resize-none" 
+                placeholder="Tuliskan narasi visi utama bidang..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">3</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900">Misi Strategis</h3>
+                  <p class="text-xs text-slate-500">Langkah-langkah taktis untuk mewujudkan visi utama.</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[11px] font-medium">
+                1 poin misi per baris (Tekan Enter)
+              </span>
+            </div>
+            <div class="space-y-1">
+              <textarea 
+                id="inputMisi" 
+                rows="5" 
+                class="w-full p-4 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition-all leading-relaxed resize-none" 
+                placeholder="1. Mengoptimalkan peran dan kinerja...&#10;2. Menjadi jembatan komunikasi...&#10;3. Membangun serta menjaga hubungan..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 flex items-center justify-between">
+            <p class="text-xs text-slate-400 hidden sm:block">Pastikan data yang diisi sudah benar sebelum menyimpan.</p>
             <button 
               type="submit" 
-              id="btnSavePro" 
-              class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md shadow-rose-950/10 transition active:scale-[0.98] disabled:opacity-70 cursor-pointer flex items-center justify-center gap-2 mt-2"
+              id="btnSaveTentangKami" 
+              class="w-full sm:w-auto px-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md shadow-rose-950/20 transition active:scale-95 cursor-pointer flex items-center justify-center gap-2 ml-auto"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-              <span>Upload Program Kerja</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Simpan Perubahan</span>
             </button>
-          </form>
-        </section>
+          </div>
+        </form>
+      </section>
 
-        <!-- Bagian Kanan: Daftar Program Kerja & Tabel -->
-        <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div>
+      <!-- TAB VIEW 3: ANGGOTA -->
+      <section id="tab-anggota" class="tab-content hidden space-y-8 !mt-0 !pt-0">
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
+          <div class="space-y-1 relative z-10">
+            <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
+              Manajemen Konten
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Data Anggota & Pengurus</h2>
+            <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
+              Tambah, perbarui, dan atur daftar anggota serta pengurus Humas HMMAL UNDIP yang terintegrasi dengan Card Anggota pada halaman utama.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3 relative z-10">
+            <div class="bg-white/10 backdrop-blur-md border border-white/15 px-4 py-3 rounded-2xl text-center min-w-[100px]">
+              <span class="block text-xl font-extrabold text-white" id="statAnggotaCount">0</span>
+              <span class="text-[10px] uppercase font-semibold text-rose-200">Total Anggota</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+            <div class="border-b border-slate-100 pb-4">
               <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
-                Daftar Program Kerja
+                Tambah Anggota Baru
               </h3>
-              <p class="text-xs text-slate-500 mt-1">Daftar agenda terbit disortir otomatis berdasarkan waktu unggah.</p>
+              <p class="text-xs text-slate-500 mt-1">Lengkapi informasi profil anggota sesuai standar Card Website.</p>
             </div>
-            <button onclick="loadProkerjaData()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition cursor-pointer border border-slate-200/60" title="Refresh Data">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </div>
 
-          <!-- Table View for Desktop -->
-          <div class="hidden sm:block overflow-x-auto">
-            <table class="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr class="border-b border-slate-100 bg-slate-50/50 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
-                  <th class="py-3 px-3 text-center w-12 rounded-l-xl">No</th>
-                  <th class="py-3 px-3">Gambar</th>
-                  <th class="py-3 px-3">Judul & Kategori</th>
-                  <th class="py-3 px-3">Waktu</th>
-                  <th class="py-3 px-3 text-right rounded-r-xl">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="prokerjaTableBody" class="divide-y divide-slate-100 font-medium text-slate-700">
-                <!-- Rendered dynamically by existing JS -->
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Card View for Mobile -->
-          <div id="prokerjaMobileCards" class="block sm:hidden space-y-3">
-            <!-- Rendered dynamically by existing JS -->
-          </div>
-
-        </section>
-
-      </div>
-    </section>
-
-    <!-- TAB VIEW 2: TENTANG KAMI (DIRECT EDIT FORM FOR SUPABASE) -->
-    <section id="tab-tentang-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-      
-      <!-- Header Banner -->
-      <div class="bg-gradient-to-r from-[#6B1D2F] via-[#7D2238] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
-        <div class="space-y-1 relative z-10">
-          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
-            Manajemen Konten
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Profil & Tentang Kami</h2>
-          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl leading-relaxed">
-            Atur Sekilas Humas, Foto Profil Divisi, Visi Utama, dan Misi Strategis Humas HMMAL UNDIP secara real-time.
-          </p>
-        </div>
-        
-        <div class="flex items-center gap-3 relative z-10 shrink-0">
-          <button type="button" onclick="loadTentangKamiData()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-2xl transition active:scale-95 cursor-pointer shadow-sm">
-            <svg class="w-4 h-4 text-rose-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            <span>Refresh Data</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Form Container Utama -->
-      <form id="formTentangKami" class="space-y-6">
-
-        <!-- SEKSI 1: FOTO PROFIL & DESKRIPSI RINGKAS -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-6">
-          
-          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div class="flex items-center gap-2.5">
-              <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">1</span>
-              <div>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900">Foto Profil & Deskripsi Ringkas</h3>
-                <p class="text-xs text-slate-500">Foto pengurus divisi dan informasi gambaran umum Humas.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-            
-            <!-- Upload Foto Preview -->
-            <div class="md:col-span-5 space-y-3">
-              <label class="block text-xs font-semibold text-slate-700">Foto Profil / Divisi</label>
+            <form id="anggotaForm" class="space-y-4">
+              <input type="hidden" id="editAnggotaId">
+              <input type="hidden" id="angOldGambarUrl">
               
-              <div class="relative group overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50 shadow-sm transition hover:shadow-md">
-                <img id="previewGambar" src="https://placehold.co/400x300/6B1D2F/ffffff?text=Loading..." class="w-full aspect-[16/10] object-cover transition duration-500 group-hover:scale-105">
-                <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                  <span class="px-3 py-1.5 bg-white/90 backdrop-blur-md rounded-xl text-[11px] font-bold text-slate-800 shadow-sm">Pratinjau Foto</span>
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
+                <input type="text" id="angNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Contoh: Rifki Nur Hasan" required>
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
+                <div class="relative flex items-center">
+                  <select id="angJabatan" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                    <option value="" disabled selected>Pilih Role / Jabatan</option>
+                    <option value="KETUA BIDANG HUMAS">KETUA BIDANG HUMAS</option>
+                    <option value="WAKIL KETUA BIDANG HUMAS">WAKIL KETUA BIDANG HUMAS</option>
+                    <option value="KETUA DIVISI SR">KETUA DIVISI SR</option>
+                    <option value="KETUA DIVISI PNP">KETUA DIVISI PNP</option>
+                    <option value="STAFF DIVISI SR">STAFF DIVISI SR</option>
+                    <option value="STAFF DIVISI PNP">STAFF DIVISI PNP</option>
+                  </select>
+                  <span class="absolute right-3 text-slate-400 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </span>
                 </div>
               </div>
-              
-              <div class="p-2 bg-slate-50 border border-slate-200 rounded-2xl flex items-center gap-2">
-                <input type="file" id="inputGambar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer transition">
-                
-                <!-- Tombol Hapus / Batalkan Pilihan Gambar Baru -->
-                <button type="button" id="btnCancelImage" onclick="cancelSelectedImage()" class="hidden px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0" title="Batalkan Pilihan">
-                  Hapus
-                </button>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1">
+                  <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
+                  <div class="relative flex items-center">
+                    <select id="angCategory" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                      <option value="" disabled selected>Pilih Kategori ID</option>
+                      <option value="bph">BPH</option>
+                      <option value="sr">Social Responsibility (SR)</option>
+                      <option value="pnp">Planning Networking & Partnership (PNP)</option>
+                    </select>
+                    <span class="absolute right-3 text-slate-400 pointer-events-none">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="space-y-1">
+                  <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
+                  <div class="relative flex items-center">
+                    <select id="angBadge" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                      <option value="" disabled selected>Pilih Badge Card</option>
+                      <option value="BPH">BPH</option>
+                      <option value="STAFF">STAFF</option>
+                    </select>
+                    <span class="absolute right-3 text-slate-400 pointer-events-none">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                  </div>
+                </div>
               </div>
-              <p class="text-[11px] text-slate-400 pl-1">Format yang didukung: JPG, PNG, WEBP (Rasio ideal 16:9 atau 16:10).</p>
-            </div>
 
-            <!-- Deskripsi Sekilas Humas -->
-            <div class="md:col-span-7 space-y-2">
-              <label class="block text-xs font-semibold text-slate-700">Sekilas Humas (Deskripsi Ringkas)</label>
-              <textarea 
-                id="inputDeskripsi" 
-                rows="8" 
-                class="w-full p-4 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition-all leading-relaxed resize-none" 
-                placeholder="Tuliskan deskripsi profil bidang..."
-              ></textarea>
-            </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1">
+                  <label class="block text-xs font-semibold text-slate-700">Divisi</label>
+                  <div class="relative flex items-center">
+                    <select id="angDivision" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
+                      <option value="" disabled selected>Pilih Divisi</option>
+                      <option value="Badan Pengurus Harian">Badan Pengurus Harian</option>
+                      <option value="Social Responsibility">Social Responsibility</option>
+                      <option value="Planning, Networking, & Partnership">Planning, Networking, & Partnership</option>
+                    </select>
+                    <span class="absolute right-3 text-slate-400 pointer-events-none">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                  </div>
+                </div>
 
-          </div>
-        </div>
+                <div class="space-y-1">
+                  <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
+                  <input type="text" id="angMal" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="2024" required>
+                </div>
+              </div>
 
-        <!-- SEKSI 2: VISI UTAMA -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
-          <div class="flex items-center gap-2.5 border-b border-slate-100 pb-4">
-            <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">2</span>
-            <div>
-              <h3 class="text-sm sm:text-base font-bold text-slate-900">Visi Utama</h3>
-              <p class="text-xs text-slate-500">Cita-cita dan tujuan jangka panjang bidang Humas HMMAL UNDIP.</p>
-            </div>
-          </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Bidang / Periode</label>
+                <input type="text" id="angSubDept" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Humas HMMAL 2026" required>
+              </div>
 
-          <div class="space-y-1">
-            <textarea 
-              id="inputVisi" 
-              rows="3" 
-              class="w-full p-4 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition-all leading-relaxed resize-none" 
-              placeholder="Tuliskan narasi visi utama bidang..."
-            ></textarea>
-          </div>
-        </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
+                <textarea id="angQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none" placeholder="Memimpin dengan empati..."></textarea>
+              </div>
 
-        <!-- SEKSI 3: MISI STRATEGIS -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div class="flex items-center gap-2.5">
-              <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">3</span>
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
+                <input type="text" id="angIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="rifkiinhs">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Foto Anggota (Potret)</label>
+                <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                  <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" required>
+                </div>
+              </div>
+
+              <button type="submit" id="btnSaveAnggota" class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2 mt-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                <span>Simpan & Upload Anggota</span>
+              </button>
+            </form>
+          </section>
+
+          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900">Misi Strategis</h3>
-                <p class="text-xs text-slate-500">Langkah-langkah taktis untuk mewujudkan visi utama.</p>
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
+                  Daftar Anggota di Database
+                </h3>
+                <p class="text-xs text-slate-500 mt-1">Daftar pengurus dan staf yang terdaftar di tabel Supabase.</p>
               </div>
+              <button onclick="loadAnggotaData()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition cursor-pointer border border-slate-200/60" title="Refresh Data">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              </button>
             </div>
-            <span class="hidden sm:inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[11px] font-medium">
-              1 poin misi per baris (Tekan Enter)
-            </span>
-          </div>
 
-          <div class="space-y-1">
-            <textarea 
-              id="inputMisi" 
-              rows="5" 
-              class="w-full p-4 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-normal text-slate-800 placeholder-slate-400 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition-all leading-relaxed resize-none" 
-              placeholder="1. Mengoptimalkan peran dan kinerja...&#10;2. Menjadi jembatan komunikasi...&#10;3. Membangun serta menjaga hubungan..."
-            ></textarea>
+            <div id="anggotaGridContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <!-- Rendered dynamically -->
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- TAB VIEW 4: KONTAK KAMI -->
+      <section id="tab-kontak-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div class="space-y-1 relative z-10">
+            <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">Manajemen Konten</div>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Kontak & Sosial Media</h2>
+            <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">Ubah nomor WhatsApp narahubung, tautan sosial media, dan informasi footer website.</p>
           </div>
         </div>
 
-        <!-- ACTION BUTTON -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 flex items-center justify-between">
-          <p class="text-xs text-slate-400 hidden sm:block">Pastikan data yang diisi sudah benar sebelum menyimpan.</p>
-          <button 
-            type="submit" 
-            id="btnSaveTentangKami" 
-            class="w-full sm:w-auto px-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md shadow-rose-950/20 transition active:scale-95 cursor-pointer flex items-center justify-center gap-2 ml-auto"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            <span>Simpan Perubahan</span>
-          </button>
-        </div>
+        <form id="formKontakKami" class="space-y-6">
+          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
+            <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Email Resmi</label>
+                <input type="email" id="kontakEmail" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="humashmmalundip@gmail.com">
+              </div>
+              <div class="max-sm:hidden">
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Narahubung WhatsApp</label>
+                <input type="text" id="kontakWaNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Yosi">
+              </div>
+            </div>
 
-      </form>
-    </section>
+            <div class="grid grid-cols-2 max-sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Narahubung WhatsApp</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Nomor WhatsApp</label>
+                <input type="text" id="kontakWaNamaMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition sm:hidden" placeholder="Yosi" oninput="document.getElementById('kontakWaNama').value = this.value">
+                <input type="text" id="kontakWaNomor" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition hidden sm:block" placeholder="6281617591588">
+              </div>
 
-    <!-- TAB VIEW 3: ANGGOTA (FULLY FUNCTIONAL CMS) -->
-    <section id="tab-anggota" class="tab-content hidden space-y-8 !mt-0 !pt-0">
-      
-      <!-- Header Banner Anggota -->
-      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
-        <div class="space-y-1 relative z-10">
-          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
-            Manajemen Konten
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Data Anggota & Pengurus</h2>
-          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">
-            Tambah, perbarui, dan atur daftar anggota serta pengurus Humas HMMAL UNDIP yang terintegrasi dengan Card Anggota pada halaman utama.
-          </p>
-        </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Nomor WhatsApp</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Link Instagram</label>
+                <input type="text" id="kontakWaNomorMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition sm:hidden" placeholder="6281617591588" oninput="document.getElementById('kontakWaNomor').value = this.value">
+                <input type="text" id="kontakIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition hidden sm:block" placeholder="https://www.instagram.com/humas.hmmal/">
+              </div>
+            </div>
 
-        <div class="flex items-center gap-3 relative z-10">
-          <div class="bg-white/10 backdrop-blur-md border border-white/15 px-4 py-3 rounded-2xl text-center min-w-[100px]">
-            <span class="block text-xl font-extrabold text-white" id="statAnggotaCount">0</span>
-            <span class="text-[10px] uppercase font-semibold text-rose-200">Total Anggota</span>
-          </div>
-        </div>
-      </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Link YouTube</label>
+                <input type="text" id="kontakYt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="https://www.youtube.com/@hmmanajemendanadministrasi9490">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Link TikTok</label>
+                <input type="text" id="kontakTt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="https://www.tiktok.com/@hmmalundip">
+              </div>
+            </div>
 
-      <!-- Layout Grid: Form Tambah Anggota di Kiri, Daftar Tabel/Card di Kanan -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- Kolom Kiri: Form Tambah Anggota (Disesuaikan dengan Card Anggota index.html) -->
-        <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
-          <div class="border-b border-slate-100 pb-4">
-            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
-              Tambah Anggota Baru
-            </h3>
-            <p class="text-xs text-slate-500 mt-1">Lengkapi informasi profil anggota sesuai standar Card Website.</p>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Footer</label>
+              <textarea id="kontakFooter" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none"></textarea>
+            </div>
           </div>
 
-          <form id="anggotaForm" class="space-y-4">
-            <!-- INPUT TERSEMBUNYI UNTUK EDIT -->
-            <input type="hidden" id="editAnggotaId">
-            <input type="hidden" id="angOldGambarUrl">
-            
-            <!-- Nama Lengkap -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
-              <input type="text" id="angNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="Contoh: Rifki Nur Hasan" required>
-            </div>
-
-            <!-- Role / Jabatan Utama -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
-              <div class="relative flex items-center">
-                <select id="angJabatan" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
-                  <option value="" disabled selected>Pilih Role / Jabatan</option>
-                  <option value="KETUA BIDANG HUMAS">KETUA BIDANG HUMAS</option>
-                  <option value="WAKIL KETUA BIDANG HUMAS">WAKIL KETUA BIDANG HUMAS</option>
-                  <option value="KETUA DIVISI SR">KETUA DIVISI SR</option>
-                  <option value="KETUA DIVISI PNP">KETUA DIVISI PNP</option>
-                  <option value="STAFF DIVISI SR">STAFF DIVISI SR</option>
-                  <option value="STAFF DIVISI PNP">STAFF DIVISI PNP</option>
-                </select>
-                <span class="absolute right-3 text-slate-400 pointer-events-none">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </span>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <!-- Kategori Filter -->
-              <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
-                <div class="relative flex items-center">
-                  <select id="angCategory" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
-                    <option value="" disabled selected>Pilih Kategori ID</option>
-                    <option value="bph">BPH</option>
-                    <option value="sr">Social Responsibility (SR)</option>
-                    <option value="pnp">Planning Networking & Partnership (PNP)</option>
-                  </select>
-                  <span class="absolute right-3 text-slate-400 pointer-events-none">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Badge Label -->
-              <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
-                <div class="relative flex items-center">
-                  <select id="angBadge" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
-                    <option value="" disabled selected>Pilih Badge Card</option>
-                    <option value="BPH">BPH</option>
-                    <option value="STAFF">STAFF</option>
-                  </select>
-                  <span class="absolute right-3 text-slate-400 pointer-events-none">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <!-- Divisi / Penempatan -->
-              <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">Divisi</label>
-                <div class="relative flex items-center">
-                  <select id="angDivision" class="w-full px-3 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition cursor-pointer appearance-none pr-8" required>
-                    <option value="" disabled selected>Pilih Divisi</option>
-                    <option value="Badan Pengurus Harian">Badan Pengurus Harian</option>
-                    <option value="Social Responsibility">Social Responsibility</option>
-                    <option value="Planning, Networking, & Partnership">Planning, Networking, & Partnership</option>
-                  </select>
-                  <span class="absolute right-3 text-slate-400 pointer-events-none">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Angkatan MAL -->
-              <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
-                <input type="text" id="angMal" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="2024" required>
-              </div>
-            </div>
-
-            <!-- Sub Departemen -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Bidang / Periode</label>
-              <input type="text" id="angSubDept" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Humas HMMAL 2026" required>
-            </div>
-
-            <!-- Motto / Quote -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
-              <textarea id="angQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none" placeholder="Memimpin dengan empati..."></textarea>
-            </div>
-
-            <!-- Instagram Username -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
-              <input type="text" id="angIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="rifkiinhs">
-            </div>
-
-            <!-- Foto Anggota -->
-            <div class="space-y-1">
-              <label class="block text-xs font-semibold text-slate-700">Foto Anggota (Potret)</label>
-              <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
-                <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" required>
-              </div>
-            </div>
-
-            <!-- Tombol Submit -->
-            <button type="submit" id="btnSaveAnggota" class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2 mt-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-              <span>Simpan & Upload Anggota</span>
+          <div class="flex justify-end">
+            <button type="submit" id="btnSaveKontak" class="px-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer">
+              Simpan Perubahan Kontak
             </button>
-          </form>
-        </section>
+          </div>
+        </form>
+      </section>
 
-        <!-- Kolom Kanan: Daftar List Anggota Tersimpan -->
-        <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+      <!-- TAB VIEW 5: AKTIVITAS -->
+      <section id="tab-aktivitas" class="tab-content hidden space-y-6 !mt-0 !pt-0">
+        <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
           <div class="flex items-center justify-between border-b border-slate-100 pb-4">
             <div>
-              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
-                Daftar Anggota di Database
-              </h3>
-              <p class="text-xs text-slate-500 mt-1">Daftar pengurus dan staf yang terdaftar di tabel Supabase.</p>
+              <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <span class="w-2.5 h-6 rounded-full bg-[#6B1D2F] inline-block"></span>
+                Log Aktivitas & Riwayat Unggahan
+              </h2>
+              <p class="text-xs text-slate-500 mt-1">Catatan pembaruan konten dan aktivitas publikasi terbaru di CMS.</p>
             </div>
-            <button onclick="loadAnggotaData()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition cursor-pointer border border-slate-200/60" title="Refresh Data">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <button onclick="addLog('Melakukan penyegaran data sistem', 'sistem')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+              Catat Log
             </button>
           </div>
 
-          <!-- Grid Daftar Anggota -->
-          <div id="anggotaGridContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            <!-- Rendered dynamically -->
-          </div>
-        </section>
-
-      </div>
-    </section>
-
-    <!-- TAB VIEW 4: KONTAK KAMI -->
-    <section id="tab-kontak-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-      <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        <div class="space-y-1 relative z-10">
-          <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">Manajemen Konten</div>
-          <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Kontak & Sosial Media</h2>
-          <p class="text-xs sm:text-sm text-rose-100/80 max-w-xl">Ubah nomor WhatsApp narahubung, tautan sosial media, dan informasi footer website.</p>
-        </div>
-      </div>
-
-      <form id="formKontakKami" class="space-y-6">
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
-          
-          <!-- Baris 1: Email Resmi & Nama Narahubung (Desktop: Berdampingan, Mobile: Menumpuk) -->
-          <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Email Resmi</label>
-              <input type="email" id="kontakEmail" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="humashmmalundip@gmail.com">
-            </div>
-            <!-- Di Mobile, Nama Narahubung ini disembunyikan karena dipindah agar berdampingan dengan No WhatsApp -->
-            <div class="max-sm:hidden">
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Narahubung WhatsApp</label>
-              <input type="text" id="kontakWaNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="Yosi">
-            </div>
-          </div>
-
-          <!-- Baris 2: Nomor WhatsApp & Link Instagram (Desktop: Berdampingan, Mobile: Berdampingan khusus Nama Narahubung & No WhatsApp) -->
-          <div class="grid grid-cols-2 max-sm:grid-cols-2 gap-4">
-            <!-- Di Mobile, elemen pertama ini menampilkan 'Nama Narahubung' agar berdampingan dengan No WhatsApp -->
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Narahubung WhatsApp</label>
-              <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Nomor WhatsApp</label>
-              <input type="text" id="kontakWaNamaMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition sm:hidden" placeholder="Yosi" oninput="document.getElementById('kontakWaNama').value = this.value">
-              <input type="text" id="kontakWaNomor" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition hidden sm:block" placeholder="6281617591588">
-            </div>
-
-            <!-- Di Mobile, menampilkan 'Nomor WhatsApp' -->
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Nomor WhatsApp</label>
-              <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Link Instagram</label>
-              <input type="text" id="kontakWaNomorMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition sm:hidden" placeholder="6281617591588" oninput="document.getElementById('kontakWaNomor').value = this.value">
-              <input type="text" id="kontakIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition hidden sm:block" placeholder="https://www.instagram.com/humas.hmmal/">
-            </div>
-          </div>
-
-          <!-- Baris 3 Desktop: Link YouTube & Link TikTok -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Link YouTube</label>
-              <input type="text" id="kontakYt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="https://www.youtube.com/@hmmanajemendanadministrasi9490">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Link TikTok</label>
-              <input type="text" id="kontakTt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition" placeholder="https://www.tiktok.com/@hmmalundip">
-            </div>
-          </div>
-
-          <!-- Baris: Deskripsi Footer -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Footer</label>
-            <textarea id="kontakFooter" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition resize-none"></textarea>
-          </div>
-
-        </div>
-
-        <div class="flex justify-end">
-          <button type="submit" id="btnSaveKontak" class="px-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer">
-            Simpan Perubahan Kontak
-          </button>
-        </div>
-      </form>
-    </section>
-
-    <!-- TAB VIEW 5: AKTIVITAS (SYSTEM LOGS) -->
-    <section id="tab-aktivitas" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-      <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-          <div>
-            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-2.5 h-6 rounded-full bg-[#6B1D2F] inline-block"></span>
-              Log Aktivitas & Riwayat Unggahan
-            </h2>
-            <p class="text-xs text-slate-500 mt-1">Catatan pembaruan konten dan aktivitas publikasi terbaru di CMS.</p>
-          </div>
-          <button onclick="addLog('Melakukan penyegaran data sistem', 'sistem')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
-            Catat Log
-          </button>
-        </div>
-
-        <div id="activityLogsList" class="space-y-3">
-          <div class="p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs">
-            <div class="flex items-center gap-3">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <div>
-                <p class="font-bold text-slate-800">Sistem CMS Berjalan Normal</p>
-                <p class="text-[11px] text-slate-500">Terhubung secara real-time dengan Supabase Database.</p>
+          <div id="activityLogsList" class="space-y-3">
+            <div class="p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs">
+              <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <div>
+                  <p class="font-bold text-slate-800">Sistem CMS Berjalan Normal</p>
+                  <p class="text-[11px] text-slate-500">Terhubung secara real-time dengan Supabase Database.</p>
+                </div>
               </div>
+              <span class="text-[10px] font-semibold text-slate-400">Baru Saja</span>
             </div>
-            <span class="text-[10px] font-semibold text-slate-400">Baru Saja</span>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-  </main>
+    </main>
+  </div>
 
   <!-- Edit Program Kerja Modal -->
   <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
@@ -835,10 +772,11 @@
           </select>
         </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Waktu Pelaksanaan</label>
-            <input type="text" id="editProWaktu" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
-          </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Waktu Pelaksanaan</label>
+          <input type="text" id="editProWaktu" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
+        </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Program</label>
           <textarea id="editProDeskripsi" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition resize-none" required></textarea>
@@ -862,54 +800,9 @@
     </div>
   </div>
 
-  <!-- Modal Tambah/Edit Anggota -->
-  <div id="anggotaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
-    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-base font-bold text-slate-900">Tambah / Edit Anggota</h3>
-        <button onclick="closeAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <form id="anggotaForm" class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
-          <input type="text" id="angNama" placeholder="Nama Pengurus" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Jabatan Divisi</label>
-          <input type="text" id="angJabatan" placeholder="Contoh: Kepala Divisi Humas / Staff" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Link Instagram (Opsional)</label>
-          <input type="text" id="angIg" placeholder="https://instagram.com/username" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Pengurus</label>
-          <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer">
-        </div>
-
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-          <button type="button" onclick="closeAnggotaModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
-            Batal
-          </button>
-          <button type="submit" id="btnSaveAnggota" class="px-5 py-2.5 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition">
-            Simpan Anggota
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <!-- Modal Edit Anggota -->
   <div id="editAnggotaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
     <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
-      
-      <!-- Header Modal -->
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-900">Edit Data Anggota</h3>
         <button onclick="closeEditAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
@@ -917,18 +810,15 @@
         </button>
       </div>
 
-      <!-- Form Edit -->
       <form id="editAnggotaForm" class="space-y-4">
         <input type="hidden" id="editAngId">
         <input type="hidden" id="editAngOldFotoUrl">
 
-        <!-- Nama Lengkap -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
           <input type="text" id="editAngNama" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
         </div>
 
-        <!-- Role / Jabatan -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
           <div class="relative flex items-center">
@@ -948,7 +838,6 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <!-- Kategori Filter ID -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
             <div class="relative flex items-center">
@@ -964,7 +853,6 @@
             </div>
           </div>
 
-          <!-- Badge Card -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
             <div class="relative flex items-center">
@@ -981,7 +869,6 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <!-- Divisi -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Divisi</label>
             <div class="relative flex items-center">
@@ -997,32 +884,27 @@
             </div>
           </div>
 
-          <!-- MAL (Tahun/Angkatan) -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
             <input type="text" id="editAngMal" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
           </div>
         </div>
 
-        <!-- Sub Departemen -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Sub Departemen / Keterangan</label>
           <input type="text" id="editAngSubDept" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
         </div>
 
-        <!-- Motto / Quote -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
           <textarea id="editAngQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none"></textarea>
         </div>
 
-        <!-- Username Instagram -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
           <input type="text" id="editAngIg" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition">
         </div>
 
-        <!-- Ganti Foto -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Ganti Foto Anggota (Opsional)</label>
           <input type="file" id="editAngFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer">
@@ -1074,9 +956,9 @@
     let listAnggota = [];
     let currentGambarUrl = '';
     let deleteTargetId = null;
-    let deleteTargetType = 'prokerja'; // 'prokerja' | 'anggota'
+    let deleteTargetType = 'prokerja';
     let inactivityTimer;
-    const inactivityLimit = 5 * 60 * 1000; // 5 menit dalam milidetik
+    const inactivityLimit = 5 * 60 * 1000;
 
     function logoutDueToInactivity() {
         supabaseClient.auth.signOut().catch(() => {});
@@ -1188,7 +1070,6 @@
       }, 3500);
     }
 
-    // FUNGSI PEREKAM LOG AKTIVITAS
     function addLog(activityMessage, category = 'Konten') {
       const list = document.getElementById('activityLogsList');
       if (!list) return;
@@ -1838,7 +1719,6 @@
       checkAuth();
     });
 
-    // Pendaftaran Service Worker untuk PWA
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
