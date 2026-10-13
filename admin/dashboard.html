@@ -1714,8 +1714,13 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const savedTab = localStorage.getItem('activeDashboardTab') || 'program-kerja';
-      switchTab(savedTab);
+      // Ambil tab terakhir yang aktif, atau default-kan ke 'program-kerja' jika baru pertama login
+      const defaultTab = localStorage.getItem('activeDashboardTab') || 'program-kerja';
+      
+      // Panggil switchTab agar konten langsung tampil tidak blank
+      switchTab(defaultTab);
+      
+      // Jalankan cek autentikasi
       checkAuth();
     });
 
