@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login Admin Humas HMMAL UNDIP - Kelola informasi dan program kerja Humas HMMAL UNDIP dengan mudah.">
+    <title>Login Admin CMS - Humas HMMAL UNDIP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/logo-humas.webp" />
+
+    <style>
+      body { 
+        font-family: 'Inter', sans-serif; 
+      }
+      /* Kartu Glassmorphism Terang & Elegan */
+      .light-glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 25px 50px -12px rgba(107, 29, 47, 0.15);
+      }
+    </style>
+</head>
+<body class="min-h-screen relative flex items-center justify-center text-slate-800 overflow-x-hidden select-none p-4">
+
+  <!-- Background Foto dengan Overlay Terang & Blur -->
+  <div class="fixed inset-0 z-0">
+    <img 
+      src="../assets/humas26.webp" 
+      alt="Background Humas HMMAL UNDIP" 
+      class="w-full h-full object-cover scale-105 filter brightness-95"
+    />
+    <div class="absolute inset-0 bg-slate-100/40 backdrop-blur-[4px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-tr from-rose-100/60 via-white/50 to-rose-50/70"></div>
+  </div>
+
+  <!-- Card Login Utama -->
+  <main class="w-full max-w-[420px] relative z-10 my-auto py-10">
+    <div class="light-glass-card rounded-3xl p-8 sm:p-10 text-center space-y-6">
+
+      <!-- Logo Organisasi Resmi -->
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white shadow-md border border-rose-100 mx-auto overflow-hidden p-1">
+        <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover rounded-xl">
+      </div>
+
+      <!-- Header Titles -->
+      <div class="space-y-1.5">
+        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Selamat Datang Admin!</h1>
+        <p class="text-xs text-slate-500 leading-relaxed max-w-[280px] mx-auto font-medium">
+          Kelola informasi dan program kerja Humas HMMAL UNDIP dengan aman.
+        </p>
+      </div>
+
+      <!-- Container Message Box Alert -->
+      <div id="errorAlert" class="hidden text-xs text-rose-800 bg-rose-50 border border-rose-200 p-3 rounded-2xl text-center leading-snug font-semibold"></div>
+
+      <!-- Form Login -->
+      <form id="loginForm" class="space-y-4 text-left pt-1">
+
+        <!-- Input Email -->
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700 pl-1">Email</label>
+          <div class="relative">
+            <input 
+              type="email" 
+              id="email" 
+              required 
+              placeholder="admin@humas.com" 
+              class="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition"
+            >
+          </div>
+        </div>
+
+        <!-- Input Password -->
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-700 pl-1">Password</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password" 
+              required 
+              placeholder="Password" 
+              class="w-full pl-4 pr-11 py-3 bg-slate-50/80 border border-slate-200 rounded-2xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] focus:ring-2 focus:ring-[#6B1D2F]/10 outline-none transition"
+            >
+            <!-- Button Toggle Password View -->
+            <button 
+              type="button" 
+              id="togglePassword" 
+              aria-label="Tampilkan atau sembunyikan kata sandi" 
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition cursor-pointer"
+            >
+              <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Tombol Masuk Utama -->
+        <button 
+          type="submit" 
+          id="btnLogin" 
+          class="w-full py-3 px-6 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-2xl shadow-lg shadow-rose-950/15 transition duration-200 active:scale-[0.98] disabled:opacity-70 cursor-pointer mt-3"
+        >
+          Log In
+        </button>
+        
+        <!-- Footer Info -->
+        <div class="pt-3 border-t border-slate-200/60">
+            <p class="text-[11px] text-slate-400 text-center font-medium leading-relaxed">
+                © Bidang Hubungan Masyarakat — HMMAL UNDIP
+            </p>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://gaslxxrrhvwtsnwzvhej.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdhc2x4eHJyaHZ3dHNud3p2aGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTM3MzEsImV4cCI6MjEwNDg2OTczMX0.WdsQoA11wTIKETeA-SThAd5PQjSGPO1wdI2G3F4w8l8';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function checkSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        window.location.replace('dashboard-mobile.html');
+      }
+    }
+    checkSession();
+
+    // Toggle Tampilkan / Sembunyikan Password Interaktif
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (togglePassword && passwordInput && eyeIcon) {
+      togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        
+        if (isPassword) {
+          // Ubah ke teks biasa & ubah ikon mata menjadi tercoret (sembunyikan)
+          passwordInput.setAttribute('type', 'text');
+          eyeIcon.innerHTML = `
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
+          `;
+        } else {
+          // Ubah kembali ke password & ubah ikon mata menjadi terbuka
+          passwordInput.setAttribute('type', 'password');
+          eyeIcon.innerHTML = `
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+          `;
+        }
+      });
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btnLogin');
+        const errorAlert = document.getElementById('errorAlert');
+        
+        errorAlert.classList.add('hidden');
+        btn.innerText = 'Memproses...';
+        btn.disabled = true;
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          errorAlert.innerText = 'Gagal masuk: ' + error.message;
+          errorAlert.classList.remove('hidden');
+          btn.innerText = 'Log In';
+          btn.disabled = false;
+        } else {
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.replace('dashboard-mobile.html');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
