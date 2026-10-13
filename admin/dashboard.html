@@ -1306,12 +1306,10 @@
       const file = input.files[0];
       if (!file) return;
 
-      const localUrl = URL.createObjectURL(file);
       const previewImg = document.getElementById('editablePhotoPreview');
-      previewImg.src = localUrl;
+      previewImg.src = URL.createObjectURL(file); // Preview lokal instan di device pengunggah
 
-      // SIMPAN PERMANEN DI LOCALSTORAGE AGAR TIDAK HILANG SAAT LOGOUT
-      localStorage.setItem('saved_admin_account_photo', localUrl);
+      showToast('Mengunggah foto...', 'info');
 
       try {
         const fileName = `profile_9_10_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
@@ -1321,16 +1319,19 @@
         const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
         const newUrl = pubData.publicUrl;
 
-        // Update URL permanen ke database Supabase (jika tabel tentang_kami digunakan)
-        await supabaseClient.from('tentang_kami').update({ gambar_url: newUrl }).eq('id', 1);
+        // SIMPAN KE DATABASE SUPABASE AGAR TERSINKRON KE SEMUA DEVICE
+        const { error: updateError } = await supabaseClient
+          .from('tentang_kami')
+          .update({ gambar_url: newUrl })
+          .eq('id', 1);
 
-        // Perbarui localStorage dengan URL publik Supabase yang valid
-        localStorage.setItem('saved_admin_account_photo', newUrl);
+        if (updateError) throw updateError;
+
         previewImg.src = newUrl;
-
+        showToast('Foto berhasil tersinkron ke semua perangkat!', 'success');
         addLog('Memperbarui foto profil akun', 'Akun');
       } catch (err) {
-        showToast('Gagal mengunggah ke server, menggunakan penyimpanan lokal.', 'info');
+        showToast('Gagal mengunggah foto: ' + err.message, 'error');
       }
     }
 
@@ -1949,11 +1950,16 @@
         const el = document.getElementById('akunEmail');
         if (el) el.textContent = (session && session.user && session.user.email) || '-';
 
-        // MUAT KEMBALI FOTO YANG TERSIMPAN PERMANEN
-        const savedPhoto = localStorage.getItem('saved_admin_account_photo');
-        if (savedPhoto) {
+        // AMBIL DATA GAMBAR TERBARU LANGSUNG DARI DATABASE SUPABASE
+        const { data, error } = await supabaseClient
+          .from('tentang_kami')
+          .select('gambar_url')
+          .eq('id', 1)
+          .maybeSingle();
+
+        if (!error && data && data.gambar_url) {
           const previewImg = document.getElementById('editablePhotoPreview');
-          if (previewImg) previewImg.src = savedPhoto;
+          if (previewImg) previewImg.src = data.gambar_url;
         }
       } catch (e) {
         console.error('Gagal memuat akun:', e);
