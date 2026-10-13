@@ -1,7 +1,7 @@
 {
   "name": "Dashboard Admin Humas HMMAL",
   "short_name": "Admin Humas",
-  "start_url": "dashboard.html",
+  "start_url": "dashboard-mobile.html",
   "display": "standalone",
   "background_color": "#FAF6F6",
   "theme_color": "#6B1D2F",
