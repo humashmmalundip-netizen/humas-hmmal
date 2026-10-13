@@ -8,6 +8,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../assets/logo-humas.webp" />
+    
+    <!-- Anti-Cache Headers (Mencegah Halaman Tersimpan di Cache Browser) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <!-- PWA Manifest & Theme Color -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6B1D2F">
@@ -1094,13 +1100,10 @@
       try {
         const { data: { session }, error } = await supabaseClient.auth.getSession();
 
+        // Jika sesi tidak ada atau error, bersihkan data & lempar ke login
         if (error || !session) {
-          if (window.location.protocol === 'blob:') {
-            const dashboardEl = document.getElementById('dashboardContent');
-            if (dashboardEl) dashboardEl.style.display = 'flex';
-            loadProkerjaData();
-            return;
-          }
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('activeDashboardTab');
           safeRedirect('login.html');
           return;
         }
@@ -1112,23 +1115,36 @@
 
         supabaseClient.auth.onAuthStateChange((event, session) => {
           if (event === 'SIGNED_OUT' || !session) {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('activeDashboardTab');
             safeRedirect('login.html');
           }
         });
       } catch (err) {
-        const dashboardEl = document.getElementById('dashboardContent');
-        if (dashboardEl) dashboardEl.style.display = 'flex';
-        loadProkerjaData();
+        localStorage.removeItem('isLoggedIn');
+        safeRedirect('login.html');
       }
     }
 
+    // PROTEKSI ALA M-BANKING: Muat ulang halaman jika dimuat dari cache browser (Tombol Back HP/Browser)
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+
     async function handleLogout() {
       try { 
+        // 1. Hancurkan sesi di Supabase
         await supabaseClient.auth.signOut(); 
       } catch (err) {}
+
+      // 2. Bersihkan penyimpanan lokal
       localStorage.removeItem('isLoggedIn');
-      addLog('Admin keluar (Logout) dari sesi Dashboard', 'Sistem');
-      safeRedirect('login.html');
+      localStorage.removeItem('activeDashboardTab');
+
+      // 3. Paksa berpindah ke login.html tanpa menyimpan history dashboard
+      window.location.replace('login.html');
     }
 
     /* =========================================
