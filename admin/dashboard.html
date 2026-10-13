@@ -37,17 +37,27 @@
 
     /* ===== MOBILE HOME (hanya layar < 768px) ===== */
     #mobileHome, #mobileHomeHeader, #mobileBottomNav { display: none; }
-    #btnMobileBack { display: none; }
     @media (max-width: 767px) {
+      #mobileHomeHeader { display: block; }
       body.mobile-home-active #mobileHome { display: block; }
-      body.mobile-home-active #mobileHomeHeader { display: block; }
-      body.mobile-home-active #mobileBottomNav { display: flex; }
-      /* Header lama (logo + hamburger) disembunyikan saat di beranda */
-      body.mobile-home-active > header:not(#mobileHomeHeader) { display: none; }
-      /* Semua tab disembunyikan saat di beranda */
       body.mobile-home-active .tab-content { display: none !important; }
-      /* Tombol kembali muncul saat berada di dalam menu */
-      body:not(.mobile-home-active) #btnMobileBack { display: flex; }
+
+      /* Bottom nav tampil di Beranda DAN di menu Akun */
+      body.mobile-home-active #mobileBottomNav,
+      body.mobile-akun-active #mobileBottomNav { display: flex; }
+
+      .tab-content > .bg-gradient-to-r { display: none !important; }
+      .tab-content > .bg-gradient-to-r + * { margin-top: 0 !important; }
+
+      /* Tombol back: hilang di Beranda dan di Akun */
+      body.mobile-home-active #btnHeaderBack,
+      body.mobile-akun-active #btnHeaderBack { display: none; }
+      body:not(.mobile-home-active) #btnHeaderBell { display: none; }
+
+      /* Warna aktif bottom nav mengikuti halaman yang sedang dibuka */
+      #btnNavHome, #btnNavAkun { color: #94a3b8; }
+      body.mobile-home-active #btnNavHome,
+      body.mobile-akun-active #btnNavAkun { color: #6B1D2F; }
     }
   </style>
 </head>
@@ -58,103 +68,19 @@
     <div class="absolute bottom-0 -left-20 w-[500px] h-[500px] bg-rose-100/50 rounded-full blur-3xl opacity-60"></div>
   </div>
 
-  <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-rose-100 shadow-sm shrink-0">
-    <div class="px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
-        <button id="btnMobileBack" onclick="showMobileHome()" class="items-center justify-center w-8 h-8 -ml-1 text-slate-700 hover:bg-rose-50 rounded-xl transition cursor-pointer" aria-label="Kembali ke beranda">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter shadow-sm overflow-hidden">
-            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
-        </div>
-        <div>
-          <h1 class="text-xs font-bold text-slate-900 leading-none">Dashboard Admin</h1>
-          <p class="text-[10px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
-        </div>
-      </div>
-
-      <!-- Mobile Toggle Button -->
-      <button id="btnMobileMenuToggle" class="p-2 text-slate-700 hover:bg-rose-50 rounded-xl transition cursor-pointer" aria-label="Toggle Navigation">
-        <svg id="iconMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <svg id="iconMenuClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </div>
-  </header>
-
   <!-- HEADER BERANDA MOBILE (hanya tampil di beranda mobile) -->
   <header id="mobileHomeHeader" class="sticky top-0 z-50 bg-[#6B1D2F] shadow-md shrink-0">
     <div class="relative px-4 py-4 flex items-center justify-center">
-      <h1 class="text-sm font-bold text-white">Beranda Admin</h1>
-      <button onclick="openMobileTab('aktivitas')" class="absolute right-3 p-2 text-white hover:bg-white/10 rounded-xl transition cursor-pointer" aria-label="Aktivitas">
+      <button id="btnHeaderBack" onclick="goMobileBack()" class="absolute left-3 p-2 text-white hover:bg-white/10 rounded-xl transition cursor-pointer" aria-label="Kembali">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <h1 id="mobileHeaderTitle" class="text-sm font-bold text-white">Beranda Admin</h1>
+      <button id="btnHeaderBell" onclick="openMobileTab('aktivitas')" class="absolute right-3 p-2 text-white hover:bg-white/10 rounded-xl transition cursor-pointer" aria-label="Aktivitas">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
         <span id="mobileBellDot" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-amber-400 border-2 border-[#6B1D2F]"></span>
       </button>
     </div>
   </header>
-
-  <!-- Mobile Slide-over Drawer -->
-  <div id="mobileDropdownMenu" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 ease-in-out">
-    <div id="menuBackdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-xs opacity-0 transition-opacity duration-300 ease-in-out" onclick="toggleMobileMenu()"></div>
-
-    <div id="menuPanel" class="absolute top-0 right-0 bottom-0 w-72 bg-white shadow-2xl p-5 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out">
-      <div class="space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-full bg-[#6B1D2F] flex items-center justify-center text-white text-xs font-extrabold tracking-tighter overflow-hidden">
-              <img src="../assets/logo-humas.webp" alt="Logo" class="w-full h-full object-cover">
-            </div>
-            <div>
-              <h1 class="text-xs font-bold text-slate-900 leading-none">CMS Dashboard</h1>
-              <p class="text-[10px] text-slate-500 font-medium">Humas HMMAL UNDIP</p>
-            </div>
-          </div>
-          <button onclick="toggleMobileMenu()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg cursor-pointer">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
-
-        <nav class="space-y-1.5">
-          <div class="px-3 pb-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase">Navigasi Utama</div>
-
-          <button onclick="switchTab('program-kerja'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="program-kerja">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-            <span>Program Kerja</span>
-          </button>
-
-          <button onclick="switchTab('tentang-kami'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="tentang-kami">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Tentang Kami</span>
-          </button>
-
-          <button onclick="switchTab('anggota'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="anggota">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-            <span>Anggota</span>
-          </button>
-
-          <button onclick="switchTab('kontak-kami'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="kontak-kami">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            <span>Kontak Kami</span>
-          </button>
-
-          <button onclick="switchTab('aktivitas'); toggleMobileMenu();" class="nav-mobile-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 transition" data-tab="aktivitas">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Aktivitas</span>
-          </button>
-        </nav>
-      </div>
-
-      <div class="space-y-2 pt-4 border-t border-slate-100">
-        <a href="../index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          <span>Lihat Website</span>
-        </a>
-        <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200/60 transition cursor-pointer">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-          <span>Keluar</span>
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- Pembungkus Utama Layar Penuh -->
   <div class="flex flex-col md:flex-row flex-1 overflow-hidden w-full bg-slate-50">
@@ -225,7 +151,7 @@
       <section id="mobileHome" class="space-y-5 pb-20">
 
         <!-- Kartu Profil -->
-        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-5 text-white shadow-xl shadow-rose-950/10 flex items-center gap-4 relative overflow-hidden">
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-xl p-5 text-white shadow-xl shadow-rose-950/10 flex items-center gap-4 relative overflow-hidden">
           <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
           <div class="w-16 h-16 rounded-full bg-white/15 border-2 border-white/30 overflow-hidden shrink-0 relative z-10">
             <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
@@ -238,7 +164,7 @@
         </div>
 
         <!-- Menu Pengelolaan -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
+        <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
           <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-5">
             <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Menu Pengelolaan</h3>
             <span class="text-[10px] font-bold text-slate-400">CMS Panel</span>
@@ -291,7 +217,7 @@
         </div>
 
         <!-- Ringkasan Sistem -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
+        <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
           <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-4">Ringkasan Sistem</h3>
           <div class="grid grid-cols-2 gap-3">
             <div class="bg-rose-50 border border-rose-100 rounded-2xl py-3 text-center">
@@ -310,7 +236,7 @@
       <section id="tab-program-kerja" class="tab-content space-y-8">
         
         <!-- Header Banner -->
-        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
           <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
           <div class="space-y-1 relative z-10">
             <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
@@ -334,7 +260,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           <!-- Bagian Kiri: Form Tambah/Edit Program Kerja -->
-          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
             <div class="border-b border-slate-100 pb-4">
               <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
@@ -440,7 +366,7 @@
           </section>
 
           <!-- Bagian Kanan: Daftar Program Kerja & Tabel -->
-          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
                 <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -484,7 +410,7 @@
 
       <!-- TAB VIEW 2: TENTANG KAMI -->
       <section id="tab-tentang-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-        <div class="bg-gradient-to-r from-[#6B1D2F] via-[#7D2238] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="bg-gradient-to-r from-[#6B1D2F] via-[#7D2238] to-[#8C283F] rounded-xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
           <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
           <div class="space-y-1 relative z-10">
             <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
@@ -505,7 +431,7 @@
         </div>
 
         <form id="formTentangKami" class="space-y-6">
-          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-6">
+          <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-6">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div class="flex items-center gap-2.5">
                 <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">1</span>
@@ -546,7 +472,7 @@
             </div>
           </div>
 
-          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
+          <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
             <div class="flex items-center gap-2.5 border-b border-slate-100 pb-4">
               <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">2</span>
               <div>
@@ -564,7 +490,7 @@
             </div>
           </div>
 
-          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
+          <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-8 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div class="flex items-center gap-2.5">
                 <span class="w-7 h-7 rounded-xl bg-rose-50 text-[#6B1D2F] font-extrabold text-xs flex items-center justify-center border border-rose-100">3</span>
@@ -587,7 +513,7 @@
             </div>
           </div>
 
-          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 flex items-center justify-between">
+          <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 flex items-center justify-between">
             <p class="text-xs text-slate-400 hidden sm:block">Pastikan data yang diisi sudah benar sebelum menyimpan.</p>
             <button 
               type="submit" 
@@ -603,7 +529,7 @@
 
       <!-- TAB VIEW 3: ANGGOTA -->
       <section id="tab-anggota" class="tab-content hidden space-y-8 !mt-0 !pt-0">
-        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
           <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
           <div class="space-y-1 relative z-10">
             <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">
@@ -624,7 +550,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
             <div class="border-b border-slate-100 pb-4">
               <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
@@ -742,7 +668,7 @@
             </form>
           </section>
 
-          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
                 <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -765,7 +691,7 @@
 
       <!-- TAB VIEW 4: KONTAK KAMI -->
       <section id="tab-kontak-kami" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
           <div class="space-y-1 relative z-10">
             <div class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[11px] font-semibold text-rose-100 mb-1">Manajemen Konten</div>
             <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Kelola Kontak & Sosial Media</h2>
@@ -774,7 +700,7 @@
         </div>
 
         <form id="formKontakKami" class="space-y-6">
-          <div class="bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
+          <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
             <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">Email Resmi</label>
@@ -829,14 +755,14 @@
 
       <!-- TAB VIEW 5: AKTIVITAS -->
       <section id="tab-aktivitas" class="tab-content hidden space-y-6 !mt-0 !pt-0">
-        <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
+        <div class="bg-white/90 backdrop-blur-xl rounded-xl border border-white shadow-lg p-6 sm:p-8 space-y-6">
           <div class="flex items-center justify-between border-b border-slate-100 pb-4">
             <div>
-              <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <span class="w-2.5 h-6 rounded-full bg-[#6B1D2F] inline-block"></span>
-                Log Aktivitas & Riwayat Unggahan
+                Log Aktivitas
               </h2>
-              <p class="text-xs text-slate-500 mt-1">Catatan pembaruan konten dan aktivitas publikasi terbaru di CMS.</p>
+              <p class="text-xs text-slate-500 mt-1">Catatan pembaruan konten dan aktivitas terbaru.</p>
             </div>
             <button onclick="addLog('Melakukan penyegaran data sistem', 'sistem')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
               Catat Log
@@ -858,12 +784,41 @@
         </div>
       </section>
 
-    </main>
-  </div>
+      <!-- TAB VIEW 6: AKUN (mobile) -->
+    <section id="tab-akun" class="tab-content hidden space-y-5 !mt-0 !pt-0 pb-28">
+      <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-6 flex flex-col items-center text-center gap-3">
+        <div class="w-20 h-20 rounded-full bg-[#6B1D2F] overflow-hidden ring-4 ring-rose-100">
+          <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <h2 class="text-base font-extrabold text-slate-900">Admin Humas HMMAL</h2>
+          <p id="akunEmail" class="text-xs text-slate-500 mt-0.5">-</p>
+        </div>
+        <span class="px-3 py-1 bg-rose-50 text-[#6B1D2F] rounded-full text-[10px] font-bold uppercase tracking-wider">Admin CMS</span>
+      </div>
+
+      <!-- Foto Full Rasio 16:10 Tanpa Card & Space Putih -->
+      <div class="relative group cursor-pointer w-full aspect-[16/10] overflow-hidden rounded-xl shadow-lg shadow-rose-950/5" onclick="document.getElementById('hiddenEditablePhotoInput').click()" title="Tekan foto untuk mengubah">
+        <img id="editablePhotoPreview" src="https://placehold.co/400x250/6B1D2F/ffffff?text=Tekan+Untuk+Ganti+Foto" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
+        <div class="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+          <span class="px-4 py-2 bg-white/90 backdrop-blur-md rounded-xl text-xs font-bold text-slate-800 shadow-sm">Ganti Foto</span>
+        </div>
+        <input type="file" id="hiddenEditablePhotoInput" accept="image/*" class="hidden" onchange="handleEditablePhotoUpload(this)">
+      </div>
+
+      <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5 space-y-2">
+        <a href="../index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">
+          <span>Lihat Website</span>
+        </a>
+        <button onclick="window.open('https://www.instagram.com/rifkiinhs/', '_blank')" class="w-full flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl text-xs font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200/60 transition cursor-pointer">
+          <span>Instagram</span>
+        </button>
+      </div>
+    </section>
 
     <!-- BOTTOM NAV BERANDA MOBILE -->
   <nav id="mobileBottomNav" class="fixed bottom-0 inset-x-0 z-40 h-16 bg-white border-t border-slate-100 items-center justify-between px-10 shadow-[0_-4px_16px_rgba(107,29,47,0.08)]">
-    <button onclick="showMobileHome()" class="flex flex-col items-center gap-0.5 text-[#6B1D2F] cursor-pointer">
+    <button id="btnNavHome" onclick="goMobileHome()" class="flex flex-col items-center gap-0.5 cursor-pointer">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg>
       <span class="text-[10px] font-bold">Beranda</span>
     </button>
@@ -872,15 +827,15 @@
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
     </button>
 
-    <button onclick="openMobileTab('aktivitas')" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#6B1D2F] cursor-pointer">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-      <span class="text-[10px] font-bold">Aktivitas</span>
+    <button id="btnNavAkun" onclick="openMobileTab('akun')" class="flex flex-col items-center gap-0.5 cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span class="text-[10px] font-bold">Akun</span>
     </button>
   </nav>
 
   <!-- Edit Program Kerja Modal -->
   <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
-    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-xl p-6 sm:p-7 max-w-lg w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-900">Edit Program Kerja</h3>
         <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
@@ -939,7 +894,7 @@
 
   <!-- Modal Edit Anggota -->
   <div id="editAnggotaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-all">
-    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-900">Edit Data Anggota</h3>
         <button onclick="closeEditAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
@@ -1062,7 +1017,7 @@
 
   <!-- Confirmation Delete Modal -->
   <div id="deleteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-slate-100">
+    <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-slate-100">
       <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-800 flex items-center justify-center mx-auto">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
       </div>
@@ -1117,8 +1072,24 @@
     window.onscroll = resetInactivityTimer;
     window.onkeypress = resetInactivityTimer;
 
+    const MOBILE_TITLES = {
+  'program-kerja': 'Program Kerja',
+  'tentang-kami': 'Tentang Kami',
+  'anggota': 'Anggota',
+  'kontak-kami': 'Kontak Kami',
+  'aktivitas': 'Aktivitas',
+  'akun': 'Akun'
+    };
+    function setMobileTitle(tabId) {
+      const el = document.getElementById('mobileHeaderTitle');
+      if (!el) return;
+      el.textContent = tabId === 'home' ? 'Beranda Admin' : (MOBILE_TITLES[tabId] || 'Dashboard Admin');
+    }
+    
     function switchTab(tabId) {
       document.body.classList.remove('mobile-home-active'); // <-- TAMBAHAN: keluar dari beranda mobile
+      document.body.classList.toggle('mobile-akun-active', tabId === 'akun');
+      setMobileTitle(tabId);
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       
       const targetTab = document.getElementById(`tab-${tabId}`);
@@ -1142,6 +1113,7 @@
       if (tabId === 'tentang-kami') loadTentangKamiData();
       if (tabId === 'anggota') loadAnggotaData();
       if (tabId === 'kontak-kami') loadKontakData();
+      if (tabId === 'akun') loadAkunData();
 
       localStorage.setItem('activeDashboardTab', tabId);
     }
@@ -1153,6 +1125,8 @@
 
     function showMobileHome() {
       document.body.classList.add('mobile-home-active');
+      document.body.classList.remove('mobile-akun-active');
+      setMobileTitle('home');
       const mainEl = document.querySelector('main');
       if (mainEl) mainEl.scrollTop = 0;
       refreshMobileSummary();
@@ -1179,10 +1153,34 @@
     }
 
     function openMobileTab(tabId) {
-      switchTab(tabId);
-      const mainEl = document.querySelector('main');
-      if (mainEl) mainEl.scrollTop = 0;
+    // Push history hanya saat berpindah dari Beranda ke sebuah menu
+    if (isMobileView() && document.body.classList.contains('mobile-home-active')) {
+      history.pushState({ view: 'menu', tab: tabId }, '');
     }
+    switchTab(tabId);
+    const mainEl = document.querySelector('main');
+    if (mainEl) mainEl.scrollTop = 0;
+    }
+
+    // Tombol panah kembali di header
+    function goMobileBack() {
+      if (history.state && history.state.view === 'menu') history.back();
+      else showMobileHome();
+    }
+
+    // Tombol "Beranda" di bottom nav
+    function goMobileHome() {
+      if (history.state && history.state.view === 'menu') history.back();
+      else showMobileHome();
+    }
+
+    // Tombol kembali bawaan HP
+    window.addEventListener('popstate', (e) => {
+      if (!isMobileView()) return;
+      const st = e.state;
+      if (st && st.view === 'menu') switchTab(st.tab);
+      else showMobileHome();
+    });
 
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileDropdownMenu');
@@ -1302,6 +1300,39 @@
         window.location.reload();
       }
     });
+
+    // Fungsi untuk menangani perubahan foto rasio 9:10 secara instan via klik
+    async function handleEditablePhotoUpload(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const localUrl = URL.createObjectURL(file);
+      const previewImg = document.getElementById('editablePhotoPreview');
+      previewImg.src = localUrl;
+
+      // SIMPAN PERMANEN DI LOCALSTORAGE AGAR TIDAK HILANG SAAT LOGOUT
+      localStorage.setItem('saved_admin_account_photo', localUrl);
+
+      try {
+        const fileName = `profile_9_10_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const { error: uploadError } = await supabaseClient.storage.from('assets_web').upload(fileName, file);
+        if (uploadError) throw uploadError;
+
+        const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
+        const newUrl = pubData.publicUrl;
+
+        // Update URL permanen ke database Supabase (jika tabel tentang_kami digunakan)
+        await supabaseClient.from('tentang_kami').update({ gambar_url: newUrl }).eq('id', 1);
+
+        // Perbarui localStorage dengan URL publik Supabase yang valid
+        localStorage.setItem('saved_admin_account_photo', newUrl);
+        previewImg.src = newUrl;
+
+        addLog('Memperbarui foto profil akun', 'Akun');
+      } catch (err) {
+        showToast('Gagal mengunggah ke server, menggunakan penyimpanan lokal.', 'info');
+      }
+    }
 
     async function handleLogout() {
       try { 
@@ -1900,18 +1931,34 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Ambil tab terakhir yang aktif, atau default-kan ke 'program-kerja' jika baru pertama login
-      const defaultTab = localStorage.getItem('activeDashboardTab') || 'program-kerja';
-      
-      // Panggil switchTab agar konten langsung tampil tidak blank
-      switchTab(defaultTab);
+      // Desktop: selalu mulai dari Program Kerja
+      switchTab('program-kerja');
 
-      // TAMBAHAN: di mobile, tampilan awal selalu beranda grid menu
-      if (isMobileView()) showMobileHome();
-      
-      // Jalankan cek autentikasi
+      // Mobile: selalu mulai dari Beranda, dan tandai entri history ini sebagai "home"
+      if (isMobileView()) {
+        history.replaceState({ view: 'home' }, '');
+        showMobileHome();
+      }
+
       checkAuth();
     });
+
+    async function loadAkunData() {
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        const el = document.getElementById('akunEmail');
+        if (el) el.textContent = (session && session.user && session.user.email) || '-';
+
+        // MUAT KEMBALI FOTO YANG TERSIMPAN PERMANEN
+        const savedPhoto = localStorage.getItem('saved_admin_account_photo');
+        if (savedPhoto) {
+          const previewImg = document.getElementById('editablePhotoPreview');
+          if (previewImg) previewImg.src = savedPhoto;
+        }
+      } catch (e) {
+        console.error('Gagal memuat akun:', e);
+      }
+    }
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
