@@ -75,10 +75,6 @@
     .tab-content:not(.hidden) {
       animation: zoomInEffect 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    /* ===== TAMBAHAN: ANIMASI ZOOM BERANDA MOBILE ===== */
-    #mobileHome {
-      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
   </style>
 </head>
 <body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 h-screen w-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
@@ -1107,33 +1103,14 @@
     }
     
     function switchTab(tabId) {
-      document.body.classList.remove('mobile-home-active'); 
+      document.body.classList.remove('mobile-home-active'); // <-- TAMBAHAN: keluar dari beranda mobile
       document.body.classList.toggle('mobile-akun-active', tabId === 'akun');
       setMobileTitle(tabId);
-
-      // 1. Sembunyikan SEMUA tab secara langsung agar tidak terjadi tumpang tindih/kedipan
-      document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.add('hidden');
-        el.style.opacity = '0';
-        el.style.transform = 'scale(0.95)';
-      });
-
-      // 2. Munculkan HANYA tab tujuan dengan efek Zoom-In
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      
       const targetTab = document.getElementById(`tab-${tabId}`);
-      if (targetTab) {
-        targetTab.classList.remove('hidden');
-        
-        // Menggunakan requestAnimationFrame agar browser memproses perubahan kelas/display sebelum animasi dimulai
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            targetTab.style.transition = 'opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
-            targetTab.style.opacity = '1';
-            targetTab.style.transform = 'scale(1)';
-          });
-        });
-      }
+      if (targetTab) targetTab.classList.remove('hidden');
 
-      // 3. Update status tombol navigasi aktif
       document.querySelectorAll('.nav-desktop-btn, .nav-mobile-btn').forEach(btn => {
         if (btn.getAttribute('data-tab') === tabId) {
           btn.classList.add('bg-rose-50', 'text-[#6B1D2F]', 'border', 'border-rose-200/50', 'shadow-sm');
@@ -1148,7 +1125,6 @@
         }
       });
 
-      // 4. Muat data dari Supabase sesuai tab
       if (tabId === 'program-kerja') loadProkerjaData();
       if (tabId === 'tentang-kami') loadTentangKamiData();
       if (tabId === 'anggota') loadAnggotaData();
@@ -1169,28 +1145,6 @@
       setMobileTitle('home');
       const mainEl = document.querySelector('main');
       if (mainEl) mainEl.scrollTop = 0;
-
-      // 1. Sembunyikan semua tab menu secara instan
-      document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.add('hidden');
-        el.style.opacity = '0';
-        el.style.transform = 'scale(0.95)';
-      });
-
-      // 2. Munculkan Beranda Mobile dengan efek Zoom-In yang mulus
-      const mobileHomeEl = document.getElementById('mobileHome');
-      if (mobileHomeEl) {
-        mobileHomeEl.style.opacity = '0';
-        mobileHomeEl.style.transform = 'scale(0.95)';
-        
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            mobileHomeEl.style.opacity = '1';
-            mobileHomeEl.style.transform = 'scale(1)';
-          });
-        });
-      }
-
       refreshMobileSummary();
     }
 
@@ -1224,71 +1178,24 @@
     if (mainEl) mainEl.scrollTop = 0;
     }
 
-    // Fungsi bantuan untuk melakukan animasi zoom-out sebelum pindah/kembali
-    function animateAndExecute(callback) {
-      if (!isMobileView()) {
-        callback();
-        return;
-      }
-      const activeTab = document.querySelector('.tab-content:not(.hidden)');
-      if (activeTab) {
-        activeTab.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-        activeTab.style.opacity = '0';
-        activeTab.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          callback();
-        }, 180);
-      } else {
-        callback();
-      }
-    }
-
     // Tombol panah kembali di header
     function goMobileBack() {
-      if (history.state && history.state.view === 'menu') {
-        animateAndExecute(() => {
-          history.back();
-        });
-      } else {
-        animateAndExecute(() => {
-          showMobileHome();
-        });
-      }
+      if (history.state && history.state.view === 'menu') history.back();
+      else showMobileHome();
     }
 
     // Tombol "Beranda" di bottom nav
     function goMobileHome() {
-      if (history.state && history.state.view === 'menu') {
-        animateAndExecute(() => {
-          history.back();
-        });
-      } else {
-        animateAndExecute(() => {
-          showMobileHome();
-        });
-      }
+      if (history.state && history.state.view === 'menu') history.back();
+      else showMobileHome();
     }
 
-    // Tombol kembali bawaan HP / Browser
+    // Tombol kembali bawaan HP
     window.addEventListener('popstate', (e) => {
       if (!isMobileView()) return;
       const st = e.state;
-      
-      // Jalankan animasi zoom-out terlebih dahulu sebelum konten berubah sesuai state history
-      const activeTab = document.querySelector('.tab-content:not(.hidden)');
-      if (activeTab) {
-        activeTab.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
-        activeTab.style.opacity = '0';
-        activeTab.style.transform = 'scale(0.95)';
-      }
-
-      setTimeout(() => {
-        if (st && st.view === 'menu') {
-          switchTab(st.tab);
-        } else {
-          showMobileHome();
-        }
-      }, 150);
+      if (st && st.view === 'menu') switchTab(st.tab);
+      else showMobileHome();
     });
 
     function toggleMobileMenu() {
