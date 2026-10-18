@@ -1208,12 +1208,32 @@
       else showMobileHome();
     }
 
-    // Tombol kembali bawaan HP
+    // Tombol kembali bawaan HP (Popstate Handler)
     window.addEventListener('popstate', (e) => {
       if (!isMobileView()) return;
+      
       const st = e.state;
-      if (st && st.view === 'menu') switchTab(st.tab);
-      else showMobileHome();
+
+      // 1. Cek apakah modal Prokerja sedang terbuka
+      const editModal = document.getElementById('editModal');
+      if (editModal && !editModal.classList.contains('hidden')) {
+        closeEditModal(true); // Tutup modal tanpa mentrigger history.back() lagi
+        return;
+      }
+
+      // 2. Cek apakah modal Anggota sedang terbuka
+      const editAnggotaModal = document.getElementById('editAnggotaModal');
+      if (editAnggotaModal && !editAnggotaModal.classList.contains('hidden')) {
+        closeEditAnggotaModal(true); // Tutup modal tanpa mentrigger history.back() lagi
+        return;
+      }
+
+      // 3. Navigasi antar halaman/menu mobile
+      if (st && st.view === 'menu') {
+        switchTab(st.tab);
+      } else {
+        showMobileHome();
+      }
     });
 
     function toggleMobileMenu() {
@@ -1520,21 +1540,33 @@
       modal.classList.remove('hidden');
       modal.classList.remove('pointer-events-none');
       modal.classList.add('flex');
-      
+
       setTimeout(() => {
         modal.classList.add('active');
       }, 10);
+
+      // TAMBAHAN: Masukkan state modal ke history browser agar tombol Back HP menutup modal
+      if (isMobileView()) {
+        history.pushState({ modal: 'editProkerja' }, '');
+      }
     }
 
-    function closeEditModal() {
+    function closeEditModal(fromPopstate = false) {
       const modal = document.getElementById('editModal');
+      if (modal.classList.contains('hidden')) return;
+
       modal.classList.remove('active');
       modal.classList.add('pointer-events-none');
-      
+
       setTimeout(() => {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }, 250);
+
+      // Jika ditutup via tombol 'Batal'/'X' (bukan Back HP), kembalikan history stack
+      if (isMobileView() && !fromPopstate && history.state && history.state.modal === 'editProkerja') {
+        history.back();
+      }
     }
 
     document.getElementById('editProkerjaForm').addEventListener('submit', async (e) => {
@@ -1804,10 +1836,17 @@
       setTimeout(() => {
         modal.classList.add('active');
       }, 10);
+
+      // TAMBAHAN: Masukkan state modal ke history browser agar tombol Back HP menutup modal
+      if (isMobileView()) {
+        history.pushState({ modal: 'editAnggota' }, '');
+      }
     }
 
-    function closeEditAnggotaModal() {
+    function closeEditAnggotaModal(fromPopstate = false) {
       const modal = document.getElementById('editAnggotaModal');
+      if (modal.classList.contains('hidden')) return;
+
       modal.classList.remove('active');
       modal.classList.add('pointer-events-none');
 
@@ -1815,6 +1854,11 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }, 250);
+
+      // Jika ditutup via tombol 'Batal'/'X' (bukan Back HP), kembalikan history stack
+      if (isMobileView() && !fromPopstate && history.state && history.state.modal === 'editAnggota') {
+        history.back();
+      }
     }
 
     document.getElementById('editAnggotaForm').addEventListener('submit', async (e) => {
