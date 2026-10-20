@@ -534,23 +534,39 @@
         <span id="toast-message" class="font-semibold">Notifikasi</span>
     </div>
 
+    <!-- MODAL KONFIRMASI HAPUS / RESET (CUSTOM DIALOG) -->
+    <div id="confirm-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[70] flex items-center justify-center hidden p-4">
+        <div class="sheet-in bg-white rounded-2xl max-w-xs sm:max-w-sm w-full p-6 text-center shadow-2xl border border-cardborder">
+            <!-- Icon Trash Bulat -->
+            <div class="w-14 h-14 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4 text-xl">
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+
+            <!-- Judul & Deskripsi -->
+            <h3 id="confirm-title" class="text-base font-bold text-forest-950 mb-1.5">Hapus Data?</h3>
+            <p id="confirm-desc" class="text-xs text-slate-500 font-medium leading-relaxed mb-6">
+                Tindakan ini tidak dapat dibatalkan. Data akan dihapus secara permanen.
+            </p>
+
+            <!-- Tombol Aksi (Batal & Ya, Hapus) -->
+            <div class="grid grid-cols-2 gap-2.5">
+                <button type="button" onclick="closeConfirmModal(false)" class="py-2.5 px-4 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+                    Batal
+                </button>
+                <button type="button" id="confirm-action-btn" class="py-2.5 px-4 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-sm active:scale-95 transition">
+                    Ya, Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- SCRIPT LOGIC -->
     <script>
         const DEFAULT_IMG = "https://placehold.co/100x100/143022/ffffff?text=Produk";
 
-        const initialProducts = [
-            { id: 'p1', name: 'Kertas HVS A4 80gr', sku: 'HVS-A4', category: 'Alat Tulis', stock: 45, minStock: 10, price: 48000, image: DEFAULT_IMG },
-            { id: 'p2', name: 'Pulpen Gel Hitam 0.5mm', sku: 'PEN-BLK', category: 'Alat Tulis', stock: 8, minStock: 15, price: 5000, image: DEFAULT_IMG },
-            { id: 'p3', name: 'Mouse Wireless Ergonomis', sku: 'MS-WRL', category: 'Elektronik', stock: 12, minStock: 5, price: 125000, image: DEFAULT_IMG },
-            { id: 'p4', name: 'Tinta Printer Epson Original', sku: 'INK-EPS', category: 'Elektronik', stock: 3, minStock: 5, price: 85000, image: DEFAULT_IMG }
-        ];
-
-        const initialTransactions = [
-            { id: 't1', productId: 'p1', type: 'IN', quantity: 50, date: '2026-10-18', notes: 'Stok Awal A4' },
-            { id: 't2', productId: 'p1', type: 'OUT', quantity: 5, date: '2026-10-19', notes: 'Divisi HRD' },
-            { id: 't3', productId: 'p2', type: 'IN', quantity: 20, date: '2026-10-19', notes: 'Restok Pulpen' },
-            { id: 't4', productId: 'p2', type: 'OUT', quantity: 12, date: '2026-10-20', notes: 'Divisi Operasional' }
-        ];
+        // Ubah menjadi array kosong agar data awal kosong
+        const initialProducts = [];
+        const initialTransactions = [];
 
         let products = JSON.parse(localStorage.getItem('stokku_products')) || initialProducts;
         let transactions = JSON.parse(localStorage.getItem('stokku_transactions')) || initialTransactions;
@@ -581,7 +597,7 @@
         }
 
         // VIEW NAVIGATION
-        function showView(viewName) {
+        function showView(viewName, pushHistory = true) {
             if (viewName === 'search') viewName = 'products';
 
             const views = ['home', 'products', 'transactions', 'account'];
@@ -616,6 +632,11 @@
                 if (viewName === 'products') title.innerText = 'Katalog Barang';
                 if (viewName === 'transactions') title.innerText = 'Riwayat Transaksi';
                 if (viewName === 'account') title.innerText = 'Profil & Pengaturan';
+            }
+
+            // Tambahkan state history agar tombol back HP bisa mundur halaman
+            if (pushHistory) {
+                history.pushState({ view: viewName }, "", "#" + viewName);
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -905,6 +926,7 @@
             }
 
             modal.classList.remove('hidden');
+            history.pushState({ modal: 'product' }, "", "#modal-product");
         }
 
         function closeProductModal() {
@@ -953,8 +975,14 @@
             closeProductModal();
         }
 
-        function deleteProduct(id) {
-            if (confirm('Hapus produk ini dari katalog?')) {
+        async function deleteProduct(id) {
+            const isConfirmed = await showConfirmModal(
+                "Hapus Produk Ini?",
+                "Tindakan ini tidak dapat dibatalkan. Produk akan dihapus dari katalog.",
+                "Ya, Hapus"
+            );
+
+            if (isConfirmed) {
                 const p = products.find(prod => prod.id === id);
                 const pName = p ? p.name : 'Produk';
                 const todayDate = new Date().toISOString().split('T')[0];
@@ -1117,8 +1145,14 @@
             showToast('Mutasi stok berhasil dicatat');
         }
 
-        function deleteTransaction(id) {
-            if (confirm('Hapus riwayat transaksi ini?')) {
+        async function deleteTransaction(id) {
+            const isConfirmed = await showConfirmModal(
+                "Hapus Riwayat Transaksi?",
+                "Tindakan ini tidak dapat dibatalkan. Catatan riwayat ini akan dihapus permanen.",
+                "Ya, Hapus"
+            );
+
+            if (isConfirmed) {
                 transactions = transactions.filter(t => t.id !== id);
                 saveData();
                 showToast('Catatan transaksi dihapus');
@@ -1155,12 +1189,18 @@
             showToast('File CSV diunduh');
         }
 
-        function resetData() {
-            if (confirm('Kembalikan semua data ke default?')) {
-                products = [...initialProducts];
-                transactions = [...initialTransactions];
+        async function resetData() {
+            const isConfirmed = await showConfirmModal(
+                "Reset Semua Data?",
+                "Semua data produk dan riwayat transaksi akan dibersihkan secara permanen.",
+                "Ya, Reset"
+            );
+
+            if (isConfirmed) {
+                products = [];
+                transactions = [];
                 saveData();
-                showToast('Data direset ke default');
+                showToast('Semua data berhasil dibersihkan');
             }
         }
 
@@ -1214,6 +1254,58 @@
             updateDashboard();
             showView('home');
         };
+
+        // Menangkap tombol back fisik/browser HP
+        window.addEventListener('popstate', function(event) {
+            // Jika ada modal yang sedang terbuka, tutup modalnya terlebih dahulu
+            const productModal = document.getElementById('product-modal');
+            const txModal = document.getElementById('transaction-modal');
+            
+            if (!productModal.classList.contains('hidden')) {
+                closeProductModal();
+                return;
+            }
+            if (!txModal.classList.contains('hidden')) {
+                closeTransactionModal();
+                return;
+            }
+
+            // Jika sedang di halaman lain, kembalikan ke beranda (home) terlebih dahulu
+            const currentView = document.querySelector('[id^="view-"]:not(.hidden)').id.replace('view-', '');
+            if (currentView !== 'home') {
+                showView('home', false); // false agar tidak menumpuk riwayat baru
+            }
+        });
+
+        // Variable untuk menyimpan callback konfirmasi
+        let confirmResolver = null;
+
+        function showConfirmModal(title, desc, confirmText = "Ya, Hapus") {
+            return new Promise((resolve) => {
+                document.getElementById('confirm-title').innerText = title;
+                document.getElementById('confirm-desc').innerText = desc;
+                
+                const actionBtn = document.getElementById('confirm-action-btn');
+                actionBtn.innerText = confirmText;
+                
+                // Pasang resolver
+                confirmResolver = resolve;
+                
+                actionBtn.onclick = function() {
+                    closeConfirmModal(true);
+                };
+
+                document.getElementById('confirm-modal').classList.remove('hidden');
+            });
+        }
+
+        function closeConfirmModal(result) {
+            document.getElementById('confirm-modal').classList.add('hidden');
+            if (confirmResolver) {
+                confirmResolver(result);
+                confirmResolver = null;
+            }
+        }
     </script>
 </body>
 </html>
