@@ -726,29 +726,53 @@
         <!-- INFORMASI UMUM -->
         <div class="bg-white rounded-xl shadow-sm border border-cardborder overflow-hidden">
             <h4 class="px-5 pt-5 pb-1 text-xs font-bold text-slate-400">Informasi Umum</h4>
-            <div id="acc-contact" class="acc">
+
+            <!-- Accordion 1: Hubungi Kami -->
+            <div id="acc-contact" class="acc border-b border-slate-100">
                 <button type="button" onclick="toggleAccordion('acc-contact')" aria-expanded="false" aria-controls="acc-contact-body" class="w-full flex items-center gap-3.5 px-5 py-4 text-left">
                     <span class="w-11 h-11 rounded-full bg-sage-100 text-forest-800 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-comments"></i>
                     </span>
                     <span class="flex-1 min-w-0">
                         <span class="block text-sm font-bold text-forest-950">Hubungi Kami</span>
-                        <!-- Tambahin span kalo mau dipake - class="block text-xs text-slate-400 mt-0.5">Tutorial, Email -->
+                        <span class="block text-xs text-slate-400 mt-0.5">Email, Instagram</span>
                     </span>
                     <i class="acc-chevron fa-solid fa-chevron-down text-xs text-slate-400"></i>
                 </button>
                 <div id="acc-contact-body" class="acc-body">
                     <div>
-                        <button type="button" onclick="openTutorialModal()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
-                            <span>Tutorial</span>
-                            <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
-                        </button>
                         <button type="button" onclick="contactEmail()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
                             <span>Email</span>
                             <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                         </button>
                         <button type="button" onclick="contactInstagram()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
                             <span>Instagram</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion 2: Tentang (Dropdown Baru) -->
+            <div id="acc-about" class="acc">
+                <button type="button" onclick="toggleAccordion('acc-about')" aria-expanded="false" aria-controls="acc-about-body" class="w-full flex items-center gap-3.5 px-5 py-4 text-left">
+                    <span class="w-11 h-11 rounded-full bg-sage-100 text-forest-800 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </span>
+                    <span class="flex-1 min-w-0">
+                        <span class="block text-sm font-bold text-forest-950">Tentang</span>
+                        <span class="block text-xs text-slate-400 mt-0.5">Tutorial, Update Terbaru</span>
+                    </span>
+                    <i class="acc-chevron fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+                <div id="acc-about-body" class="acc-body">
+                    <div>
+                        <button type="button" onclick="openTutorialModal()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
+                            <span>Tutorial</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="openUpdateLink()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
+                            <span>Dapatkan Update Terbaru</span>
                             <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                         </button>
                     </div>
@@ -1800,7 +1824,8 @@
             tagline: 'Sistem Pencatatan Stok',
             splashDuration: 2600,  
             contactEmail: 'humashmmalundip@gmail.com', // Ganti dengan email Anda
-            instagramUrl: 'https://instagram.com/humas.hmmal' // Ganti dengan link Instagram Anda
+            instagramUrl: 'https://instagram.com/humas.hmmal', // <--- TAMBAHKAN KOMA DI SINI
+            downloadUrl: 'https://www.humashmmalundip.web.id/downloader' // Ganti dengan link download aplikasi Anda
         };
 
         const ONBOARDING_SLIDES = [
@@ -1978,6 +2003,10 @@
 
         function contactInstagram() {
             window.open(APP_CONFIG.instagramUrl, '_blank');
+        }
+
+        function openUpdateLink() {
+            window.open(APP_CONFIG.downloadUrl, '_blank');
         }
 
         function openTutorialModal() {
