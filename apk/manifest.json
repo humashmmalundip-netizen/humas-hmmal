@@ -8,12 +8,12 @@
   "theme_color": "#0e2018",
   "icons": [
     {
-      "src": "/apk/images/logo-digistock.png",
+      "src": "/apk/images/logo-digistock-tr.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/apk/images/logo-digistock.png",
+      "src": "/apk/images/logo-digistock-tr.png",
       "sizes": "512x512",
       "type": "image/png"
     }
