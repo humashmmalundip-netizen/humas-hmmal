@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unduh Aplikasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  CARA MENAMBAH APLIKASI
+  1. Simpan file aplikasi di folder "files" (sejajar dengan index.html).
+  2. Tambahkan satu blok { ... } baru di daftar APPS pada bagian <script> di bawah.
+  3. Unggah index.html dan folder files ke hosting Anda.
+-->
+<style>
+  :root {
+    --bg: #e9eef2;
+    --surface: #ffffff;
+    --ink: #1b2a41;
+    --muted: #55657a;
+    --line: #cdd6df;
+    --accent: #0f7476;
+    --accent-ink: #ffffff;
+    --focus: #b8860b;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 56px 20px 72px; }
+
+  header h1 {
+    font-family: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+  }
+  header p { margin: 0; max-width: 52ch; color: var(--muted); font-size: 1.05rem; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 36px 0 18px; }
+  .filters button {
+    font: inherit; font-weight: 500; font-size: .92rem;
+    padding: 7px 14px; border-radius: 999px; cursor: pointer;
+    border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+  }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+  ul.apps { list-style: none; margin: 0; padding: 0; background: var(--surface); border-radius: 10px; border: 1px solid var(--line); }
+  .app {
+    display: grid;
+    grid-template-columns: 84px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 22px;
+  }
+  .app + .app { border-top: 1px solid var(--line); }
+
+  .ext {
+    width: 84px; height: 64px; border-radius: 6px;
+    display: grid; place-items: center;
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 700; font-size: 1.3rem; letter-spacing: -0.01em;
+    color: #fff; background: var(--ink);
+  }
+  .ext[data-ext="apk"] { background: #2f7d4f; }
+  .ext[data-ext="exe"], .ext[data-ext="msi"] { background: #2b5fa8; }
+  .ext[data-ext="dmg"], .ext[data-ext="pkg"] { background: #5a4a8a; }
+  .ext[data-ext="zip"], .ext[data-ext="rar"], .ext[data-ext="7z"] { background: #8a5a2b; }
+  .ext[data-ext="ipa"] { background: #a8324b; }
+
+  .app h2 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.25rem; margin: 0 0 4px; line-height: 1.2; }
+  .app .desc { margin: 0 0 8px; color: var(--muted); max-width: 56ch; }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; padding: 0; font-size: .88rem; color: var(--muted); }
+  .meta dt { display: inline; font-weight: 500; color: var(--ink); }
+  .meta dd { display: inline; margin: 0 0 0 4px; }
+  .meta div { display: inline; }
+
+  .btn {
+    display: inline-block; text-decoration: none; white-space: nowrap;
+    font-weight: 500; padding: 11px 22px; border-radius: 8px;
+    background: var(--accent); color: var(--accent-ink);
+  }
+  .btn:hover { background: #0b5c5e; }
+
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .empty { padding: 36px 22px; color: var(--muted); }
+  footer { margin-top: 28px; color: var(--muted); font-size: .88rem; }
+
+  @media (max-width: 640px) {
+    .wrap { padding-top: 36px; }
+    .app { grid-template-columns: 64px 1fr; gap: 14px; padding: 18px 16px; }
+    .ext { width: 64px; height: 52px; font-size: 1.05rem; }
+    .app .action { grid-column: 1 / -1; }
+    .btn { display: block; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Unduh aplikasi</h1>
+    <p>Pilih aplikasi di bawah, lalu klik Unduh. Gratis dan tanpa perlu mendaftar.</p>
+  </header>
+
+  <div class="filters" id="filters" role="group" aria-label="Filter platform"></div>
+  <ul class="apps" id="apps"></ul>
+
+  <footer>Setelah mengunduh, buka file untuk memasang aplikasi. Jika perangkat meminta izin pemasangan dari sumber luar, izinkan hanya jika Anda percaya pada sumber ini.</footer>
+</div>
+
+<script>
+  // ====== DAFTAR APLIKASI: ubah dan tambah di sini ======
+  const APPS = [
+    {
+      nama: "DigiStock",
+      deskripsi: "...",
+      versi: "3.1.0",
+      platform: "Android",
+      ekstensi: "apk",
+      ukuran: "365 KB",
+      tanggal: "2026-10-22",
+      file: "files/Stock Apps.apk",
+      ikon: "files/logo-digistock.png"
+    }
+  ];
+  // =====================================================
+
+  const list = document.getElementById("apps");
+  const filtersEl = document.getElementById("filters");
+  let aktif = "Semua";
+
+  function el(tag, props, children) {
+    const node = document.createElement(tag);
+    Object.assign(node, props || {});
+    (children || []).forEach(c => node.append(c));
+    return node;
+  }
+
+  function metaItem(label, value) {
+    return el("div", {}, [el("dt", { textContent: label }), el("dd", { textContent: value })]);
+  }
+
+  function formatTanggal(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(d);
+  }
+
+  function renderFilters() {
+    const platforms = ["Semua", ...new Set(APPS.map(a => a.platform))];
+    filtersEl.replaceChildren();
+    if (platforms.length <= 2) return; // satu platform saja, filter tidak perlu
+    platforms.forEach(p => {
+      const b = el("button", { type: "button", textContent: p });
+      b.setAttribute("aria-pressed", String(p === aktif));
+      b.addEventListener("click", () => { aktif = p; renderFilters(); renderApps(); });
+      filtersEl.append(b);
+    });
+  }
+
+  function renderApps() {
+    list.replaceChildren();
+    const tampil = APPS.filter(a => aktif === "Semua" || a.platform === aktif);
+    if (!tampil.length) {
+      list.append(el("li", { className: "empty", textContent: "Belum ada aplikasi untuk platform ini." }));
+      return;
+    }
+    tampil.forEach(a => {
+      const ext = el("div", { className: "ext", textContent: "." + a.ekstensi });
+      ext.dataset.ext = a.ekstensi.toLowerCase();
+      ext.setAttribute("aria-hidden", "true");
+
+      const info = el("div", {}, [
+        el("h2", { textContent: a.nama }),
+        el("p", { className: "desc", textContent: a.deskripsi }),
+        el("dl", { className: "meta" }, [
+          metaItem("Versi", a.versi),
+          metaItem("Platform", a.platform),
+          metaItem("Ukuran", a.ukuran),
+          metaItem("Diperbarui", formatTanggal(a.tanggal))
+        ])
+      ]);
+
+      const link = el("a", { className: "btn", href: a.file, textContent: "Unduh" });
+      link.setAttribute("download", "");
+      link.setAttribute("aria-label", "Unduh " + a.nama + " versi " + a.versi);
+
+      list.append(el("li", { className: "app" }, [ext, info, el("div", { className: "action" }, [link])]));
+    });
+  }
+
+  renderFilters();
+  renderApps();
+</script>
+</body>
+</html>
