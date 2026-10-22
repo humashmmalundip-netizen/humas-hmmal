@@ -1,7 +1,7 @@
 const CACHE_NAME = 'digistock-pwa-v1';
 const assetsToCache = [
-  './digistock.html',
-  './manifest.json'
+  '/apk/digistock.html',
+  '/apk/manifest.json'
 ];
 
 // Install Service Worker
