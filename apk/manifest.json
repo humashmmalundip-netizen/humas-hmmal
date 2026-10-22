@@ -2,17 +2,18 @@
   "name": "DigiStock - Sistem Pencatatan Stok",
   "short_name": "DigiStock",
   "start_url": "/apk/digistock.html",
+  "scope": "/apk/",
   "display": "standalone",
   "background_color": "#f4f6f3",
   "theme_color": "#143022",
   "icons": [
     {
-      "src": "/assets/logo-digistock.png",
+      "src": "/apk/images/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/assets/logo-digistock.png",
+      "src": "/apk/images/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
