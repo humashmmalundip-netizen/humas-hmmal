@@ -6,7 +6,7 @@
     <title>DigiStock</title>
     
     <!-- PWA Manifest & Theme Color -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/apk/manifest.json">
     <meta name="theme-color" content="#143022">
     <link rel="apple-touch-icon" href="/assets/logo-digistock.png">
     <link rel="icon" type="image/png" href="/assets/logo-digistock.png" />
@@ -1638,7 +1638,7 @@
             
             // Registrasi Service Worker PWA
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js')
+                navigator.serviceWorker.register('/apk/sw.js')
                 .then(() => console.log('Service Worker berhasil didaftarkan.'))
                 .catch((err) => console.log('Gagal mendaftarkan Service Worker:', err));
             }
