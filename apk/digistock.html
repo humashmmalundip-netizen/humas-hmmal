@@ -550,7 +550,7 @@
                     <span class="text-xs font-semibold text-emerald-100/80 tracking-wide">Total Nilai Persediaan</span>
                 </div>
                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-white/10 text-emerald-300 border border-white/10 backdrop-blur-sm">
-                    <i class="fa-solid fa-arrow-trend-up"></i> +12.4%
+                     Optimal
                 </span>
             </div>
 
@@ -712,9 +712,9 @@
             <p id="profile-business" class="text-xs text-slate-400 font-medium mt-0.5 break-words"></p>
 
             <div class="mt-6 pt-5 border-t border-slate-100 space-y-2">
-                <button onclick="showToast('DigiStock v3.1 - Made by Humas HMMAL')" class="w-full py-3 bg-sage-50/60 hover:bg-sage-100/60 rounded-lg text-xs font-bold text-slate-700 transition flex items-center justify-between px-4">
+                <button onclick="showToast('Humas HMMAL - Crafted with passion.')" class="w-full py-3 bg-sage-50/60 hover:bg-sage-100/60 rounded-lg text-xs font-bold text-slate-700 transition flex items-center justify-between px-4">
                     <span><i class="fa-solid fa-circle-info mr-2 text-forest-800"></i> Versi Aplikasi</span>
-                    <span class="text-slate-400">v3.1</span>
+                    <span class="text-slate-400">v3.1.0</span>
                 </button>
                 <button onclick="resetData()" class="w-full py-3 bg-rose-50 hover:bg-rose-100 rounded-lg text-xs font-bold text-rose-700 transition flex items-center justify-between px-4">
                     <span><i class="fa-solid fa-arrows-rotate mr-2 text-rose-600"></i> Reset Data Default</span>
@@ -733,7 +733,7 @@
                     </span>
                     <span class="flex-1 min-w-0">
                         <span class="block text-sm font-bold text-forest-950">Hubungi Kami</span>
-                        <span class="block text-xs text-slate-400 mt-0.5">Tutorial, Email</span>
+                        <!-- Tambahin span kalo mau dipake - class="block text-xs text-slate-400 mt-0.5">Tutorial, Email -->
                     </span>
                     <i class="acc-chevron fa-solid fa-chevron-down text-xs text-slate-400"></i>
                 </button>
@@ -745,6 +745,10 @@
                         </button>
                         <button type="button" onclick="contactEmail()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
                             <span>Email</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+                        </button>
+                        <button type="button" onclick="contactInstagram()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-sage-50/60 border-t border-slate-100 transition">
+                            <span>Instagram</span>
                             <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                         </button>
                     </div>
@@ -833,22 +837,22 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="field-label" for="p-stock">Stok Awal</label>
-                            <input type="number" id="p-stock" required min="0" value="0" class="field field-num">
+                            <input type="number" id="p-stock" required placeholder="0" min="0" class="field field-num">
                         </div>
                         <div>
                             <label class="field-label" for="p-min">Batas Minimal</label>
-                            <input type="number" id="p-min" required min="0" value="5" class="field field-num">
+                            <input type="number" id="p-min" required placeholder="5" min="0" class="field field-num">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="field-label" for="p-cost">Harga Pokok (Rp)</label>
-                            <input type="number" id="p-cost" required min="0" value="0" class="field field-num">
+                            <input type="number" id="p-cost" required placeholder="5000" min="0" class="field field-num">
                         </div>
                         <div>
                             <label class="field-label" for="p-sell">Harga Jual (Rp)</label>
-                            <input type="number" id="p-sell" required min="0" value="0" class="field field-num">
+                            <input type="number" id="p-sell" required placeholder="10000" min="0" class="field field-num">
                         </div>
                     </div>
                 </div>
@@ -924,7 +928,7 @@
                     <!-- Catatan -->
                     <div>
                         <label class="field-label" for="tx-notes">Catatan <span class="font-normal text-slate-400">(opsional)</span></label>
-                        <textarea id="tx-notes" rows="2" placeholder="Contoh: Divisi Operasional" class="field resize-none"></textarea>
+                        <textarea id="tx-notes" rows="2" placeholder="Kosongkan untuk otomatis: Pengadaan / Penjualan" class="field resize-none"></textarea>
                     </div>
                 </div>
 
@@ -1022,7 +1026,6 @@
     <script>
         const DEFAULT_IMG = "https://placehold.co/100x100/143022/ffffff?text=Produk";
 
-        // Ubah menjadi array kosong agar data awal kosong
         const initialProducts = [];
         const initialTransactions = [];
 
@@ -1054,7 +1057,6 @@
             }, 2500);
         }
 
-        // Menutup modal dengan animasi zoom out (hanya menunda penambahan class 'hidden')
         function hideModalAnimated(id) {
             const m = document.getElementById(id);
             if (!m || m.classList.contains('hidden') || m.classList.contains('modal-closing')) return;
@@ -1065,7 +1067,6 @@
             }, 200);
         }
 
-        // VIEW NAVIGATION
         function showView(viewName, pushHistory = true) {
             if (viewName === 'search') viewName = 'products';
 
@@ -1083,7 +1084,6 @@
                 }
             });
 
-            // Arah transisi: ke beranda = zoom out, masuk menu lain = zoom in
             document.body.dataset.nav = (viewName === 'home') ? 'back' : 'forward';
             document.getElementById(`view-${viewName}`).classList.remove('hidden');
 
@@ -1105,7 +1105,6 @@
                 if (viewName === 'account') title.innerText = 'Profil & Pengaturan';
             }
 
-            // Tambahkan state history agar tombol back HP bisa mundur halaman
             if (pushHistory) {
                 history.pushState({ view: viewName }, "", "#" + viewName);
             }
@@ -1126,7 +1125,6 @@
             document.getElementById('sum-total-value').innerText = formatRp(totalValue);
             document.getElementById('sum-total-profit').innerText = formatRp(totalProfit);
 
-            // Populate category filter dropdown
             const catSelect = document.getElementById('product-category-filter');
             const categories = [...new Set(products.map(p => p.category))];
             const currentCat = catSelect.value;
@@ -1143,7 +1141,6 @@
             updateChart();
         }
 
-        // RENDER RECENT TRANSACTIONS
         function renderRecentTransactions() {
             const container = document.getElementById('home-recent-transactions');
             const recent = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
@@ -1165,7 +1162,7 @@
                             <img src="${imgSrc}" onerror="this.src='${DEFAULT_IMG}'" class="w-10 h-10 rounded-lg border border-cardborder object-cover shrink-0">
                             <div>
                                 <p class="text-xs font-bold text-forest-950">${p ? p.name : 'Produk Dihapus'}</p>
-                                <p class="text-[10px] text-slate-400 font-medium">${t.date} • ${t.notes || 'Tanpa catatan'}</p>
+                                <p class="text-[10px] text-slate-400 font-medium">${t.date} | ${t.notes || 'Tanpa catatan'}</p>
                             </div>
                         </div>
                         <div class="text-right">
@@ -1178,18 +1175,15 @@
             });
         }
 
-        // RENDER LOW STOCK ALERTS
         function renderLowStockAlerts(lowItems) {
             const container = document.getElementById('home-low-stock-list');
-            const cardWrapper = container.closest('.bg-white'); // Mengambil elemen card pembungkus utama
+            const cardWrapper = container.closest('.bg-white');
 
             if (lowItems.length === 0) {
-                // Sembunyikan seluruh card jika tidak ada stok menipis
                 if (cardWrapper) cardWrapper.style.display = 'none';
                 return;
             }
 
-            // Tampilkan kembali card jika ada barang yang menipis
             if (cardWrapper) cardWrapper.style.display = 'block';
 
             const badge = document.getElementById('home-low-count-badge');
@@ -1214,7 +1208,6 @@
             });
         }
 
-        // RENDER PRODUCTS
         function renderProducts() {
             const container = document.getElementById('product-list-container');
             const search = document.getElementById('product-search').value.toLowerCase();
@@ -1275,7 +1268,6 @@
             });
         }
 
-        // RENDER TRANSACTIONS
         function renderTransactions() {
             const container = document.getElementById('tx-list-container');
             const search = document.getElementById('tx-search').value.toLowerCase();
@@ -1339,16 +1331,15 @@
                 }
             });
             renderTransactions();
-            updateChart(); // <-- Tambahkan baris ini agar grafik ikut memperbarui tampilannya
+            updateChart();
         }
 
-        // IMAGE UPLOAD HANDLERS
         function handleImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            if (file.size > 2 * 1024 * 1024) {
-                showToast('Ukuran foto maksimal 2MB', true);
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Ukuran foto maksimal 5MB', true);
                 return;
             }
 
@@ -1367,7 +1358,6 @@
             document.getElementById('p-image-input').value = '';
         }
 
-        // PRODUCT MODAL
         function openProductModal(editId = null) {
             const modal = document.getElementById('product-modal');
             const title = document.getElementById('product-modal-title');
@@ -1419,7 +1409,10 @@
             const price = parseFloat(document.getElementById('p-sell').value) || 0;
             const image = document.getElementById('p-image-data').value || DEFAULT_IMG;
 
-            const todayDate = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            const todayDate = now.toISOString().split('T')[0];
+            const timeString = now.toTimeString().split(' ')[0];
+            const dateTimeStr = `${todayDate} ${timeString}`;
 
             if (id) {
                 const index = products.findIndex(p => p.id === id);
@@ -1431,14 +1424,14 @@
                 const newProductId = 'p_' + Date.now();
                 products.push({ id: newProductId, name, sku, category, stock, minStock, costPrice, price, image });
                 
-                // Otomatis masukkan ke riwayat transaksi jika stok awal > 0 saat produk baru dibuat
+                // Ketika pertama kali menambahkan produk, Catatan otomatis: "Stok Awal Produk Baru"
                 if (stock > 0) {
                     transactions.unshift({
                         id: 't_' + Date.now(),
                         productId: newProductId,
                         type: 'IN',
                         quantity: stock,
-                        date: todayDate,
+                        date: dateTimeStr,
                         notes: 'Stok Awal Produk Baru'
                     });
                 }
@@ -1460,15 +1453,17 @@
             if (isConfirmed) {
                 const p = products.find(prod => prod.id === id);
                 const pName = p ? p.name : 'Produk';
-                const todayDate = new Date().toISOString().split('T')[0];
+                const now = new Date();
+                const todayDate = now.toISOString().split('T')[0];
+                const timeString = now.toTimeString().split(' ')[0];
+                const dateTimeStr = `${todayDate} ${timeString}`;
 
-                // Catat ke riwayat transaksi bahwa produk dihapus
                 transactions.unshift({
                     id: 't_' + Date.now(),
                     productId: id,
                     type: 'OUT',
                     quantity: p ? p.stock : 0,
-                    date: todayDate,
+                    date: dateTimeStr,
                     notes: `Produk Dihapus (${pName})`
                 });
 
@@ -1478,8 +1473,6 @@
             }
         }
 
-        // TRANSACTION MODAL
-        // productId (opsional): langsung memilih produk tertentu, misalnya dari daftar stok menipis
         function openTransactionModal(defaultType = 'IN', productId = null) {
             const modal = document.getElementById('transaction-modal');
             const select = document.getElementById('tx-product-id');
@@ -1495,7 +1488,6 @@
                 select.innerHTML += `<option value="${p.id}">${p.name} (Sisa: ${p.stock})</option>`;
             });
 
-            // Arahkan pilihan produk ke barang yang dimaksud
             if (productId && products.some(p => p.id === productId)) {
                 select.value = productId;
             }
@@ -1520,7 +1512,6 @@
             updateTxStockInfo();
         }
 
-        // Info stok saat ini dan perkiraan stok setelah transaksi
         function updateTxStockInfo() {
             const select = document.getElementById('tx-product-id');
             const info = document.getElementById('tx-stock-info');
@@ -1580,8 +1571,18 @@
             const productId = document.getElementById('tx-product-id').value;
             const type = document.querySelector('input[name="tx-type"]:checked').value;
             const quantity = parseInt(document.getElementById('tx-quantity').value) || 0;
-            const date = document.getElementById('tx-date').value;
-            const notes = document.getElementById('tx-notes').value;
+            const inputDate = document.getElementById('tx-date').value;
+            
+            const now = new Date();
+            const timeString = now.toTimeString().split(' ')[0];
+            const dateTimeStr = `${inputDate} ${timeString}`;
+
+            // Pada menu stok masuk/keluar, jika Catatan dikosongkan:
+            // Stok Masuk -> "Pengadaan", Stok Keluar -> "Penjualan"
+            let notes = document.getElementById('tx-notes').value.trim();
+            if (!notes) {
+                notes = (type === 'IN') ? 'Pengadaan' : 'Penjualan';
+            }
 
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -1602,7 +1603,7 @@
                 productId,
                 type,
                 quantity,
-                date,
+                date: dateTimeStr,
                 notes
             });
 
@@ -1631,18 +1632,29 @@
                 return;
             }
 
-            // Gunakan titik koma (;) sebagai delimiter agar Excel/Spreadsheet langsung memisahkannya ke kolom terpisah
-            let csv = "ID;Tanggal;Tipe;Produk;Jumlah;Catatan\n";
-            // Transaksi baru disimpan di awal array (terbaru dulu), jadi dibalik
-            // agar aktivitas pertama berada di baris paling atas dan berlanjut ke bawah.
+            let csv = "Tanggal & Jam;Tipe;Produk;Jumlah;Catatan;Profit\n";
+            let totalProfitSum = 0;
+
             [...transactions].reverse().forEach(t => {
                 const p = products.find(prod => prod.id === t.productId);
                 const pName = p ? `"${p.name.replace(/"/g, '""')}"` : 'Produk Dihapus';
                 const notes = `"${(t.notes || '').replace(/"/g, '""')}"`;
-                csv += `${t.id};${t.date};${t.type};${pName};${t.quantity};${notes}\n`;
+                
+                // Profit HANYA dihitung dan ditampilkan pada transaksi OUT (Penjualan)
+                let profitStr = "";
+                if (t.type === 'OUT' && p) {
+                    const unitProfit = Number(p.price) - Number(p.costPrice || 0);
+                    const profitVal = unitProfit * Number(t.quantity);
+                    profitStr = profitVal;
+                    totalProfitSum += profitVal;
+                }
+
+                csv += `${t.date};${t.type};${pName};${t.quantity};${notes};${profitStr}\n`;
             });
 
-            // Sertakan \uFEFF (UTF-8 BOM) agar Excel membaca karakter khusus/format dengan rapi
+            // Total profit di baris paling bawah menghitung akumulasi profit transaksi Penjualan (OUT)
+            csv += `;;;;Total Profit;${totalProfitSum}\n`;
+
             const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
             const url = URL.createObjectURL(blob);
             
@@ -1676,16 +1688,16 @@
             const ctx = document.getElementById('stockChart').getContext('2d');
             const dateMap = {};
 
-            // Filter transaksi sesuai dengan tab aktif (ALL, IN, atau OUT)
             const filteredTransactions = transactions.filter(t => {
                 if (txFilterType === 'ALL') return true;
                 return t.type === txFilterType;
             });
 
             filteredTransactions.forEach(t => {
-                if (!dateMap[t.date]) dateMap[t.date] = { in: 0, out: 0 };
-                if (t.type === 'IN') dateMap[t.date].in += t.quantity;
-                else dateMap[t.date].out += t.quantity;
+                const dateOnly = t.date.split(' ')[0];
+                if (!dateMap[dateOnly]) dateMap[dateOnly] = { in: 0, out: 0 };
+                if (t.type === 'IN') dateMap[dateOnly].in += t.quantity;
+                else dateMap[dateOnly].out += t.quantity;
             });
 
             const sortedDates = Object.keys(dateMap).sort().slice(-7);
@@ -1694,7 +1706,6 @@
 
             if (stockChart) stockChart.destroy();
 
-            // Tentukan dataset yang akan ditampilkan berdasarkan filter aktif
             let datasets = [];
             if (txFilterType === 'ALL' || txFilterType === 'IN') {
                 datasets.push({ label: 'Stok Masuk', data: inData.length ? inData : [0], backgroundColor: '#143022', borderRadius: 4 });
@@ -1722,7 +1733,6 @@
             updateDashboard();
             showView('home');
             
-            // Registrasi Service Worker PWA
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js')
                 .then(() => console.log('Service Worker berhasil didaftarkan.'))
@@ -1730,9 +1740,7 @@
             }
         };
 
-        // Menangkap tombol back fisik/browser HP
         window.addEventListener('popstate', function(event) {
-            // Jika ada modal yang sedang terbuka, tutup modalnya terlebih dahulu
             const productModal = document.getElementById('product-modal');
             const txModal = document.getElementById('transaction-modal');
             
@@ -1750,14 +1758,12 @@
                 return;
             }
 
-            // Jika sedang di halaman lain, kembalikan ke beranda (home) terlebih dahulu
             const currentView = document.querySelector('[id^="view-"]:not(.hidden)').id.replace('view-', '');
             if (currentView !== 'home') {
-                showView('home', false); // false agar tidak menumpuk riwayat baru
+                showView('home', false);
             }
         });
 
-        // Variable untuk menyimpan callback konfirmasi
         let confirmResolver = null;
 
         function showConfirmModal(title, desc, confirmText = "Ya, Hapus") {
@@ -1768,7 +1774,6 @@
                 const actionBtn = document.getElementById('confirm-action-btn');
                 actionBtn.innerText = confirmText;
                 
-                // Pasang resolver
                 confirmResolver = resolve;
                 
                 actionBtn.onclick = function() {
@@ -1790,20 +1795,14 @@
 
     <!-- ============ KONFIGURASI & LOGIKA SPLASH / ONBOARDING ============ -->
     <script>
-        /* ------------------------------------------------------------
-           PENGATURAN YANG BISA DIUBAH
-           Ganti `name` untuk mengganti nama aplikasi. Logo, judul tab,
-           dan teks sambutan akan ikut berubah otomatis.
-           Huruf "o" terakhir pada nama akan menyala hijau seperti logo.
-           ------------------------------------------------------------ */
         const APP_CONFIG = {
             name: 'DigiStock',
             tagline: 'Sistem Pencatatan Stok',
-            splashDuration: 2600,  // lama animasi loading (milidetik)
-            contactEmail: 'halo@digistock.id'  // alamat tujuan tombol Email di menu Profil
+            splashDuration: 2600,  
+            contactEmail: 'humashmmalundip@gmail.com', // Ganti dengan email Anda
+            instagramUrl: 'https://instagram.com/humas.hmmal' // Ganti dengan link Instagram Anda
         };
 
-        // Slide layar pengantar. Slide pertama memakai nama aplikasi otomatis.
         const ONBOARDING_SLIDES = [
             {
                 title: 'Selamat Datang di {app}',
@@ -1825,7 +1824,6 @@
             }
         ];
 
-        /* ------------------------- Logo & nama ------------------------- */
         function introEscape(s) {
             return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         }
@@ -1849,7 +1847,6 @@
             const name = APP_CONFIG.name;
             document.title = name;
 
-            // Ukuran logo menyesuaikan panjang nama agar tidak terpotong
             const maxW = Math.min(window.innerWidth, 430) * 0.78;
             const size = Math.max(28, Math.min(64, maxW / (Array.from(name).length * 0.6)));
             document.querySelectorAll('[data-brand-logo]').forEach(el => {
@@ -1860,7 +1857,6 @@
             document.querySelectorAll('[data-app-tagline]').forEach(el => el.textContent = APP_CONFIG.tagline);
         }
 
-        /* ------------------------- Onboarding ------------------------- */
         let obIndex = 0;
 
         function buildCollage() {
@@ -1905,7 +1901,6 @@
             ob.classList.add('is-leaving');
             setTimeout(() => {
                 ob.remove();
-                // Jika belum registrasi, layar registrasi sudah menunggu di bawahnya
                 if (getProfile()) {
                     document.body.classList.remove('intro-lock');
                     if (typeof showToast === 'function') showToast('Selamat datang di ' + APP_CONFIG.name);
@@ -1936,7 +1931,6 @@
             document.getElementById('ob-next').addEventListener('click', nextOnboarding);
         }
 
-        /* ------------------------- Profil UMKM ------------------------- */
         function getProfile() {
             try {
                 const p = JSON.parse(localStorage.getItem('stokku_profile'));
@@ -1944,7 +1938,6 @@
             } catch (e) { return null; }
         }
 
-        // Menampilkan nama pemilik di sapaan dan menu Profil
         function applyProfile() {
             const p = getProfile();
             document.getElementById('greeting-text').textContent = p ? `Selamat Datang, ${p.owner}! 👋` : 'Selamat Datang';
@@ -1973,7 +1966,6 @@
             }, 480);
         }
 
-        /* ------------------- Menu Profil: Informasi Umum ------------------- */
         function toggleAccordion(id) {
             const acc = document.getElementById(id);
             const open = acc.classList.toggle('acc-open');
@@ -1982,6 +1974,10 @@
 
         function contactEmail() {
             window.location.href = 'mailto:' + APP_CONFIG.contactEmail + '?subject=' + encodeURIComponent('Bantuan ' + APP_CONFIG.name);
+        }
+
+        function contactInstagram() {
+            window.open(APP_CONFIG.instagramUrl, '_blank');
         }
 
         function openTutorialModal() {
@@ -1993,11 +1989,10 @@
             hideModalAnimated('tutorial-modal');
         }
 
-        /* ------------------------- Alur pembuka ------------------------- */
         (function startIntro() {
             const splash = document.getElementById('splash');
             const registered = !!getProfile();
-            const firstTime = !registered; // onboarding selalu tampil sampai UMKM terdaftar
+            const firstTime = !registered;
 
             applyBrand();
             applyProfile();
