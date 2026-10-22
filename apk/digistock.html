@@ -1720,7 +1720,7 @@
         // Slide layar pengantar. Slide pertama memakai nama aplikasi otomatis.
         const ONBOARDING_SLIDES = [
             {
-                title: 'Selamat Datang di {app}',
+                title: 'Selamat Datang di {app}!',
                 desc: 'Catat dan pantau stok barang Anda dengan cepat, rapi, dan tanpa ribet.',
                 angle: -28,
                 icons: ['box-open', 'barcode', 'warehouse', 'truck-fast', 'boxes-stacked', 'tags', 'clipboard-list', 'cubes', 'receipt', 'cart-flatbed', 'dolly', 'layer-group']
@@ -1811,7 +1811,7 @@
             const title = introEscape(slide.title).replace('{app}', introEscape(APP_CONFIG.name));
             document.getElementById('ob-title').innerHTML = title;
             document.getElementById('ob-desc').textContent = slide.desc;
-            document.getElementById('ob-next').textContent = obIndex === ONBOARDING_SLIDES.length - 1 ? 'Mulai Sekarang' : 'Lanjut';
+            document.getElementById('ob-next').textContent = obIndex === ONBOARDING_SLIDES.length - 1 ? 'Registrasi Sekarang' : 'Lanjut';
         }
 
         function finishOnboarding() {
