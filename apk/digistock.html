@@ -11,6 +11,12 @@
     <link rel="apple-touch-icon" href="/assets/logo-digistock.png">
     <link rel="icon" type="image/png" href="/assets/logo-digistock.png" />
 
+    <!-- Pre-koneksi ke tujuan link eksternal agar terbuka lebih cepat -->
+    <link rel="preconnect" href="https://instagram.com" crossorigin>
+    <link rel="dns-prefetch" href="https://instagram.com">
+    <link rel="preconnect" href="https://www.humashmmalundip.web.id" crossorigin>
+    <link rel="dns-prefetch" href="https://www.humashmmalundip.web.id">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Plus Jakarta Sans -->
@@ -121,6 +127,16 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .sheet-in { animation: none; }
+        }
+
+        /* Bottom nav stabil: layer GPU sendiri, tidak ikut bergeser saat toolbar browser muncul/hilang */
+        #bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
+            will-change: transform;
+            backface-visibility: hidden;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         /* ===== Transisi antar menu & modal (zoom in / zoom out) ===== */
@@ -782,7 +798,7 @@
     </div>
 
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-cardborder z-40 shadow-lg">
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-cardborder z-40 shadow-lg">
         <div class="max-w-md mx-auto h-16 flex items-center justify-around relative px-3">
 
             <!-- Nav 1: Home -->
@@ -1133,7 +1149,7 @@
                 history.pushState({ view: viewName }, "", "#" + viewName);
             }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         }
 
         function updateDashboard() {
@@ -2001,12 +2017,25 @@
             window.location.href = 'mailto:' + APP_CONFIG.contactEmail + '?subject=' + encodeURIComponent('Bantuan ' + APP_CONFIG.name);
         }
 
-        function contactInstagram() {
-            window.location.href = APP_CONFIG.instagramUrl;
+        // Buka link eksternal tanpa meninggalkan/membongkar halaman aplikasi,
+        // sehingga tidak ada layar hitam saat berpindah (seperti perilaku Email).
+        function openExternalLink(url) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => a.remove(), 0);
         }
-        
+
+        function contactInstagram() {
+            openExternalLink(APP_CONFIG.instagramUrl);
+        }
+
         function openUpdateLink() {
-            window.location.href = APP_CONFIG.downloadUrl;
+            openExternalLink(APP_CONFIG.downloadUrl);
         }
 
         function openTutorialModal() {
