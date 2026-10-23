@@ -156,7 +156,9 @@
             transform-origin: 50% 0;
         }
         /* Kembali ke beranda = zoom out */
-        body[data-nav="back"] #view-home:not(.hidden) {
+        /* FIX: animasi dipasang pada anak-anak beranda (bukan #view-home) karena #view-home selebar layar penuh;
+           scale(1.03) membuatnya melewati tepi layar, Android menciutkan halaman sesaat dan bottom navbar ikut turun. */
+        body[data-nav="back"] #view-home:not(.hidden) > * {
             animation: viewZoomOut .28s cubic-bezier(.2, .8, .2, 1);
             transform-origin: 50% 0;
         }
@@ -194,6 +196,7 @@
         }
         @media (prefers-reduced-motion: reduce) {
             body[data-nav] [id^="view-"],
+            body[data-nav] #view-home > *,
             #product-modal, #transaction-modal, #tutorial-modal, #confirm-modal,
             #product-modal .sheet-in, #transaction-modal .sheet-in,
             #tutorial-modal .sheet-in, #confirm-modal .sheet-in,
