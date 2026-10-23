@@ -733,7 +733,7 @@
             <div class="mt-6 pt-5 border-t border-slate-100 space-y-2">
                 <button onclick="showToast('Humas HMMAL - Crafted with passion.')" class="w-full py-3 bg-sage-50/60 hover:bg-sage-100/60 rounded-lg text-xs font-bold text-slate-700 transition flex items-center justify-between px-4">
                     <span><i class="fa-solid fa-circle-info mr-2 text-forest-800"></i> Versi Aplikasi</span>
-                    <span class="text-slate-400">v3.1.0</span>
+                    <span class="text-slate-400">v2.0</span>
                 </button>
                 <button onclick="resetData()" class="w-full py-3 bg-rose-50 hover:bg-rose-100 rounded-lg text-xs font-bold text-rose-700 transition flex items-center justify-between px-4">
                     <span><i class="fa-solid fa-arrows-rotate mr-2 text-rose-600"></i> Reset Data Default</span>
@@ -1475,7 +1475,7 @@
                         type: 'IN',
                         quantity: stock,
                         date: dateTimeStr,
-                        notes: 'Stok Awal Produk Baru'
+                        notes: 'Stok Awal'
                     });
                 }
                 
@@ -1849,13 +1849,13 @@
 
         const ONBOARDING_SLIDES = [
             {
-                title: 'Selamat Datang di {app}',
+                title: 'Selamat Datang di {app}!',
                 desc: 'Catat dan pantau stok barang Anda dengan cepat, rapi, dan tanpa ribet.',
                 angle: -28,
                 icons: ['box-open', 'barcode', 'warehouse', 'truck-fast', 'boxes-stacked', 'tags', 'clipboard-list', 'cubes', 'receipt', 'cart-flatbed', 'dolly', 'layer-group']
             },
             {
-                title: 'Catat Stok Masuk dan Keluar',
+                title: 'Catat Stok Keluar dan Masuk',
                 desc: 'Setiap pergerakan barang tersimpan otomatis lengkap dengan tanggal dan catatan.',
                 angle: -20,
                 icons: ['right-left', 'arrow-down', 'arrow-up', 'clock-rotate-left', 'calendar-check', 'file-pen', 'list-check', 'pen-to-square', 'boxes-packing', 'receipt', 'check-double', 'bolt']
@@ -1937,7 +1937,7 @@
             const title = introEscape(slide.title).replace('{app}', introEscape(APP_CONFIG.name));
             document.getElementById('ob-title').innerHTML = title;
             document.getElementById('ob-desc').textContent = slide.desc;
-            document.getElementById('ob-next').textContent = obIndex === ONBOARDING_SLIDES.length - 1 ? 'Mulai Sekarang' : 'Lanjut';
+            document.getElementById('ob-next').textContent = obIndex === ONBOARDING_SLIDES.length - 1 ? 'Registrasi Sekarang' : 'Lanjut';
         }
 
         function finishOnboarding() {
