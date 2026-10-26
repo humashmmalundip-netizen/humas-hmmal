@@ -218,6 +218,84 @@
       .edit-photo-field > input[type="file"] { grid-area: inp; min-width: 0; width: 100%; }
       .edit-photo-field > p { grid-area: hint; }
     }
+
+    /* ===== MOBILE: latar polos, nav tanpa label, Tentang & Kontak minimalis ===== */
+    @media (max-width: 767px) {
+      /* Hilangkan lapisan blur dekoratif & bayangan berwarna (latar polos seperti DigiStock) */
+      #dashboardContent > div:first-child { display: none !important; }
+      body#dashboardContent { background-color: #f6f6f6; }
+      [class*="shadow-rose"] { --tw-shadow-color: rgba(15, 23, 42, .08) !important; --tw-shadow: var(--tw-shadow-colored) !important; }
+      #mobileBottomNav { box-shadow: 0 -2px 12px rgba(15, 23, 42, .06) !important; }
+
+      /* Bottom nav tanpa label: ikon dalam pill */
+      #mobileBottomNav .nav-pill { padding: .5rem 1.4rem; border-radius: .75rem; }
+      #mobileBottomNav .nav-pill svg { width: 1.375rem; height: 1.375rem; }
+
+      /* ---- Kartu minimalis (Tentang & Kontak) ---- */
+      #formTentangKami > * + *, #formKontakKami > * + * { margin-top: 1rem !important; }
+      #formTentangKami > div:not(:last-child), .kontak-card {
+        background: #fff !important; border: 1px solid #eee8e9 !important; border-radius: 1rem !important;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, .05) !important; padding: 1.25rem !important;
+        -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+      }
+      #formTentangKami > div:not(:last-child) { gap: 1rem; }
+      #formTentangKami > div:not(:last-child) > div:first-child { border-bottom: 0 !important; padding-bottom: 0 !important; }
+      #formTentangKami span.rounded-xl.font-extrabold {
+        width: 2.25rem; height: 2.25rem; border-radius: .5rem; background: #6B1D2F; color: #fff; border: 0; font-size: .8rem; flex-shrink: 0;
+      }
+      #formTentangKami h3 { font-size: .875rem; line-height: 1.25; }
+      #formTentangKami .relative.group { border-radius: .75rem; border-color: #eee8e9; box-shadow: none; }
+      #formTentangKami .p-2.bg-slate-50 { background: #fbf8f8; border: 1px dashed #dccbce; border-radius: .75rem; }
+
+      /* Kolom isian seragam */
+      :is(#formTentangKami, .kontak-card) :is(input:not([type="file"]):not([type="hidden"]), textarea) {
+        font-size: 13px; font-weight: 500; padding: .65rem .9rem; background: #fbf8f8;
+        border: 1px solid #ece3e4; border-radius: .5rem; color: #2a080c;
+      }
+      :is(#formTentangKami, .kontak-card) :is(input, textarea)::placeholder { color: #b4a3a6; font-weight: 400; }
+      :is(#formTentangKami, .kontak-card) :is(input:not([type="file"]):not([type="hidden"]), textarea):focus {
+        background: #fff; border-color: #6B1D2F; box-shadow: 0 0 0 3px rgba(107, 29, 47, .12);
+      }
+      :is(#formTentangKami, .kontak-card) label { font-size: 11px; font-weight: 600; color: #64748b; }
+
+      /* Tombol simpan: lebar penuh, tanpa pembungkus kartu */
+      #formTentangKami > div:last-child {
+        background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important;
+        -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+      }
+      #formTentangKami > div:last-child > button, .kontak-save > button {
+        width: 100%; padding: .8rem 1rem; border-radius: .5rem; box-shadow: none; font-size: 12px; margin-left: 0;
+      }
+      .kontak-save { display: block; }
+
+      /* ---- Kontak: urutkan kolom dalam satu daftar ---- */
+      .kontak-card { display: flex; flex-direction: column; gap: 1rem; }
+      .kontak-card > * { margin-top: 0 !important; }
+      .kontak-row { display: contents; }
+      .kontak-c-email { order: 1; } .kontak-c-wanama { order: 2; } .kontak-c-a { order: 3; }
+      .kontak-c-b { order: 4; display: flex; flex-direction: column; }
+      .kontak-c-yt { order: 5; } .kontak-c-tt { order: 6; } .kontak-c-footer { order: 7; }
+      .kontak-c-b > label:nth-child(1) { order: 1; }
+      .kontak-c-b > #kontakWaNomorMobileAlias { order: 2; }
+      .kontak-c-b > .kontak-ig-label { order: 3; display: block !important; }
+      .kontak-c-b > #kontakIg { order: 4; display: block !important; }
+
+      /* Ikon kecil pada label */
+      .kl::before {
+        content: ""; display: inline-block; width: .9rem; height: .9rem; margin-right: .4rem; vertical-align: -.18rem;
+        background: #6B1D2F; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat;
+      }
+      .kl-email { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'/%3E%3C/svg%3E"); }
+      .kl-user { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3E%3C/svg%3E"); }
+      .kl-phone { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5a2 2 0 012-2h3.28a1 1 0 01.95.68l1.5 4.5a1 1 0 01-.5 1.2l-2.26 1.13a11 11 0 005.52 5.52l1.13-2.26a1 1 0 011.2-.5l4.5 1.5a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z'/%3E%3C/svg%3E"); }
+      .kl-ig { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='5'/%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M17.5 6.5h.01'/%3E%3C/svg%3E"); }
+      .kl-yt { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='4'/%3E%3Cpath d='M10 9.5l5 2.5-5 2.5z'/%3E%3C/svg%3E"); }
+      .kl-tt { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18V5l11-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm11-2a3 3 0 11-6 0 3 3 0 016 0z'/%3E%3C/svg%3E"); }
+      .kl-doc { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'/%3E%3C/svg%3E"); }
+    }
+    @media (max-width: 639px) {
+      .kontak-c-b > .kontak-ig-label { margin-top: 1rem; }
+    }
   </style>
 </head>
 <body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 h-screen w-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
@@ -334,7 +412,7 @@
               <p id="mobileStatProker" class="text-base font-bold text-white mt-0.5">0</p>
             </div>
             <div class="border-x border-white/10">
-              <p class="text-[10px] text-rose-200/70 font-medium uppercase tracking-wider">Total Anggota</p>
+              <p class="text-[10px] text-rose-200/70 font-medium uppercase tracking-wider">Anggota</p>
               <p id="mobileStatAnggota" class="text-base font-bold text-white mt-0.5">0</p>
             </div>
             <div>
@@ -348,7 +426,7 @@
         <div class="grid grid-cols-4 gap-3">
           <button onclick="openMobileTab('program-kerja')" class="flex flex-col items-center group cursor-pointer">
             <div class="w-14 h-14 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-[#6B1D2F] group-hover:bg-[#6B1D2F] group-hover:text-white transition-all active:scale-95"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
-            <span class="text-[11px] font-bold text-slate-700 mt-2">Prokerja</span>
+            <span class="text-[11px] font-bold text-slate-700 mt-2">Proker</span>
           </button>
           <button onclick="openMobileTab('anggota')" class="flex flex-col items-center group cursor-pointer">
             <div class="w-14 h-14 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-[#6B1D2F] group-hover:bg-[#6B1D2F] group-hover:text-white transition-all active:scale-95"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
@@ -388,7 +466,7 @@
               <span class="w-8 h-8 rounded-md bg-white border border-rose-100 text-[#6B1D2F] flex items-center justify-center shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></span>
               <div>
                 <p class="text-xs font-bold text-slate-800">Lihat Website</p>
-                <p class="text-[10px] text-[#6B1D2F]">Buka tampilan publik Humas HMMAL UNDIP</p>
+                <p class="text-[10px] text-[#6B1D2F]">Buka Website Humas HMMAL UNDIP</p>
               </div>
             </div>
             <svg class="w-3.5 h-3.5 text-[#6B1D2F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -619,6 +697,13 @@
               <span>Refresh Data</span>
             </button>
           </div>
+        </div>
+
+        <!-- Intro mobile -->
+        <div class="md:hidden px-1">
+          <span class="inline-block px-2.5 py-1 rounded-md bg-rose-50 text-[#6B1D2F] text-[10px] font-bold">Manajemen Konten</span>
+          <h2 class="text-base font-extrabold text-slate-900 mt-2">Profil &amp; Tentang Kami</h2>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">Atur sekilas Humas, foto profil, visi, dan misi yang tampil di website.</p>
         </div>
 
         <form id="formTentangKami" class="space-y-6">
@@ -917,53 +1002,60 @@
           </div>
         </div>
 
+        <!-- Intro mobile -->
+        <div class="md:hidden px-1">
+          <span class="inline-block px-2.5 py-1 rounded-md bg-rose-50 text-[#6B1D2F] text-[10px] font-bold">Manajemen Konten</span>
+          <h2 class="text-base font-extrabold text-slate-900 mt-2">Kontak &amp; Sosial Media</h2>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">Ubah narahubung, tautan sosial media, dan informasi footer website.</p>
+        </div>
+
         <form id="formKontakKami" class="space-y-6">
-          <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
-            <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Email Resmi</label>
+          <div class="kontak-card bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl p-6 sm:p-8 space-y-4">
+            <div class="kontak-row grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+              <div class="kontak-c-email">
+                <label class="block text-xs font-semibold text-slate-700 mb-1 kl kl-email">Email Resmi</label>
                 <input type="email" id="kontakEmail" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="humashmmalundip@gmail.com">
               </div>
-              <div class="max-sm:hidden">
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Narahubung WhatsApp</label>
+              <div class="max-sm:hidden kontak-c-wanama">
+                <label class="block text-xs font-semibold text-slate-700 mb-1 kl kl-user">Narahubung WhatsApp</label>
                 <input type="text" id="kontakWaNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Yosi">
               </div>
             </div>
 
-            <div class="grid grid-cols-2 max-sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Narahubung WhatsApp</label>
-                <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Nomor WhatsApp</label>
+            <div class="kontak-row grid grid-cols-2 max-sm:grid-cols-2 gap-4">
+              <div class="kontak-c-a">
+                <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden kl kl-user">Narahubung WhatsApp</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block kl kl-phone">Nomor WhatsApp</label>
                 <input type="text" id="kontakWaNamaMobileAlias" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition sm:hidden" placeholder="Yosi" oninput="document.getElementById('kontakWaNama').value = this.value">
                 <input type="number" id="kontakWaNomor" inputmode="numeric" pattern="[0-9]*" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition hidden sm:block" placeholder="6281617591588">
               </div>
 
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden">Nomor WhatsApp</label>
-                <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block">Link Instagram</label>
+              <div class="kontak-c-b">
+                <label class="block text-xs font-semibold text-slate-700 mb-1 sm:hidden kl kl-phone">Nomor WhatsApp</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1 hidden sm:block kl kl-ig kontak-ig-label">Link Instagram</label>
                 <input type="number" id="kontakWaNomorMobileAlias" inputmode="numeric" pattern="[0-9]*" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition sm:hidden" placeholder="6281617591588" oninput="document.getElementById('kontakWaNomor').value = this.value">
                 <input type="text" id="kontakIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition hidden sm:block" placeholder="https://www.instagram.com/humas.hmmal/">
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Link YouTube</label>
+            <div class="kontak-row grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="kontak-c-yt">
+                <label class="block text-xs font-semibold text-slate-700 mb-1 kl kl-yt">Link YouTube</label>
                 <input type="text" id="kontakYt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="https://www.youtube.com/@hmmanajemendanadministrasi9490">
               </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Link TikTok</label>
+              <div class="kontak-c-tt">
+                <label class="block text-xs font-semibold text-slate-700 mb-1 kl kl-tt">Link TikTok</label>
                 <input type="text" id="kontakTt" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="https://www.tiktok.com/@hmmalundip">
               </div>
             </div>
 
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Footer</label>
+            <div class="kontak-c-footer">
+              <label class="block text-xs font-semibold text-slate-700 mb-1 kl kl-doc">Deskripsi Footer</label>
               <textarea id="kontakFooter" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none"></textarea>
             </div>
           </div>
 
-          <div class="flex justify-end">
+          <div class="kontak-save flex justify-end">
             <button type="submit" id="btnSaveKontak" class="px-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer">
               Simpan Perubahan Kontak
             </button>
@@ -1015,23 +1107,6 @@
         <span class="px-3 py-1 bg-rose-50 text-[#6B1D2F] rounded-full text-[10px] font-bold uppercase tracking-wider">Admin CMS</span>
       </div>
 
-      <!-- Foto Full Rasio 16:10 Tanpa Card & Space Putih -->
-      <div class="relative group cursor-pointer w-full aspect-[16/10] overflow-hidden rounded-xl shadow-lg shadow-rose-950/5" onclick="document.getElementById('hiddenEditablePhotoInput').click()" title="Tekan foto untuk mengubah">
-        <img id="editablePhotoPreview" src="https://placehold.co/400x250/6B1D2F/ffffff?text=Tekan+Untuk+Ganti+Foto" class="w-full h-full object-cover transition duration-300 group-hover:scale-105">
-        <div class="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-          <span class="px-4 py-2 bg-white/90 backdrop-blur-md rounded-xl text-xs font-bold text-slate-800 shadow-sm">Ganti Foto</span>
-        </div>
-        <input type="file" id="hiddenEditablePhotoInput" accept="image/*" class="hidden" onchange="handleEditablePhotoUpload(this)">
-      </div>
-
-      <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5 space-y-2">
-        <a href="../index.html" target="_blank" class="w-full flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition">
-          <span>Lihat Website</span>
-        </a>
-        <button onclick="window.open('https://www.instagram.com/rifkiinhs/', '_blank')" class="w-full flex items-center justify-center gap-2 px-3.5 py-3 rounded-xl text-xs font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200/60 transition cursor-pointer">
-          <span>Instagram</span>
-        </button>
-      </div>
       <!-- INFORMASI UMUM -->
       <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 overflow-hidden">
         <h4 class="px-5 pt-5 pb-1 text-xs font-bold text-slate-400">Informasi Umum</h4>
@@ -1090,18 +1165,16 @@
 
     <!-- BOTTOM NAV BERANDA MOBILE -->
   <nav id="mobileBottomNav" class="fixed bottom-0 inset-x-0 z-40 h-16 bg-white border-t border-slate-100 items-center justify-between px-10 shadow-[0_-4px_16px_rgba(107,29,47,0.08)]">
-    <button id="btnNavHome" onclick="goMobileHome()" class="flex flex-col items-center gap-0.5 cursor-pointer">
+    <button id="btnNavHome" onclick="goMobileHome()" aria-label="Beranda" class="flex flex-col items-center gap-0.5 cursor-pointer">
       <span class="nav-pill flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg></span>
-      <span class="text-[10px] font-bold">Beranda</span>
     </button>
 
     <button onclick="handleLogout()" class="absolute left-1/2 -translate-x-1/2 -top-6 w-14 h-14 rounded-full bg-[#6B1D2F] text-white flex items-center justify-center shadow-xl shadow-rose-950/30 ring-4 ring-white cursor-pointer" aria-label="Keluar">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
     </button>
 
-    <button id="btnNavAkun" onclick="openMobileTab('akun')" class="flex flex-col items-center gap-0.5 cursor-pointer">
+    <button id="btnNavAkun" onclick="openMobileTab('akun')" aria-label="Akun" class="flex flex-col items-center gap-0.5 cursor-pointer">
       <span class="nav-pill flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></span>
-      <span class="text-[10px] font-bold">Akun</span>
     </button>
   </nav>
 
@@ -2457,7 +2530,7 @@
       } else if (kind === 'whatsapp') {
         const num = String(d.whatsapp_nomor || '').replace(/\D/g, '');
         if (!num) return showToast('Nomor WhatsApp belum diisi di menu Kontak', 'info');
-        openExtLink('https://wa.me/' + num);
+        openExtLink('https://wa.me/' + 6285929094840);
       } else if (kind === 'instagram') {
         let u = (d.instagram || '').trim();
         if (!u) return showToast('Instagram belum diisi di menu Kontak', 'info');
