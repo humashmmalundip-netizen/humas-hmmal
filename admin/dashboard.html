@@ -93,6 +93,131 @@
       transform: scale(1);
       opacity: 1;
     }
+
+    /* ===== MOBILE: beranda layout ala DigiStock + accordion Akun ===== */
+    .acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .25s ease; }
+    .acc-body > div { overflow: hidden; }
+    .acc.acc-open .acc-body { grid-template-rows: 1fr; }
+    .acc-chevron { transition: transform .25s ease; }
+    .acc.acc-open .acc-chevron { transform: rotate(180deg); }
+    @keyframes panduanIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    #panduanModal:not(.hidden) .panduan-sheet { animation: panduanIn .25s cubic-bezier(.16, 1, .3, 1); }
+
+    @media (max-width: 767px) {
+      /* Bottom nav: ikon dalam pill seperti DigiStock */
+      #mobileBottomNav .nav-pill { padding: .25rem 1rem; border-radius: .5rem; transition: background .2s; }
+      body.mobile-home-active #btnNavHome .nav-pill,
+      body.mobile-akun-active #btnNavAkun .nav-pill { background: rgba(107, 29, 47, .12); }
+    }
+
+    /* ===== MOBILE: menu Prokerja & Anggota ala katalog DigiStock + modal Tambah/Edit ===== */
+    @keyframes modalZoomIn2 { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+    @keyframes modalFadeIn2 { from { opacity: 0; } to { opacity: 1; } }
+    @media (max-width: 767px) {
+      /* Cegah transform animasi tab menahan elemen fixed (modal Tambah) */
+      .tab-content:not(.hidden) { animation-fill-mode: none !important; }
+
+      /* ---- Daftar: kartu langsung di atas background ---- */
+      #tab-program-kerja > .grid, #tab-anggota > .grid { margin-top: .9rem !important; }
+      #prokerjaListSection, #anggotaListSection {
+        background: transparent !important; border: 0 !important; box-shadow: none !important;
+        padding: 0 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+      }
+      #prokerjaListSection > div:first-child, #anggotaListSection > div:first-child { display: none; }
+      #prokerjaListSection > *, #anggotaListSection > * { margin-top: 0 !important; }
+      #anggotaGridContainer { gap: .75rem; }
+
+      #prokerjaMobileCards > div, #anggotaGridContainer > div:not(.col-span-full) {
+        background: #fff !important; border: 1px solid #eee5e6 !important; border-radius: .75rem !important;
+        padding: 1rem !important; box-shadow: 0 1px 2px rgba(15, 23, 42, .05);
+      }
+      #prokerjaMobileCards img { width: 3.5rem; height: 3.5rem; border-radius: .5rem; border: 1px solid #eee5e6; }
+      #prokerjaMobileCards button, #anggotaGridContainer button {
+        width: 1.75rem; height: 1.75rem; padding: 0; display: flex; align-items: center; justify-content: center;
+        border-radius: .375rem; background: #f1f5f9; color: #475569;
+      }
+      #prokerjaMobileCards button svg, #anggotaGridContainer button svg { width: .8rem; height: .8rem; }
+      #prokerjaMobileCards button:last-child, #anggotaGridContainer button:last-child { background: #fff1f2; color: #e11d48; }
+
+      /* ---- Modal Tambah (form lama dipakai ulang sebagai modal) ---- */
+      #sheetBackdrop:not(.hidden) { animation: modalFadeIn2 .2s ease-out; }
+      #toastContainer { z-index: 80; }
+      .form-sheet { display: none !important; }
+      .form-sheet.sheet-open {
+        display: block !important; position: fixed; left: 0; right: 0; bottom: 0; top: auto;
+        margin: 0 auto !important; width: 100%; max-width: 28rem; max-height: 92vh; overflow-y: auto; z-index: 70;
+        border-radius: 1rem 1rem 0 0 !important; border: 0 !important; background: #fff !important;
+        -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+        padding: 1.25rem !important; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+        transform-origin: 50% 100%; animation: modalZoomIn2 .24s cubic-bezier(.2, .8, .2, 1);
+      }
+      .form-sheet.sheet-open > * { margin-top: 0 !important; }
+      .form-sheet.sheet-open > .sheet-head { margin-bottom: 1rem; }
+      .form-sheet.sheet-open h3 > span { display: none; }
+      .form-sheet.sheet-open form { display: flex; flex-wrap: wrap; gap: 1rem; }
+      .form-sheet.sheet-open form > * { flex: 0 0 100%; margin-top: 0 !important; }
+      .form-sheet.sheet-open form > .sheet-cancel { flex: 0 0 auto; order: 98; margin-top: .25rem !important; }
+      .form-sheet.sheet-open form > button[type="submit"] {
+        flex: 1 1 0; width: auto; order: 99; margin-top: .25rem !important; padding: .75rem 1rem;
+        border-radius: .5rem; box-shadow: none; font-size: 12px;
+      }
+
+      /* ---- Header modal (Tambah & Edit): ikon + judul + subjudul + tutup ---- */
+      .sheet-head {
+        display: grid !important; grid-template-columns: auto 1fr auto; grid-template-areas: "ico title x" "ico sub x";
+        column-gap: .75rem; align-items: center; border-bottom: 0 !important; padding-bottom: 0 !important;
+      }
+      .sheet-head > .sheet-ico { grid-area: ico; }
+      .sheet-head > h3 { grid-area: title; font-size: .875rem; line-height: 1.25; }
+      .sheet-head > p { grid-area: sub; margin: .1rem 0 0 !important; font-size: 11px; color: #94a3b8; }
+      .sheet-head > button { grid-area: x; position: static !important; }
+
+      /* ---- Kolom isian bergaya DigiStock (Tambah & Edit) ---- */
+      :is(.form-sheet.sheet-open, #editModal, #editAnggotaModal) label { font-size: 11px; font-weight: 600; color: #64748b; }
+      :is(.form-sheet.sheet-open, #editModal, #editAnggotaModal) :is(input:not([type="file"]):not([type="hidden"]), select, textarea) {
+        font-size: 13px; font-weight: 500; padding-top: .65rem; padding-bottom: .65rem;
+        background: #fbf8f8; border: 1px solid #ece3e4; border-radius: .5rem; color: #2a080c;
+      }
+      :is(.form-sheet.sheet-open, #editModal, #editAnggotaModal) :is(input, select, textarea)::placeholder { color: #b4a3a6; font-weight: 400; }
+      :is(.form-sheet.sheet-open, #editModal, #editAnggotaModal) :is(input:not([type="file"]):not([type="hidden"]), select, textarea):focus {
+        background: #fff; border-color: #6B1D2F; box-shadow: 0 0 0 3px rgba(107, 29, 47, .12);
+      }
+
+      /* ---- Foto: pratinjau + tombol pilih (Tambah) ---- */
+      .form-sheet.sheet-open .sheet-photo {
+        background: transparent !important; border: 0 !important; padding: 0 !important;
+        display: grid; grid-template-columns: 4rem 1fr; column-gap: .75rem; row-gap: .25rem;
+        grid-template-areas: "prev inp" "prev clr"; align-items: center;
+      }
+      .sheet-prev { width: 4rem; height: 4rem; object-fit: cover; border-radius: .5rem; border: 1px solid #ece3e4; grid-area: prev; }
+      .form-sheet.sheet-open .sheet-photo input[type="file"] { grid-area: inp; min-width: 0; width: 100%; }
+      .sheet-clear { grid-area: clr; justify-self: start; font-size: 11px; font-weight: 500; color: #94a3b8; }
+
+      /* ---- Modal Edit: bottom modal gaya DigiStock ---- */
+      :is(#editModal, #editAnggotaModal) { align-items: flex-end !important; padding: 0 !important; }
+      :is(#editModal, #editAnggotaModal) .modal-content {
+        max-width: 28rem !important; max-height: 92vh !important; border: 0 !important; transform-origin: 50% 100%;
+        border-radius: 1rem 1rem 0 0 !important; padding: 1.25rem !important;
+        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      :is(#editModal, #editAnggotaModal) .modal-content > * { margin-top: 0 !important; }
+      :is(#editModal, #editAnggotaModal) .modal-content > .sheet-head { margin-bottom: 1rem; }
+      :is(#editModal, #editAnggotaModal) form > div:last-child { border-top: 0 !important; padding-top: .25rem !important; }
+      :is(#editModal, #editAnggotaModal) form > div:last-child > button[type="button"] {
+        background: transparent; color: #64748b; font-weight: 700; padding: .75rem 1rem; border-radius: .5rem;
+      }
+      :is(#editModal, #editAnggotaModal) form > div:last-child > button[type="submit"] {
+        flex: 1; padding: .75rem 1rem; border-radius: .5rem; box-shadow: none;
+      }
+      .edit-photo-field {
+        display: grid; grid-template-columns: 4rem 1fr; column-gap: .75rem; row-gap: .25rem;
+        grid-template-areas: "lbl lbl" "prev inp" "prev hint"; align-items: center;
+      }
+      .edit-photo-field > * { margin: 0 !important; }
+      .edit-photo-field > label { grid-area: lbl; margin-bottom: .25rem !important; }
+      .edit-photo-field > input[type="file"] { grid-area: inp; min-width: 0; width: 100%; }
+      .edit-photo-field > p { grid-area: hint; }
+    }
   </style>
 </head>
 <body id="dashboardContent" class="bg-[#FAF6F6] text-slate-800 h-screen w-screen relative flex flex-col md:flex-row selection:bg-rose-900 selection:text-white" style="display: none;">
@@ -180,89 +305,94 @@
 
     <!-- BAGIAN KANAN (Hanya area ini yang dapat di-scroll secara halus) -->
     <main class="flex-1 h-full overflow-y-auto p-6 pb-12">
-      <!-- BERANDA MOBILE (hanya tampil di mobile saat pertama dibuka) -->
-            <!-- BERANDA MOBILE (hanya tampil di mobile saat pertama dibuka) -->
-      <section id="mobileHome" class="space-y-5 pb-20">
+<!-- BERANDA MOBILE (hanya tampil di mobile saat pertama dibuka) -->
+      <section id="mobileHome" class="space-y-5 pb-24">
 
-        <!-- Kartu Profil -->
-        <div class="bg-gradient-to-r from-[#6B1D2F] to-[#8C283F] rounded-xl p-5 text-white shadow-xl shadow-rose-950/10 flex items-center gap-4 relative overflow-hidden">
-          <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 skew-x-12 pointer-events-none"></div>
-          <div class="w-16 h-16 rounded-full bg-white/15 border-2 border-white/30 overflow-hidden shrink-0 relative z-10">
-            <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+        <!-- KARTU UTAMA (gaya fintech) -->
+        <div class="relative overflow-hidden bg-gradient-to-br from-[#4A1220] via-[#6B1D2F] to-[#4A1220] rounded-xl p-6 text-white shadow-xl shadow-rose-950/10 border border-rose-900/50">
+          <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-rose-400/15 blur-2xl pointer-events-none"></div>
+          <div class="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-rose-300/10 blur-2xl pointer-events-none"></div>
+
+          <div class="relative flex justify-between items-center mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-md bg-white/10 overflow-hidden flex items-center justify-center shrink-0">
+                <img src="../assets/logo-humas.webp" alt="Logo Humas HMMAL UNDIP" class="w-full h-full object-cover">
+              </span>
+              <span class="text-xs font-semibold text-rose-100/80 tracking-wide">Admin CMS</span>
+            </div>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold bg-white/10 text-rose-100 border border-white/10">Online</span>
           </div>
-          <div class="relative z-10 min-w-0">
-            <span class="inline-block px-2.5 py-0.5 bg-white/15 rounded-full text-[10px] font-bold uppercase tracking-wider mb-1">Admin CMS</span>
-            <h2 class="text-base font-extrabold leading-tight">HUMAS HMMAL UNDIP</h2>
-            <p class="text-[11px] text-rose-200 mt-0.5">Sekolah Vokasi Universitas Diponegoro</p>
+
+          <div class="relative my-3">
+            <h2 class="text-2xl font-extrabold tracking-tight text-white leading-tight">HUMAS HMMAL UNDIP</h2>
+            <p class="mt-1.5 text-xs font-semibold text-rose-100/80">Sekolah Vokasi Universitas Diponegoro</p>
+          </div>
+
+          <div class="relative pt-4 mt-2 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
+            <div>
+              <p class="text-[10px] text-rose-200/70 font-medium uppercase tracking-wider">Program Kerja</p>
+              <p id="mobileStatProker" class="text-base font-bold text-white mt-0.5">0</p>
+            </div>
+            <div class="border-x border-white/10">
+              <p class="text-[10px] text-rose-200/70 font-medium uppercase tracking-wider">Total Anggota</p>
+              <p id="mobileStatAnggota" class="text-base font-bold text-white mt-0.5">0</p>
+            </div>
+            <div>
+              <p class="text-[10px] text-rose-200/70 font-medium uppercase tracking-wider">Aktivitas</p>
+              <p id="mobileStatLog" class="text-base font-bold text-white mt-0.5">0</p>
+            </div>
           </div>
         </div>
 
-        <!-- Menu Pengelolaan -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-5">
-            <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Menu Pengelolaan</h3>
-            <span class="text-[10px] font-bold text-slate-400">CMS Panel</span>
+        <!-- TOMBOL AKSES CEPAT -->
+        <div class="grid grid-cols-4 gap-3">
+          <button onclick="openMobileTab('program-kerja')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-14 h-14 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-[#6B1D2F] group-hover:bg-[#6B1D2F] group-hover:text-white transition-all active:scale-95"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
+            <span class="text-[11px] font-bold text-slate-700 mt-2">Prokerja</span>
+          </button>
+          <button onclick="openMobileTab('anggota')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-14 h-14 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-[#6B1D2F] group-hover:bg-[#6B1D2F] group-hover:text-white transition-all active:scale-95"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
+            <span class="text-[11px] font-bold text-slate-700 mt-2">Anggota</span>
+          </button>
+          <button onclick="openMobileTab('tentang-kami')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-14 h-14 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-[#6B1D2F] group-hover:bg-[#6B1D2F] group-hover:text-white transition-all active:scale-95"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+            <span class="text-[11px] font-bold text-slate-700 mt-2">Tentang</span>
+          </button>
+          <button onclick="openMobileTab('kontak-kami')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-14 h-14 rounded-xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-[#6B1D2F] group-hover:bg-[#6B1D2F] group-hover:text-white transition-all active:scale-95"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+            <span class="text-[11px] font-bold text-slate-700 mt-2">Kontak</span>
+          </button>
+        </div>
+
+        <!-- AKTIVITAS TERAKHIR -->
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-100">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-sm font-bold text-slate-900">Aktivitas Terakhir</h3>
+            <button onclick="openMobileTab('aktivitas')" class="text-xs font-bold text-[#6B1D2F] flex items-center gap-1 cursor-pointer">
+              Lihat Semua <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
           </div>
-          <div class="grid grid-cols-3 gap-x-2 gap-y-5">
-
-            <button onclick="openMobileTab('program-kerja')" class="flex flex-col items-center gap-2 cursor-pointer group">
-              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-              </span>
-              <span class="text-[11px] font-semibold text-slate-700">Prokerja</span>
-            </button>
-
-            <button onclick="openMobileTab('tentang-kami')" class="flex flex-col items-center gap-2 cursor-pointer group">
-              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              </span>
-              <span class="text-[11px] font-semibold text-slate-700">Tentang</span>
-            </button>
-
-            <button onclick="openMobileTab('anggota')" class="flex flex-col items-center gap-2 cursor-pointer group">
-              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-              </span>
-              <span class="text-[11px] font-semibold text-slate-700">Anggota</span>
-            </button>
-
-            <button onclick="openMobileTab('kontak-kami')" class="flex flex-col items-center gap-2 cursor-pointer group">
-              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              </span>
-              <span class="text-[11px] font-semibold text-slate-700">Kontak</span>
-            </button>
-
-            <button onclick="openMobileTab('aktivitas')" class="flex flex-col items-center gap-2 cursor-pointer group">
-              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              </span>
-              <span class="text-[11px] font-semibold text-slate-700">Aktivitas</span>
-            </button>
-
-            <a href="../index.html" target="_blank" class="flex flex-col items-center gap-2 cursor-pointer group">
-              <span class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/70 text-[#6B1D2F] flex items-center justify-center group-active:scale-95 transition">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              </span>
-              <span class="text-[11px] font-semibold text-slate-700">Website</span>
-            </a>
-
+          <div id="mobileRecentActivity" class="space-y-3">
+            <p class="text-xs text-slate-400 text-center py-4">Belum ada aktivitas</p>
           </div>
         </div>
 
-        <!-- Ringkasan Sistem -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 p-5">
-          <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-4">Ringkasan Sistem</h3>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="bg-rose-50 border border-rose-100 rounded-2xl py-3 text-center">
-              <p class="text-[10px] font-bold text-slate-500 uppercase">Program Kerja</p>
-              <p id="mobileStatProker" class="text-2xl font-extrabold text-[#6B1D2F]">0</p>
-            </div>
-            <div class="bg-rose-50 border border-rose-100 rounded-2xl py-3 text-center">
-              <p class="text-[10px] font-bold text-slate-500 uppercase">Total Anggota</p>
-              <p id="mobileStatAnggota" class="text-2xl font-extrabold text-[#6B1D2F]">0</p>
-            </div>
+        <!-- WEBSITE -->
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-100">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-bold text-slate-900">Website</h3>
+            <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-rose-50 text-[#6B1D2F]">Publik</span>
           </div>
+          <a href="../index.html" target="_blank" class="flex items-center justify-between p-2.5 bg-rose-50/60 rounded-lg border border-rose-100/80 active:scale-[0.98] transition">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-md bg-white border border-rose-100 text-[#6B1D2F] flex items-center justify-center shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></span>
+              <div>
+                <p class="text-xs font-bold text-slate-800">Lihat Website</p>
+                <p class="text-[10px] text-[#6B1D2F]">Buka tampilan publik Humas HMMAL UNDIP</p>
+              </div>
+            </div>
+            <svg class="w-3.5 h-3.5 text-[#6B1D2F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
         </div>
       </section>
 
@@ -290,12 +420,35 @@
           </div>
         </div>
 
+        <!-- Toolbar mobile: cari + tombol Tambah + filter -->
+        <div class="md:hidden space-y-2">
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg></span>
+              <input type="text" id="searchProker" placeholder="Cari program kerja..." autocomplete="off" class="w-full pl-9 pr-3 py-2.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B1D2F]/20 shadow-sm">
+            </div>
+            <button type="button" onclick="openFormSheet('prokerjaFormSection')" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold shadow-sm active:scale-95 transition cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" d="M12 4v16m8-8H4"/></svg><span>Tambah</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1">
+              <select id="filterProker" class="w-full bg-white border border-slate-200 text-xs rounded-lg px-3 py-2.5 pr-8 appearance-none focus:outline-none shadow-sm font-medium cursor-pointer"><option value="">Semua Kategori</option><option value="Planning, Networking, and Partnership">Planning, Networking, and Partnership</option><option value="Social Responsibility">Social Responsibility</option></select>
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+            </div>
+            <button type="button" onclick="loadProkerjaData()" class="shrink-0 w-10 h-10 flex items-center justify-center text-slate-500 bg-white border border-slate-200 rounded-lg shadow-sm active:scale-95 transition cursor-pointer" title="Refresh Data"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+          </div>
+          <p id="noResultProker" class="hidden text-center text-xs text-slate-400 py-6">Tidak ada hasil yang cocok.</p>
+        </div>
+
         <!-- Layout Grid: Form on Left, Table/List on Right -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           <!-- Bagian Kiri: Form Tambah/Edit Program Kerja -->
-          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
-            <div class="border-b border-slate-100 pb-4">
+          <section id="prokerjaFormSection" class="form-sheet lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+            <div class="sheet-head border-b border-slate-100 pb-4">
+              <span class="sheet-ico md:hidden w-9 h-9 rounded-lg bg-[#6B1D2F] text-white flex items-center justify-center shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></span>
+              <button type="button" onclick="closeFormSheet()" class="md:hidden w-8 h-8 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 flex items-center justify-center transition cursor-pointer" aria-label="Tutup"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
               <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
                 Tambah Program Kerja Baru
@@ -376,7 +529,8 @@
               <!-- Foto Kegiatan / File Upload -->
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Foto Kegiatan</label>
-                <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                <div class="sheet-photo p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                  <img id="proPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Pratinjau Foto" class="sheet-prev md:hidden shrink-0">
                   <input 
                     type="file" 
                     id="proFile" 
@@ -384,6 +538,8 @@
                     class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" 
                     required
                   >
+
+                  <button type="button" onclick="clearSheetPhoto('proFile', 'proPreview')" class="sheet-clear md:hidden hover:text-rose-600 transition cursor-pointer">Hapus foto</button>
                 </div>
               </div>
 
@@ -396,11 +552,12 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Upload Program Kerja</span>
               </button>
+  <button type="button" onclick="closeFormSheet()" class="sheet-cancel md:hidden px-4 py-3 rounded-lg text-xs font-bold text-slate-500 hover:bg-slate-100 transition cursor-pointer">Batal</button>
             </form>
           </section>
 
           <!-- Bagian Kanan: Daftar Program Kerja & Tabel -->
-          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <section id="prokerjaListSection" class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
                 <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -583,9 +740,32 @@
           </div>
         </div>
 
+        <!-- Toolbar mobile: cari + tombol Tambah + filter -->
+        <div class="md:hidden space-y-2">
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg></span>
+              <input type="text" id="searchAnggota" placeholder="Cari nama atau jabatan..." autocomplete="off" class="w-full pl-9 pr-3 py-2.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B1D2F]/20 shadow-sm">
+            </div>
+            <button type="button" onclick="openFormSheet('anggotaFormSection')" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold shadow-sm active:scale-95 transition cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" d="M12 4v16m8-8H4"/></svg><span>Tambah</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1">
+              <select id="filterAnggota" class="w-full bg-white border border-slate-200 text-xs rounded-lg px-3 py-2.5 pr-8 appearance-none focus:outline-none shadow-sm font-medium cursor-pointer"><option value="">Semua Kategori</option><option value="BPH">BPH</option><option value="SR">Social Responsibility (SR)</option><option value="PNP">Planning Networking & Partnership (PNP)</option></select>
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+            </div>
+            <button type="button" onclick="loadAnggotaData()" class="shrink-0 w-10 h-10 flex items-center justify-center text-slate-500 bg-white border border-slate-200 rounded-lg shadow-sm active:scale-95 transition cursor-pointer" title="Refresh Data"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+          </div>
+          <p id="noResultAnggota" class="hidden text-center text-xs text-slate-400 py-6">Tidak ada hasil yang cocok.</p>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <section class="lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
-            <div class="border-b border-slate-100 pb-4">
+          <section id="anggotaFormSection" class="form-sheet lg:col-span-5 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5 lg:sticky lg:top-6">
+            <div class="sheet-head border-b border-slate-100 pb-4">
+              <span class="sheet-ico md:hidden w-9 h-9 rounded-lg bg-[#6B1D2F] text-white flex items-center justify-center shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></span>
+              <button type="button" onclick="closeFormSheet()" class="md:hidden w-8 h-8 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 flex items-center justify-center transition cursor-pointer" aria-label="Tutup"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
               <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <span class="w-2 h-5 rounded-full bg-[#6B1D2F] inline-block"></span>
                 Tambah Anggota Baru
@@ -690,8 +870,11 @@
 
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Foto Anggota (Potret)</label>
-                <div class="p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                <div class="sheet-photo p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                  <img id="angPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Pratinjau Foto" class="sheet-prev md:hidden shrink-0">
                   <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" required>
+
+                  <button type="button" onclick="clearSheetPhoto('angFile', 'angPreview')" class="sheet-clear md:hidden hover:text-rose-600 transition cursor-pointer">Hapus foto</button>
                 </div>
               </div>
 
@@ -699,10 +882,11 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 <span>Simpan & Upload Anggota</span>
               </button>
+  <button type="button" onclick="closeFormSheet()" class="sheet-cancel md:hidden px-4 py-3 rounded-lg text-xs font-bold text-slate-500 hover:bg-slate-100 transition cursor-pointer">Batal</button>
             </form>
           </section>
 
-          <section class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
+          <section id="anggotaListSection" class="lg:col-span-7 bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl shadow-rose-950/5 p-6 sm:p-7 space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
               <div>
                 <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -848,12 +1032,66 @@
           <span>Instagram</span>
         </button>
       </div>
+      <!-- INFORMASI UMUM -->
+      <div class="bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-lg shadow-rose-950/5 overflow-hidden">
+        <h4 class="px-5 pt-5 pb-1 text-xs font-bold text-slate-400">Informasi Umum</h4>
+
+      <div id="acc-contact" class="acc border-b border-slate-100">
+        <button type="button" onclick="toggleAccordion('acc-contact')" aria-expanded="false" aria-controls="acc-contact-body" class="w-full flex items-center gap-3.5 px-5 py-4 text-left cursor-pointer">
+          <span class="w-11 h-11 rounded-full bg-rose-50 text-[#6B1D2F] flex items-center justify-center shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg></span>
+          <span class="flex-1 min-w-0">
+            <span class="block text-sm font-bold text-slate-900">Hubungi Kami</span>
+            <span class="block text-xs text-slate-400 mt-0.5">Email, WhatsApp, Instagram</span>
+          </span>
+          <svg class="acc-chevron w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="acc-contact-body" class="acc-body">
+          <div>
+            <button type="button" onclick="akunContact('email')" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-rose-50/60 border-t border-slate-100 transition cursor-pointer">
+              <span>Email</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" onclick="akunContact('whatsapp')" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-rose-50/60 border-t border-slate-100 transition cursor-pointer">
+              <span>WhatsApp</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" onclick="akunContact('instagram')" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-rose-50/60 border-t border-slate-100 transition cursor-pointer">
+              <span>Instagram</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="acc-about" class="acc">
+        <button type="button" onclick="toggleAccordion('acc-about')" aria-expanded="false" aria-controls="acc-about-body" class="w-full flex items-center gap-3.5 px-5 py-4 text-left cursor-pointer">
+          <span class="w-11 h-11 rounded-full bg-rose-50 text-[#6B1D2F] flex items-center justify-center shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+          <span class="flex-1 min-w-0">
+            <span class="block text-sm font-bold text-slate-900">Tentang</span>
+            <span class="block text-xs text-slate-400 mt-0.5">Panduan, Versi Dashboard</span>
+          </span>
+          <svg class="acc-chevron w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="acc-about-body" class="acc-body">
+          <div>
+            <button type="button" onclick="openPanduan()" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-rose-50/60 border-t border-slate-100 transition cursor-pointer">
+              <span>Panduan Penggunaan</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" onclick="showToast('Dashboard Admin CMS Humas HMMAL UNDIP', 'info')" class="w-full flex items-center justify-between pl-[78px] pr-5 py-3.5 text-sm font-semibold text-slate-800 hover:bg-rose-50/60 border-t border-slate-100 transition cursor-pointer">
+              <span>Versi Dashboard · v1.0</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
     </section>
 
     <!-- BOTTOM NAV BERANDA MOBILE -->
   <nav id="mobileBottomNav" class="fixed bottom-0 inset-x-0 z-40 h-16 bg-white border-t border-slate-100 items-center justify-between px-10 shadow-[0_-4px_16px_rgba(107,29,47,0.08)]">
     <button id="btnNavHome" onclick="goMobileHome()" class="flex flex-col items-center gap-0.5 cursor-pointer">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg>
+      <span class="nav-pill flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg></span>
       <span class="text-[10px] font-bold">Beranda</span>
     </button>
 
@@ -862,7 +1100,7 @@
     </button>
 
     <button id="btnNavAkun" onclick="openMobileTab('akun')" class="flex flex-col items-center gap-0.5 cursor-pointer">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span class="nav-pill flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></span>
       <span class="text-[10px] font-bold">Akun</span>
     </button>
   </nav>
@@ -870,8 +1108,10 @@
   <!-- Edit Program Kerja Modal -->
   <div id="editModal" class="modal-container fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 opacity-0 pointer-events-none">
     <div class="modal-content bg-white rounded-xl p-6 sm:p-7 max-w-lg w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <div class="sheet-head flex items-center justify-between border-b border-slate-100 pb-3">
+        <span class="sheet-ico md:hidden w-9 h-9 rounded-lg bg-[#6B1D2F] text-white flex items-center justify-center shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></span>
         <h3 class="text-base font-bold text-slate-900">Edit Program Kerja</h3>
+        <p class="sheet-sub md:hidden text-[11px] text-slate-400">Perbarui detail program kerja di bawah ini</p>
         <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -908,8 +1148,9 @@
           <textarea id="editProDeskripsi" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition resize-none" required></textarea>
         </div>
 
-        <div>
+        <div class="edit-photo-field">
           <label class="block text-xs font-semibold text-slate-700 mb-1">Ganti Foto Kegiatan (Opsional)</label>
+          <img id="editProPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Foto saat ini" class="sheet-prev md:hidden">
           <input type="file" id="editProFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer">
           <p class="text-[11px] text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
         </div>
@@ -929,8 +1170,10 @@
   <!-- Modal Edit Anggota -->
   <div id="editAnggotaModal" class="modal-container fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4 opacity-0 pointer-events-none">
     <div class="modal-content bg-white rounded-xl p-6 sm:p-7 max-w-md w-full space-y-5 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <div class="sheet-head flex items-center justify-between border-b border-slate-100 pb-3">
+        <span class="sheet-ico md:hidden w-9 h-9 rounded-lg bg-[#6B1D2F] text-white flex items-center justify-center shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></span>
         <h3 class="text-base font-bold text-slate-900">Edit Data Anggota</h3>
+        <p class="sheet-sub md:hidden text-[11px] text-slate-400">Perbarui data anggota di bawah ini</p>
         <button onclick="closeEditAnggotaModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -1031,8 +1274,9 @@
           <input type="text" id="editAngIg" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition">
         </div>
 
-        <div class="space-y-1">
+        <div class="space-y-1 edit-photo-field">
           <label class="block text-xs font-semibold text-slate-700">Ganti Foto Anggota (Opsional)</label>
+          <img id="editAngPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Foto saat ini" class="sheet-prev md:hidden">
           <input type="file" id="editAngFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer">
           <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah foto.</p>
         </div>
@@ -1069,6 +1313,66 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Panduan Penggunaan (Akun mobile) -->
+  <div id="panduanModal" onclick="if(event.target===this) closePanduan()" class="hidden fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm items-end justify-center md:hidden">
+    <div class="panduan-sheet bg-white rounded-t-2xl w-full max-w-md max-h-[85vh] overflow-y-auto p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+        <h3 class="text-base font-bold text-slate-900">Panduan Penggunaan</h3>
+        <button type="button" onclick="closePanduan()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer" aria-label="Tutup">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <ol class="space-y-4">
+        <li class="flex gap-3">
+          <span class="w-6 h-6 rounded-full bg-rose-50 text-[#6B1D2F] text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">1</span>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Program Kerja</p>
+            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Tambah agenda baru (judul, kategori, waktu, deskripsi, dan foto kegiatan), lalu ubah atau hapus lewat daftar.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="w-6 h-6 rounded-full bg-rose-50 text-[#6B1D2F] text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">2</span>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Anggota</p>
+            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Isi data lengkap pengurus atau staf beserta foto potret. Data tampil di Card Anggota pada website.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="w-6 h-6 rounded-full bg-rose-50 text-[#6B1D2F] text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">3</span>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Tentang</p>
+            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Atur foto profil divisi, Sekilas Humas, Visi Utama, dan Misi Strategis.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="w-6 h-6 rounded-full bg-rose-50 text-[#6B1D2F] text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">4</span>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Kontak</p>
+            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Perbarui email, narahubung dan nomor WhatsApp, tautan sosial media, serta deskripsi footer.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="w-6 h-6 rounded-full bg-rose-50 text-[#6B1D2F] text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">5</span>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Aktivitas</p>
+            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Lihat catatan perubahan konten. Ikon lonceng di Beranda membukanya langsung.</p>
+          </div>
+        </li>
+        <li class="flex gap-3">
+          <span class="w-6 h-6 rounded-full bg-rose-50 text-[#6B1D2F] text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">6</span>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Keluar</p>
+            <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Tekan tombol bulat maroon di tengah bawah. Sesi berakhir otomatis setelah 5 menit tanpa aktivitas.</p>
+          </div>
+        </li>
+      </ol>
+      <button type="button" onclick="closePanduan()" class="w-full mt-6 py-3 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer">Mengerti</button>
+    </div>
+  </div>
+
+  <!-- Backdrop modal Tambah (mobile) -->
+  <div id="sheetBackdrop" onclick="closeFormSheet()" class="hidden fixed inset-0 z-[65] bg-slate-900/50 backdrop-blur-sm md:hidden"></div>
 
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -1184,6 +1488,9 @@
       const logs = document.getElementById('activityLogsList');
       const dot = document.getElementById('mobileBellDot');
       if (dot) dot.classList.toggle('hidden', !(logs && logs.children.length > 1));
+      const ml = document.getElementById('mobileStatLog');
+      if (ml) ml.innerText = logs ? logs.children.length : 0;
+      renderMobileRecent();
     }
 
     function openMobileTab(tabId) {
@@ -2060,6 +2367,269 @@
         console.error('Gagal memuat akun:', e);
       }
     }
+
+    /* =========================================
+       MOBILE: Aktivitas terakhir (Beranda) + Informasi Umum (Akun)
+       ========================================= */
+    function renderMobileRecent() {
+      const src = document.getElementById('activityLogsList');
+      const dst = document.getElementById('mobileRecentActivity');
+      if (!src || !dst) return;
+      const rows = Array.from(src.children).slice(0, 4);
+      dst.innerHTML = '';
+      if (!rows.length) {
+        dst.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Belum ada aktivitas</p>';
+        return;
+      }
+      rows.forEach(el => {
+        const ps = el.querySelectorAll('p');
+        const title = ps[0] ? ps[0].textContent : '';
+        const sub = ps[1] ? ps[1].textContent : '';
+        const time = (el.querySelector(':scope > span') || {}).textContent || '';
+
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-3 p-2.5 rounded-lg hover:bg-rose-50/50 transition';
+
+        const left = document.createElement('div');
+        left.className = 'flex items-center gap-3 min-w-0';
+
+        const tile = document.createElement('span');
+        tile.className = 'w-10 h-10 rounded-lg bg-rose-50 border border-rose-100 text-[#6B1D2F] flex items-center justify-center shrink-0';
+        tile.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>';
+
+        const txt = document.createElement('div');
+        txt.className = 'min-w-0';
+        const t = document.createElement('p');
+        t.className = 'text-xs font-bold text-slate-900 truncate';
+        t.textContent = title;
+        const sb = document.createElement('p');
+        sb.className = 'text-[10px] text-slate-400 font-medium truncate';
+        sb.textContent = sub;
+        txt.append(t, sb);
+        left.append(tile, txt);
+
+        const tm = document.createElement('span');
+        tm.className = 'text-[11px] font-extrabold text-[#6B1D2F] shrink-0';
+        tm.textContent = time;
+
+        row.append(left, tm);
+        dst.appendChild(row);
+      });
+    }
+
+    function toggleAccordion(id) {
+      const acc = document.getElementById(id);
+      if (!acc) return;
+      const open = acc.classList.toggle('acc-open');
+      const btn = acc.querySelector('button[aria-expanded]');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    // Buka link eksternal tanpa meninggalkan halaman dashboard
+    function openExtLink(url) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 0);
+    }
+
+    // Ambil data kontak terbaru (hanya baca, tidak mengubah data/form Kontak)
+    async function fetchKontakInfo() {
+      try {
+        const { data, error } = await supabaseClient.from('kontak_kami').select('*').eq('id', 1).maybeSingle();
+        if (error || !data) return {};
+        return data;
+      } catch (e) {
+        return {};
+      }
+    }
+
+    async function akunContact(kind) {
+      const d = await fetchKontakInfo();
+      if (kind === 'email') {
+        const email = (d.email || '').trim();
+        if (!email) return showToast('Email belum diisi di menu Kontak', 'info');
+        window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Humas HMMAL UNDIP');
+      } else if (kind === 'whatsapp') {
+        const num = String(d.whatsapp_nomor || '').replace(/\D/g, '');
+        if (!num) return showToast('Nomor WhatsApp belum diisi di menu Kontak', 'info');
+        openExtLink('https://wa.me/' + num);
+      } else if (kind === 'instagram') {
+        let u = (d.instagram || '').trim();
+        if (!u) return showToast('Instagram belum diisi di menu Kontak', 'info');
+        if (!/^https?:\/\//i.test(u)) u = 'https://www.instagram.com/' + u.replace(/^@/, '');
+        openExtLink(u);
+      }
+    }
+
+    // Modal Panduan Penggunaan (Tombol Back HP ikut menutup modal)
+    function openPanduan() {
+      const m = document.getElementById('panduanModal');
+      if (!m || !m.classList.contains('hidden')) return;
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+      if (isMobileView()) history.pushState({ modal: 'panduan' }, '');
+    }
+
+    function closePanduan(fromPopstate = false) {
+      const m = document.getElementById('panduanModal');
+      if (!m || m.classList.contains('hidden')) return;
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+      if (isMobileView() && !fromPopstate && history.state && history.state.modal === 'panduan') history.back();
+    }
+
+    window.addEventListener('popstate', () => closePanduan(true));
+
+    /* =========================================
+       MOBILE: modal Tambah, pratinjau foto, cari & filter (Prokerja / Anggota)
+       (hanya menambah; fungsi lama tidak diubah)
+       ========================================= */
+    const PHOTO_PH = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>";
+    const SHEET_TAB = { prokerjaFormSection: 'program-kerja', anggotaFormSection: 'anggota' };
+
+    function openFormSheet(id) {
+      const el = document.getElementById(id);
+      if (!el || el.classList.contains('sheet-open')) return;
+      el.classList.add('sheet-open');
+      el.scrollTop = 0;
+      const bd = document.getElementById('sheetBackdrop');
+      if (bd) bd.classList.remove('hidden');
+      if (isMobileView()) {
+        history.pushState({ view: 'menu', tab: SHEET_TAB[id], sheet: id }, '');
+      }
+    }
+
+    function closeFormSheet(fromPopstate = false) {
+      const open = document.querySelectorAll('.form-sheet.sheet-open');
+      if (!open.length) return;
+      open.forEach(el => el.classList.remove('sheet-open'));
+      const bd = document.getElementById('sheetBackdrop');
+      if (bd) bd.classList.add('hidden');
+      if (!fromPopstate && history.state && history.state.sheet) history.back();
+    }
+
+    // Tombol Back HP menutup modal Tambah
+    window.addEventListener('popstate', () => {
+      if (document.querySelector('.form-sheet.sheet-open')) closeFormSheet(true);
+    });
+
+    // Tutup otomatis setelah simpan berhasil (form.reset() hanya dipanggil saat sukses)
+    [['prokerjaForm', 'proPreview'], ['anggotaForm', 'angPreview']].forEach(([fid, pid]) => {
+      const f = document.getElementById(fid);
+      if (!f) return;
+      f.addEventListener('reset', () => setTimeout(() => {
+        const p = document.getElementById(pid);
+        if (p) p.src = PHOTO_PH;
+        closeFormSheet();
+      }, 0));
+    });
+
+    // Kembali ke lebar desktop: pastikan modal tidak tersisa
+    window.addEventListener('resize', () => {
+      if (!isMobileView()) {
+        document.querySelectorAll('.form-sheet.sheet-open').forEach(el => el.classList.remove('sheet-open'));
+        const bd = document.getElementById('sheetBackdrop');
+        if (bd) bd.classList.add('hidden');
+      }
+    });
+
+    // ----- Pratinjau foto -----
+    function setPreview(imgId, url) {
+      const p = document.getElementById(imgId);
+      if (!p) return;
+      p.onerror = () => { p.onerror = null; p.src = PHOTO_PH; };
+      p.src = url || PHOTO_PH;
+    }
+
+    function bindPhotoPreview(inputId, imgId, oldId) {
+      const i = document.getElementById(inputId);
+      if (!i) return;
+      i.addEventListener('change', () => {
+        const f = i.files && i.files[0];
+        if (f) {
+          const r = new FileReader();
+          r.onload = e => setPreview(imgId, e.target.result);
+          r.readAsDataURL(f);
+        } else {
+          const old = oldId ? (document.getElementById(oldId) || {}).value : '';
+          setPreview(imgId, old);
+        }
+      });
+    }
+
+    function clearSheetPhoto(inputId, imgId) {
+      const i = document.getElementById(inputId);
+      if (i) i.value = '';
+      setPreview(imgId, '');
+    }
+
+    bindPhotoPreview('proFile', 'proPreview');
+    bindPhotoPreview('angFile', 'angPreview');
+    bindPhotoPreview('editProFile', 'editProPreview', 'editProOldGambarUrl');
+    bindPhotoPreview('editAngFile', 'editAngPreview', 'editAngOldFotoUrl');
+
+    // Tampilkan foto saat ini di modal Edit (membungkus fungsi lama tanpa mengubah isinya)
+    const _openEditModalOrig = openEditModal;
+    openEditModal = function (id) {
+      _openEditModalOrig(id);
+      const it = listProgramKerja.find(x => Number(x.id) === Number(id));
+      setPreview('editProPreview', it ? it.gambar_url : '');
+    };
+    const _openEditAnggotaModalOrig = openEditAnggotaModal;
+    openEditAnggotaModal = function (id) {
+      _openEditAnggotaModalOrig(id);
+      const it = listAnggota.find(x => Number(x.id) === Number(id));
+      setPreview('editAngPreview', it ? (it.foto_url || it.photo) : '');
+    };
+
+    // ----- Cari & filter kategori (mobile) -----
+    function setupListFilter(cfg) {
+      const q = document.getElementById(cfg.search);
+      const sel = document.getElementById(cfg.select);
+      const none = document.getElementById(cfg.none);
+      if (!q || !sel) return;
+
+      const run = () => {
+        const term = (q.value || '').trim().toLowerCase();
+        const cat = sel.value;
+        let total = 0, shown = 0;
+        document.querySelectorAll(cfg.items).forEach(el => {
+          if (!el.querySelector('img')) return; // abaikan teks "Belum ada data"
+          total++;
+          const text = el.textContent.replace(/\s+/g, ' ');
+          const visible = (!term || text.toLowerCase().includes(term)) && (!cat || cfg.match(text, cat));
+          el.style.display = visible ? '' : 'none';
+          if (visible) shown++;
+        });
+        if (none) none.classList.toggle('hidden', !(total > 0 && shown === 0));
+      };
+
+      q.addEventListener('input', run);
+      sel.addEventListener('change', run);
+      cfg.containers.forEach(cid => {
+        const c = document.getElementById(cid);
+        if (c) new MutationObserver(run).observe(c, { childList: true });
+      });
+    }
+
+    setupListFilter({
+      search: 'searchProker', select: 'filterProker', none: 'noResultProker',
+      items: '#prokerjaMobileCards > div, #prokerjaTableBody > tr',
+      containers: ['prokerjaMobileCards', 'prokerjaTableBody'],
+      match: (text, cat) => text.toLowerCase().includes(cat.toLowerCase())
+    });
+
+    setupListFilter({
+      search: 'searchAnggota', select: 'filterAnggota', none: 'noResultAnggota',
+      items: '#anggotaGridContainer > div',
+      containers: ['anggotaGridContainer'],
+      match: (text, cat) => new RegExp('\\b' + cat + '\\b', 'i').test(text)
+    });
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
