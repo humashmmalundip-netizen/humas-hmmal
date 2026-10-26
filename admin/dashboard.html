@@ -535,6 +535,23 @@
             </div>
 
             <form id="prokerjaForm" class="space-y-4">
+
+              <!-- Foto Kegiatan / File Upload -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Foto Kegiatan</label>
+                <div class="sheet-photo p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                  <img id="proPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Pratinjau Foto" class="sheet-prev md:hidden shrink-0">
+                  <input 
+                    type="file" 
+                    id="proFile" 
+                    accept="image/*" 
+                    class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" 
+                    required
+                  >
+
+                  <button type="button" onclick="clearSheetPhoto('proFile', 'proPreview')" class="sheet-clear md:hidden hover:text-rose-600 transition cursor-pointer">Hapus foto</button>
+                </div>
+              </div>
               
               <!-- Judul Program -->
               <div class="space-y-1">
@@ -602,23 +619,6 @@
                   placeholder="Jelaskan secara ringkas mengenai latar belakang dan tujuan agenda..."
                   required
                 ></textarea>
-              </div>
-
-              <!-- Foto Kegiatan / File Upload -->
-              <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">Foto Kegiatan</label>
-                <div class="sheet-photo p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
-                  <img id="proPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Pratinjau Foto" class="sheet-prev md:hidden shrink-0">
-                  <input 
-                    type="file" 
-                    id="proFile" 
-                    accept="image/*" 
-                    class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" 
-                    required
-                  >
-
-                  <button type="button" onclick="clearSheetPhoto('proFile', 'proPreview')" class="sheet-clear md:hidden hover:text-rose-600 transition cursor-pointer">Hapus foto</button>
-                </div>
               </div>
 
               <!-- Tombol Simpan -->
@@ -860,12 +860,25 @@
             <form id="anggotaForm" class="space-y-4">
               <input type="hidden" id="editAnggotaId">
               <input type="hidden" id="angOldGambarUrl">
+
+              <!-- Foto Anggota -->
+              <div class="space-y-1">
+                <label class="block text-xs font-semibold text-slate-700">Foto Anggota (Potret)</label>
+                <div class="sheet-photo p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
+                  <img id="angPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Pratinjau Foto" class="sheet-prev md:hidden shrink-0">
+                  <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" required>
+
+                  <button type="button" onclick="clearSheetPhoto('angFile', 'angPreview')" class="sheet-clear md:hidden hover:text-rose-600 transition cursor-pointer">Hapus foto</button>
+                </div>
+              </div>
               
+              <!-- Nama Lengkap -->
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
                 <input type="text" id="angNama" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Contoh: Rifki Nur Hasan" required>
               </div>
 
+              <!-- Role / Jabatan -->
               <div class="space-y-1">
                 <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
                 <div class="relative flex items-center">
@@ -884,6 +897,7 @@
                 </div>
               </div>
 
+              <!-- Kategori ID -->
               <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1">
                   <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
@@ -900,6 +914,7 @@
                   </div>
                 </div>
 
+                <!-- Badge Card -->
                 <div class="space-y-1">
                   <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
                   <div class="relative flex items-center">
@@ -915,6 +930,7 @@
                 </div>
               </div>
 
+              <!-- Divisi -->
               <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1">
                   <label class="block text-xs font-semibold text-slate-700">Divisi</label>
@@ -932,34 +948,28 @@
                 </div>
 
                 <div class="space-y-1">
+                  <!-- MAL (Tahun) -->
                   <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
                   <input type="number" id="angMal" inputmode="numeric" pattern="[0-9]*" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder="2024" required>
                 </div>
               </div>
 
               <div class="space-y-1">
+                <!-- Bidang / Periode -->
                 <label class="block text-xs font-semibold text-slate-700">Bidang / Periode</label>
                 <input type="text" id="angSubDept" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="Humas HMMAL 2026" required>
               </div>
 
               <div class="space-y-1">
+                <!-- Motto / Quote Singkat -->
                 <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
                 <textarea id="angQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none" placeholder="Memimpin dengan empati..."></textarea>
               </div>
 
               <div class="space-y-1">
+                <!-- Username Instagram -->
                 <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
                 <input type="text" id="angIg" class="w-full px-3.5 py-2.5 bg-slate-50/80 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" placeholder="rifkiinhs">
-              </div>
-
-              <div class="space-y-1">
-                <label class="block text-xs font-semibold text-slate-700">Foto Anggota (Potret)</label>
-                <div class="sheet-photo p-2 bg-slate-50/80 border border-slate-200 rounded-2xl flex items-center">
-                  <img id="angPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Pratinjau Foto" class="sheet-prev md:hidden shrink-0">
-                  <input type="file" id="angFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer" required>
-
-                  <button type="button" onclick="clearSheetPhoto('angFile', 'angPreview')" class="sheet-clear md:hidden hover:text-rose-600 transition cursor-pointer">Hapus foto</button>
-                </div>
               </div>
 
               <button type="submit" id="btnSaveAnggota" class="w-full py-3 px-4 bg-[#6B1D2F] hover:bg-[#521422] text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2 mt-2">
@@ -1194,6 +1204,13 @@
         <input type="hidden" id="editProId">
         <input type="hidden" id="editProOldGambarUrl">
 
+        <div class="edit-photo-field">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Ganti Foto Kegiatan (Opsional)</label>
+          <img id="editProPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Foto saat ini" class="sheet-prev md:hidden">
+          <input type="file" id="editProFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer">
+          <p class="text-[11px] text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
+        </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Program</label>
           <input type="text" id="editProJudul" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition" required>
@@ -1219,13 +1236,6 @@
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Program</label>
           <textarea id="editProDeskripsi" rows="3" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-rose-900 outline-none transition resize-none" required></textarea>
-        </div>
-
-        <div class="edit-photo-field">
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Ganti Foto Kegiatan (Opsional)</label>
-          <img id="editProPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Foto saat ini" class="sheet-prev md:hidden">
-          <input type="file" id="editProFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-900 hover:file:bg-rose-100 cursor-pointer">
-          <p class="text-[11px] text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
         </div>
 
         <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
@@ -1255,12 +1265,22 @@
       <form id="editAnggotaForm" class="space-y-4">
         <input type="hidden" id="editAngId">
         <input type="hidden" id="editAngOldFotoUrl">
+        
+        <!-- Foto Anggota -->
+        <div class="space-y-1 edit-photo-field">
+          <label class="block text-xs font-semibold text-slate-700">Ganti Foto Anggota (Opsional)</label>
+          <img id="editAngPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Foto saat ini" class="sheet-prev md:hidden">
+          <input type="file" id="editAngFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer">
+          <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah foto.</p>
+        </div>
 
+        <!-- Nama Lengkap -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Nama Lengkap</label>
           <input type="text" id="editAngNama" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
         </div>
 
+        <!-- Role / Jabatan -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Role / Jabatan</label>
           <div class="relative flex items-center">
@@ -1279,6 +1299,7 @@
           </div>
         </div>
 
+        <!-- Kategori ID -->
         <div class="grid grid-cols-2 gap-3">
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Kategori ID</label>
@@ -1295,6 +1316,7 @@
             </div>
           </div>
 
+          <!-- Badge Card -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Badge Card</label>
             <div class="relative flex items-center">
@@ -1310,6 +1332,7 @@
           </div>
         </div>
 
+        <!-- Divisi -->
         <div class="grid grid-cols-2 gap-3">
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">Divisi</label>
@@ -1326,32 +1349,29 @@
             </div>
           </div>
 
+          <!-- MAL (Tahun) -->
           <div class="space-y-1">
             <label class="block text-xs font-semibold text-slate-700">MAL (Tahun)</label>
             <input type="number" id="editAngMal" inputmode="numeric" pattern="[0-9]*" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" required>
           </div>
         </div>
 
+        <!-- Sub Departemen / Keterangan -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Sub Departemen / Keterangan</label>
           <input type="text" id="editAngSubDept" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition" required>
         </div>
 
+        <!-- Motto / Quote Singkat -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Motto / Quote Singkat</label>
           <textarea id="editAngQuote" rows="2" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition resize-none"></textarea>
         </div>
 
+        <!-- Username Instagram -->
         <div class="space-y-1">
           <label class="block text-xs font-semibold text-slate-700">Username Instagram (Tanpa @)</label>
           <input type="text" id="editAngIg" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:bg-white focus:border-[#6B1D2F] outline-none transition">
-        </div>
-
-        <div class="space-y-1 edit-photo-field">
-          <label class="block text-xs font-semibold text-slate-700">Ganti Foto Anggota (Opsional)</label>
-          <img id="editAngPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>" alt="Foto saat ini" class="sheet-prev md:hidden">
-          <input type="file" id="editAngFile" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-[#6B1D2F] hover:file:bg-rose-100 cursor-pointer">
-          <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah foto.</p>
         </div>
 
         <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
@@ -1498,7 +1518,7 @@
     }
     
     function switchTab(tabId) {
-      document.body.classList.remove('mobile-home-active'); // <-- TAMBAHAN: keluar dari beranda mobile
+      document.body.classList.remove('mobile-home-active');
       document.body.classList.toggle('mobile-akun-active', tabId === 'akun');
       setMobileTitle(tabId);
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -1529,7 +1549,6 @@
       localStorage.setItem('activeDashboardTab', tabId);
     }
 
-        // ===== BERANDA MOBILE =====
     function isMobileView() {
       return window.matchMedia('(max-width: 767px)').matches;
     }
@@ -1543,7 +1562,6 @@
       refreshMobileSummary();
     }
 
-    // Ringkasan Sistem di beranda mobile: memakai fungsi load yang sudah ada
     async function refreshMobileSummary() {
       try {
         await Promise.all([loadProkerjaData(), loadAnggotaData()]);
@@ -1557,17 +1575,15 @@
       if (p && mp) mp.innerText = p.innerText;
       if (a && ma) ma.innerText = a.innerText;
 
-      // Titik kuning di ikon lonceng muncul jika ada log aktivitas baru
-      const logs = document.getElementById('activityLogsList');
+      const logs = await loadLogsFromDatabase();
       const dot = document.getElementById('mobileBellDot');
-      if (dot) dot.classList.toggle('hidden', !(logs && logs.children.length > 1));
+      if (dot) dot.classList.toggle('hidden', !(logs && logs.length > 0));
       const ml = document.getElementById('mobileStatLog');
-      if (ml) ml.innerText = logs ? logs.children.length : 0;
+      if (ml) ml.innerText = logs ? logs.length : 0;
       renderMobileRecent();
     }
 
     function openMobileTab(tabId) {
-    // Push history hanya saat berpindah dari Beranda ke sebuah menu
     if (isMobileView() && document.body.classList.contains('mobile-home-active')) {
       history.pushState({ view: 'menu', tab: tabId }, '');
     }
@@ -1576,39 +1592,33 @@
     if (mainEl) mainEl.scrollTop = 0;
     }
 
-    // Tombol panah kembali di header
     function goMobileBack() {
       if (history.state && history.state.view === 'menu') history.back();
       else showMobileHome();
     }
 
-    // Tombol "Beranda" di bottom nav
     function goMobileHome() {
       if (history.state && history.state.view === 'menu') history.back();
       else showMobileHome();
     }
 
-    // Tombol kembali bawaan HP (Popstate Handler)
     window.addEventListener('popstate', (e) => {
       if (!isMobileView()) return;
       
       const st = e.state;
 
-      // 1. Cek apakah modal Prokerja sedang terbuka
       const editModal = document.getElementById('editModal');
       if (editModal && !editModal.classList.contains('hidden')) {
-        closeEditModal(true); // Tutup modal tanpa mentrigger history.back() lagi
+        closeEditModal(true);
         return;
       }
 
-      // 2. Cek apakah modal Anggota sedang terbuka
       const editAnggotaModal = document.getElementById('editAnggotaModal');
       if (editAnggotaModal && !editAnggotaModal.classList.contains('hidden')) {
-        closeEditAnggotaModal(true); // Tutup modal tanpa mentrigger history.back() lagi
+        closeEditAnggotaModal(true);
         return;
       }
 
-      // 3. Navigasi antar halaman/menu mobile
       if (st && st.view === 'menu') {
         switchTab(st.tab);
       } else {
@@ -1678,31 +1688,100 @@
       }, 3500);
     }
 
-    function addLog(activityMessage, category = 'Konten') {
+    /* =========================================
+       LOG AKTIVITAS TERAKHIR (SUPABASE DATABASE)
+       ========================================= */
+    async function loadLogsFromDatabase() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('log_aktivitas')
+          .select('*')
+          .order('id', { ascending: false })
+          .limit(20);
+
+        if (error) throw error;
+        
+        if (!data || data.length === 0) {
+          return [
+            {
+              message: 'Sistem CMS Berjalan Normal',
+              category: 'Terhubung secara real-time dengan Supabase Database.',
+              time: 'Baru Saja',
+              isSystemDefault: true
+            }
+          ];
+        }
+
+        return data;
+      } catch (e) {
+        console.error('Gagal memuat log dari Supabase:', e);
+        return [];
+      }
+    }
+
+    async function renderLogsUI() {
       const list = document.getElementById('activityLogsList');
       if (!list) return;
 
-      const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
-      const logItem = document.createElement('div');
-      logItem.className = 'p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs transition animate-fade-in';
-      logItem.innerHTML = `
-        <div class="flex items-center gap-3">
-          <span class="w-2 h-2 rounded-full bg-rose-600"></span>
-          <div>
-            <p class="font-bold text-slate-800">${activityMessage}</p>
-            <p class="text-[11px] text-slate-500">Kategori: ${category}</p>
+      const logs = await loadLogsFromDatabase();
+      list.innerHTML = '';
+
+      logs.forEach(log => {
+        const logItem = document.createElement('div');
+        logItem.className = 'p-4 bg-slate-50 border border-slate-200/60 rounded-2xl flex items-center justify-between text-xs transition animate-fade-in';
+        
+        const dotColor = log.isSystemDefault ? 'bg-emerald-500' : 'bg-rose-600';
+        const subText = log.isSystemDefault ? log.category : `Kategori: ${log.category}`;
+
+        logItem.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+            <div>
+              <p class="font-bold text-slate-800">${log.message}</p>
+              <p class="text-[11px] text-slate-500">${subText}</p>
+            </div>
           </div>
-        </div>
-        <span class="text-[10px] font-semibold text-slate-400">${time}</span>
-      `;
-      list.prepend(logItem);
+          <span class="text-[10px] font-semibold text-slate-400">${log.time}</span>
+        `;
+        list.appendChild(logItem);
+      });
+
+      renderMobileRecent();
+    }
+
+    async function addLog(activityMessage, category = 'Konten') {
+      const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+
+      try {
+        const { error } = await supabaseClient.from('log_aktivitas').insert([{
+          message: activityMessage,
+          category: category,
+          time: time
+        }]);
+
+        if (error) throw error;
+
+        const { data: allLogs } = await supabaseClient
+          .from('log_aktivitas')
+          .select('id')
+          .order('id', { ascending: false });
+
+        if (allLogs && allLogs.length > 20) {
+          const idsToDelete = allLogs.slice(20).map(item => item.id);
+          await supabaseClient.from('log_aktivitas').delete().in('id', idsToDelete);
+        }
+
+        await renderLogsUI();
+
+      } catch (err) {
+        console.error('Gagal mencatat log ke server:', err);
+      }
     }
 
     async function checkAuth() {
       try {
         const { data: { session }, error } = await supabaseClient.auth.getSession();
 
-        // Jika sesi tidak ada atau error, bersihkan data & lempar ke login
         if (error || !session) {
           localStorage.removeItem('isLoggedIn');
           localStorage.removeItem('activeDashboardTab');
@@ -1712,6 +1791,7 @@
 
         const dashboardEl = document.getElementById('dashboardContent');
         if (dashboardEl) dashboardEl.style.display = 'flex';
+        await renderLogsUI();
         loadProkerjaData();
         addLog('Admin berhasil masuk ke Dashboard CMS', 'Sistem');
 
@@ -1728,20 +1808,18 @@
       }
     }
 
-    // PROTEKSI ALA M-BANKING: Muat ulang halaman jika dimuat dari cache browser (Tombol Back HP/Browser)
     window.addEventListener('pageshow', (event) => {
       if (event.persisted) {
         window.location.reload();
       }
     });
 
-    // Fungsi untuk menangani perubahan foto rasio 9:10 secara instan via klik
     async function handleEditablePhotoUpload(input) {
       const file = input.files[0];
       if (!file) return;
 
       const previewImg = document.getElementById('editablePhotoPreview');
-      previewImg.src = URL.createObjectURL(file); // Preview lokal instan di device pengunggah
+      previewImg.src = URL.createObjectURL(file);
 
       try {
         const fileName = `profile_9_10_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
@@ -1751,7 +1829,6 @@
         const { data: pubData } = supabaseClient.storage.from('assets_web').getPublicUrl(fileName);
         const newUrl = pubData.publicUrl;
 
-        // SIMPAN KE DATABASE SUPABASE AGAR TERSINKRON KE SEMUA DEVICE
         const { error: updateError } = await supabaseClient
           .from('tentang_kami')
           .update({ gambar_url: newUrl })
@@ -1768,15 +1845,12 @@
 
     async function handleLogout() {
       try { 
-        // 1. Hancurkan sesi di Supabase
         await supabaseClient.auth.signOut(); 
       } catch (err) {}
 
-      // 2. Bersihkan penyimpanan lokal
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('activeDashboardTab');
 
-      // 3. Paksa berpindah ke login.html tanpa menyimpan history dashboard
       window.location.replace('login.html');
     }
 
@@ -1925,7 +1999,6 @@
         modal.classList.add('active');
       }, 10);
 
-      // TAMBAHAN: Masukkan state modal ke history browser agar tombol Back HP menutup modal
       if (isMobileView()) {
         history.pushState({ modal: 'editProkerja' }, '');
       }
@@ -1943,7 +2016,6 @@
         modal.classList.remove('flex');
       }, 250);
 
-      // Jika ditutup via tombol 'Batal'/'X' (bukan Back HP), kembalikan history stack
       if (isMobileView() && !fromPopstate && history.state && history.state.modal === 'editProkerja') {
         history.back();
       }
@@ -2217,7 +2289,6 @@
         modal.classList.add('active');
       }, 10);
 
-      // TAMBAHAN: Masukkan state modal ke history browser agar tombol Back HP menutup modal
       if (isMobileView()) {
         history.pushState({ modal: 'editAnggota' }, '');
       }
@@ -2235,7 +2306,6 @@
         modal.classList.remove('flex');
       }, 250);
 
-      // Jika ditutup via tombol 'Batal'/'X' (bukan Back HP), kembalikan history stack
       if (isMobileView() && !fromPopstate && history.state && history.state.modal === 'editAnggota') {
         history.back();
       }
@@ -2407,10 +2477,8 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Desktop: selalu mulai dari Program Kerja
       switchTab('program-kerja');
 
-      // Mobile: selalu mulai dari Beranda, dan tandai entri history ini sebagai "home"
       if (isMobileView()) {
         history.replaceState({ view: 'home' }, '');
         showMobileHome();
@@ -2425,7 +2493,6 @@
         const el = document.getElementById('akunEmail');
         if (el) el.textContent = (session && session.user && session.user.email) || '-';
 
-        // AMBIL DATA GAMBAR TERBARU LANGSUNG DARI DATABASE SUPABASE
         const { data, error } = await supabaseClient
           .from('tentang_kami')
           .select('gambar_url')
@@ -2441,24 +2508,23 @@
       }
     }
 
-    /* =========================================
-       MOBILE: Aktivitas terakhir (Beranda) + Informasi Umum (Akun)
-       ========================================= */
-    function renderMobileRecent() {
-      const src = document.getElementById('activityLogsList');
+    async function renderMobileRecent() {
       const dst = document.getElementById('mobileRecentActivity');
-      if (!src || !dst) return;
-      const rows = Array.from(src.children).slice(0, 4);
+      if (!dst) return;
+      
+      const logs = await loadLogsFromDatabase();
+      const rows = logs.slice(0, 4);
       dst.innerHTML = '';
+
       if (!rows.length) {
         dst.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Belum ada aktivitas</p>';
         return;
       }
-      rows.forEach(el => {
-        const ps = el.querySelectorAll('p');
-        const title = ps[0] ? ps[0].textContent : '';
-        const sub = ps[1] ? ps[1].textContent : '';
-        const time = (el.querySelector(':scope > span') || {}).textContent || '';
+
+      rows.forEach(item => {
+        const title = item.message || '';
+        const sub = item.isSystemDefault ? item.category : `Kategori: ${item.category}`;
+        const time = item.time || '';
 
         const row = document.createElement('div');
         row.className = 'flex items-center justify-between gap-3 p-2.5 rounded-lg hover:bg-rose-50/50 transition';
@@ -2498,7 +2564,6 @@
       if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
-    // Buka link eksternal tanpa meninggalkan halaman dashboard
     function openExtLink(url) {
       const a = document.createElement('a');
       a.href = url;
@@ -2510,7 +2575,6 @@
       setTimeout(() => a.remove(), 0);
     }
 
-    // Ambil data kontak terbaru (hanya baca, tidak mengubah data/form Kontak)
     async function fetchKontakInfo() {
       try {
         const { data, error } = await supabaseClient.from('kontak_kami').select('*').eq('id', 1).maybeSingle();
@@ -2539,7 +2603,6 @@
       }
     }
 
-    // Modal Panduan Penggunaan (Tombol Back HP ikut menutup modal)
     function openPanduan() {
       const m = document.getElementById('panduanModal');
       if (!m || !m.classList.contains('hidden')) return;
@@ -2558,10 +2621,6 @@
 
     window.addEventListener('popstate', () => closePanduan(true));
 
-    /* =========================================
-       MOBILE: modal Tambah, pratinjau foto, cari & filter (Prokerja / Anggota)
-       (hanya menambah; fungsi lama tidak diubah)
-       ========================================= */
     const PHOTO_PH = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100' height='100' fill='%236B1D2F'/><text x='50' y='56' font-size='16' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'>Foto</text></svg>";
     const SHEET_TAB = { prokerjaFormSection: 'program-kerja', anggotaFormSection: 'anggota' };
 
@@ -2586,12 +2645,10 @@
       if (!fromPopstate && history.state && history.state.sheet) history.back();
     }
 
-    // Tombol Back HP menutup modal Tambah
     window.addEventListener('popstate', () => {
       if (document.querySelector('.form-sheet.sheet-open')) closeFormSheet(true);
     });
 
-    // Tutup otomatis setelah simpan berhasil (form.reset() hanya dipanggil saat sukses)
     [['prokerjaForm', 'proPreview'], ['anggotaForm', 'angPreview']].forEach(([fid, pid]) => {
       const f = document.getElementById(fid);
       if (!f) return;
@@ -2602,7 +2659,6 @@
       }, 0));
     });
 
-    // Kembali ke lebar desktop: pastikan modal tidak tersisa
     window.addEventListener('resize', () => {
       if (!isMobileView()) {
         document.querySelectorAll('.form-sheet.sheet-open').forEach(el => el.classList.remove('sheet-open'));
@@ -2611,7 +2667,6 @@
       }
     });
 
-    // ----- Pratinjau foto -----
     function setPreview(imgId, url) {
       const p = document.getElementById(imgId);
       if (!p) return;
@@ -2646,7 +2701,6 @@
     bindPhotoPreview('editProFile', 'editProPreview', 'editProOldGambarUrl');
     bindPhotoPreview('editAngFile', 'editAngPreview', 'editAngOldFotoUrl');
 
-    // Tampilkan foto saat ini di modal Edit (membungkus fungsi lama tanpa mengubah isinya)
     const _openEditModalOrig = openEditModal;
     openEditModal = function (id) {
       _openEditModalOrig(id);
@@ -2660,7 +2714,6 @@
       setPreview('editAngPreview', it ? (it.foto_url || it.photo) : '');
     };
 
-    // ----- Cari & filter kategori (mobile) -----
     function setupListFilter(cfg) {
       const q = document.getElementById(cfg.search);
       const sel = document.getElementById(cfg.select);
@@ -2672,7 +2725,7 @@
         const cat = sel.value;
         let total = 0, shown = 0;
         document.querySelectorAll(cfg.items).forEach(el => {
-          if (!el.querySelector('img')) return; // abaikan teks "Belum ada data"
+          if (!el.querySelector('img')) return;
           total++;
           const text = el.textContent.replace(/\s+/g, ' ');
           const visible = (!term || text.toLowerCase().includes(term)) && (!cat || cfg.match(text, cat));
