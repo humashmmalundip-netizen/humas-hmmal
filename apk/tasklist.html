@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+  <html lang="id">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+      <title>Task List</title>
+        <style>
+        :root{--n:#0B2559;--n2:#1C3F86;--nl:#EEF2FA;--bg:#F1F3F8;--nh:calc(72px + env(safe-area-inset-bottom,0px));--tx:#0F1B3D;--mu:#7B8499;--ln:#E6EAF2;--rd:#D64550}
+        *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+        body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;background:#E3E7F0;color:var(--tx);display:flex;justify-content:center}
+        #app{width:100%;max-width:430px;height:100dvh;position:relative;overflow:hidden;background:var(--bg)}
+        svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+        .screen{position:absolute;inset:0 0 var(--nh);overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 24px) 22px 50px;display:none;animation:fi .25s}
+        .screen.on{display:block}
+        @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+        h1{font-size:24px;font-weight:700;letter-spacing:-.4px}.sub{color:var(--mu);font-size:13px;margin-top:3px}
+        .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+        .ic{width:42px;height:42px;border-radius:14px;border:1px solid var(--ln);display:grid;place-items:center;color:var(--n)}
+        .glow{position:relative;overflow:hidden;background:radial-gradient(circle at 100% 0,#ffffff33,#0000 55%),radial-gradient(circle at 0 110%,#4f86ff66,#0000 55%),linear-gradient(135deg,#17358a,#0B2559);box-shadow:0 14px 30px #0b255966,0 2px 0 #ffffff22 inset}.glow::before{content:'';position:absolute;width:150px;height:150px;border-radius:50%;right:-40px;top:-60px;background:#ffffff1c;filter:blur(8px)}.glow>*{position:relative}.hero{color:#fff;border-radius:22px;padding:20px}
+        .hero small{opacity:.75;font-size:13px}.hero b{display:block;font-size:42px;font-weight:700;margin:2px 0 8px;letter-spacing:-1px}
+        .bar{height:6px;background:#ffffff30;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#fff;border-radius:9px;transition:width .5s}
+        .stats{display:flex;background:#fff;margin-top:14px;border:1px solid var(--ln);border-radius:18px;padding:14px 0}
+        .stats div{flex:1;text-align:center;border-right:1px solid var(--ln)}.stats div:last-child{border:0}
+        .stats b{font-size:21px;display:block;color:var(--n)}.stats span{font-size:12px;color:var(--mu)}
+        .sec{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px}.sec h2{font-size:16px}.sec a{color:var(--n2);font-size:13px;font-weight:600;cursor:pointer}
+        .task{display:flex;align-items:center;gap:12px;border:1px solid var(--ln);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;background:#fff;transition:.15s}
+        .task:active{background:var(--nl)}
+        .task .m{flex:1;min-width:0}.task b{font-size:14.5px;display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .task .cs{font-size:12px;color:var(--n2);font-weight:600;display:block;margin-bottom:2px}
+        .meta{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:12px;color:var(--mu);flex-wrap:wrap}
+        .meta span{display:inline-flex;align-items:center;gap:4px}.meta svg{width:14px;height:14px}
+        .task.done b{text-decoration:line-through;opacity:.45}.task.done .cs{opacity:.5}
+        .chk{width:26px;height:26px;border-radius:50%;border:1.8px solid #C5CCDB;display:grid;place-items:center;color:#fff;flex:none;transition:.2s}
+        .chk svg{width:14px;height:14px;stroke-width:3;opacity:0}.task.done .chk{background:var(--n);border-color:var(--n)}.task.done .chk svg{opacity:1}
+        .badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--nl);color:var(--n2)}
+        .badge.late{background:#D645501a;color:var(--rd)}.badge.soon{background:#FFF3DC;color:#A66A00}
+        .chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px}
+        .chip{padding:8px 16px;border-radius:20px;background:#fff;border:1px solid var(--ln);font-size:13px;font-weight:600;color:var(--mu);white-space:nowrap}
+        .chip.on{background:var(--n);border-color:var(--n);color:#fff}
+        .empty{text-align:center;color:var(--mu);padding:36px 0;font-size:14px;line-height:1.5}.empty svg{width:40px;height:40px;margin-bottom:8px;opacity:.5}
+        .cal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.cal-h button{background:#fff;border:1px solid var(--ln);width:38px;height:38px;border-radius:12px;color:var(--n);display:grid;place-items:center}.cal-h h1{font-size:17px}.card{background:#fff;border:1px solid var(--ln);border-radius:20px;padding:12px}
+        .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:13.5px}
+        .grid .d{color:var(--mu);font-size:11px;padding:6px 0;font-weight:600}
+        .grid .c{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;position:relative;cursor:pointer}
+        .grid .c.today{border:1.5px solid var(--n)}.grid .c.sel{background:var(--n);color:#fff;font-weight:700}
+        .grid .c.has::after{content:'';position:absolute;bottom:5px;width:4px;height:4px;border-radius:50%;background:var(--n2)}.grid .c.sel.has::after{background:#fff}
+        .av{width:80px;height:80px;border-radius:50%;background:var(--nl);color:var(--n);margin:8px auto 10px;display:grid;place-items:center}.av svg{width:36px;height:36px}
+
+        .ov{color:#fff;border-radius:20px;padding:18px 20px;display:flex;margin:18px 0}
+        .ov div{flex:1;text-align:center;border-right:1px solid #ffffff2e}.ov div:last-child{border:0}.ov small{opacity:.75;font-size:13px}.ov b{display:block;font-size:30px}
+        .list{background:#fff;border:1px solid var(--ln);border-radius:18px;overflow:hidden}
+        .row{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid var(--ln);font-size:14px;gap:8px}.row:last-child{border:0}
+        .row .n{display:flex;align-items:center;gap:8px;min-width:0;flex:1}.row .n span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .row .cnt{color:var(--mu);font-size:12px}
+        .ib{width:34px;height:34px;border-radius:10px;border:0;background:var(--nl);color:var(--n);display:grid;place-items:center;flex:none}.ib.rd{color:var(--rd);background:#D645501a}.ib svg{width:16px;height:16px}
+        nav{position:absolute;bottom:0;left:0;right:0;height:var(--nh);z-index:5;filter:drop-shadow(0 -3px 10px #0b255922)}
+        nav .bar{position:absolute;inset:0;background:#fff;border-radius:24px 24px 0 0;-webkit-mask:radial-gradient(circle 37px at 50% 6px,#0000 36px,#000 37px);mask:radial-gradient(circle 37px at 50% 6px,#0000 36px,#000 37px)}
+        nav .items{position:absolute;left:0;right:0;top:0;height:72px;display:flex;align-items:center;justify-content:space-around;padding:0 8px}
+        nav button[data-s]{background:none;border:0;width:56px;height:56px;display:grid;place-items:center;color:#A3ABBD;position:relative;transition:.2s}
+        nav button svg{width:25px;height:25px}nav button.on{color:var(--n)}
+        nav button.on::after{content:'';position:absolute;bottom:7px;width:5px;height:5px;border-radius:50%;background:var(--n)}
+        nav .sp{width:72px;flex:none}
+        nav .fab{position:absolute;left:50%;top:-24px;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;border:0;color:#fff;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#3a62c4,#0B2559 70%);box-shadow:0 8px 20px #0b255973,0 0 0 4px #fff;transition:transform .15s}
+        nav .fab:active{transform:translateX(-50%) scale(.94)}nav .fab svg{width:28px;height:28px;stroke-width:2.3}
+        .ov-bg{position:absolute;inset:0;background:#0b1b3f80;z-index:10;display:none;align-items:flex-end}.ov-bg.on{display:flex}
+        .sheet{background:#fff;width:100%;border-radius:26px 26px 0 0;padding:10px 22px calc(env(safe-area-inset-bottom,0px) + 22px);max-height:92%;overflow-y:auto;animation:up .3s}
+        @keyframes up{from{transform:translateY(100%)}}
+        .grab{width:40px;height:4px;background:var(--ln);border-radius:4px;margin:0 auto 16px}
+        .sheet h2{font-size:19px;margin-bottom:6px}
+        label{display:block;font-size:12.5px;font-weight:600;color:var(--mu);margin:16px 0 6px}
+        input,select,textarea{width:100%;padding:13px 14px;border:1.5px solid var(--ln);border-radius:13px;background:#fff;color:var(--tx);font:inherit;font-size:14.5px;outline:0;appearance:none;-webkit-appearance:none}
+        select{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%230B2559' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center}
+        input:focus,select:focus,textarea:focus{border-color:var(--n)}textarea{resize:none;height:84px}
+        .two{display:flex;gap:10px}.two>div{flex:1}
+        .seg{display:flex;background:var(--nl);border-radius:13px;padding:4px}.seg button{flex:1;border:0;background:none;padding:10px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:6px}.seg button svg{width:16px;height:16px}.seg button.on{background:var(--n);color:#fff}
+        .btn{width:100%;padding:15px;border:0;border-radius:14px;background:var(--n);color:#fff;font-size:15px;font-weight:700;margin-top:20px}
+        .btn.g{background:var(--nl);color:var(--n);margin-top:10px}.btn.dl{background:#fff;color:var(--rd);border:1px solid #D6455040;margin-top:10px}
+        .add{display:flex;gap:8px;margin:14px 0}.add input{flex:1}.add .btn{width:auto;margin:0;padding:0 18px}
+        .det .k{color:var(--mu);font-size:12px;margin-top:14px}.det p{margin-top:3px;font-size:14.5px;line-height:1.5}
+        #toast{position:absolute;bottom:calc(var(--nh) + 16px);left:50%;transform:translateX(-50%);background:var(--n);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;z-index:50;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap}#toast.on{opacity:1}
+
+        .grp{background:#fff;border:1px solid var(--ln);border-radius:16px;margin-bottom:10px;overflow:hidden}
+        .gh{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}.gh:active{background:var(--nl)}
+        .gi{width:44px;height:44px;border-radius:14px;background:var(--nl);color:var(--n);display:grid;place-items:center;flex:none}
+        .gh .m{flex:1;min-width:0}.gh b{font-size:15px;display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .gh .chev{color:var(--mu);transition:transform .25s}.grp.open .chev{transform:rotate(90deg)}
+        .gb{display:none;padding:10px 10px 0;background:#F7F9FC;border-top:1px solid var(--ln)}.grp.open .gb{display:block;animation:fi .25s}
+        .drop{width:100%;display:flex;align-items:center;gap:12px;padding:14px;border:1.5px dashed #B9C3D9;border-radius:14px;background:var(--nl);color:var(--n);text-align:left;font:inherit}
+        .drop span{display:flex;flex-direction:column}.drop b{font-size:14px}.drop small{color:var(--mu);font-size:12px;margin-top:1px}
+        .fi{display:flex;align-items:center;gap:10px;border:1px solid var(--ln);border-radius:14px;padding:8px;margin-top:8px;background:#fff}
+        .fn{flex:1;min-width:0}.fn b{display:block;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fn small{color:var(--mu);font-size:11.5px}
+        .th{width:44px;height:44px;border-radius:10px;object-fit:cover;background:var(--nl);flex:none}.th.f{display:grid;place-items:center;color:var(--n)}
+        .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.th.big{width:100%;height:auto;aspect-ratio:1;border-radius:12px;cursor:pointer}
+        #dlg{position:absolute;inset:0;background:#0b1b3f99;z-index:40;display:none;align-items:center;justify-content:center;padding:28px}#dlg.on{display:flex;animation:fi .2s}
+        .dbox{background:#fff;border-radius:26px;padding:26px 22px 20px;width:100%;max-width:340px;text-align:center;animation:pop .3s cubic-bezier(.2,1.2,.4,1)}
+        @keyframes pop{from{transform:scale(.88);opacity:0}}
+        .dic{width:60px;height:60px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;background:var(--nl);color:var(--n);box-shadow:0 0 0 8px #0b25590d}
+        .dic.red{background:#D6455018;color:var(--rd);box-shadow:0 0 0 8px #D645500d}
+        .dbox h3{font-size:18px;margin-bottom:6px}.dbox .dm{font-size:13.5px;color:var(--mu);line-height:1.5}
+        .dprev{background:var(--bg);border-radius:14px;padding:11px 14px;margin:14px 0 2px;text-align:left}.dprev small{color:var(--n2);font-weight:600;font-size:12px}.dprev b{color:var(--tx);display:block;font-size:14px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .dbt{display:flex;gap:10px;margin-top:20px}.dbt .btn{margin:0;flex:1;padding:13px}.btn.rd{background:var(--rd);box-shadow:0 6px 16px #d6455055}.dbox input{margin-top:14px}
+        #lb{position:absolute;inset:0;background:#0b1430f2;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:16px}#lb.on{display:flex}
+        #lb img{max-width:100%;max-height:68%;border-radius:14px;object-fit:contain}#lb .lbb{display:flex;gap:10px;width:100%;max-width:340px}#lb .btn{margin:0;flex:1}
+        .task.hc .cs{font-size:15.5px;font-weight:700;margin-bottom:3px}.task.hc b{font-size:13.5px;font-weight:500;color:#44506b}
+        .btn:disabled{opacity:.6}
+        </style>
+      </head>
+    <body>
+      <div id="app">
+        <section class="screen on" id="s-home"></section>
+        <section class="screen" id="s-tasks"></section>
+        <section class="screen" id="s-cal"></section>
+        <section class="screen" id="s-prof"></section>
+        <nav></nav>
+        <div class="ov-bg" id="ov"><div class="sheet" id="sheet"></div></div>
+        <div id="dlg"></div><div id="lb"><img id="lbi" alt=""><div class="lbb"><button class="btn" onclick="dlF(curF)">Unduh</button><button class="btn g" onclick="closeLb()">Tutup</button></div></div>
+        <div id="toast"></div>
+      </div>
+<script>
+const $=s=>document.querySelector(s);
+const P={
+home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+list:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1 1 2-2M3.5 12l1 1 2-2M3.5 18l1 1 2-2"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5"/><path d="M16 4.7a3.5 3.5 0 0 1 0 6.6M18 14.7c2 .6 3.5 2.2 3.5 5.3"/>',
+person:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+l:'<path d="M15 6l-6 6 6 6"/>',r:'<path d="M9 6l6 6-6 6"/>',
+ok:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',clip:'<path d="M20 11.5l-7.8 7.8a4.5 4.5 0 0 1-6.4-6.4l8-8a3 3 0 0 1 4.2 4.2l-8 8a1.5 1.5 0 0 1-2.1-2.1l7.3-7.3"/>',file:'<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/>',upload:'<path d="M12 16V4M7 9l5-5 5 5M4 20h16"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',note:'<rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 8h6M9 12h6M9 16h3"/>'};
+const I=(n,s)=>`<svg viewBox="0 0 24 24"${s?` style="width:${s}px;height:${s}px"`:''}>${P[n]}</svg>`;
+$('nav').innerHTML='<div class="bar"></div><div class="items">'+[['home','home','Beranda'],['tasks','list','Tugas'],['sp'],['cal','cal','Kalender'],['prof','user','Profil']].map(([k,i,l])=>k==='sp'?'<span class="sp"></span>':`<button data-s="${k}" aria-label="${l}" class="${k==='home'?'on':''}">${I(i)}</button>`).join('')+'</div><button class="fab" id="fab" aria-label="Tambah tugas">'+I('plus')+'</button>';
+let tasks=[],courses=['Etika Bisnis','Kewarganegaraan','Pancasila','Kewirausahaan','Internet of Things','Presentasi & Komunikasi'];
+let filter='Semua',selDate=iso(new Date()),calM=new Date(),edit=null,ftype='Individu';
+try{tasks=JSON.parse(localStorage.getItem('tl_tasks')||'[]');courses=JSON.parse(localStorage.getItem('tl_courses')||'null')||courses}catch(e){}
+function save(){try{localStorage.setItem('tl_tasks',JSON.stringify(tasks));localStorage.setItem('tl_courses',JSON.stringify(courses))}catch(e){}}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+const dmy=s=>s.split('-').reverse().join('/');
+function parseDmy(s){const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s.trim());if(!m)return null;const d=new Date(+m[3],+m[2]-1,+m[1]);return d.getDate()==+m[1]&&d.getMonth()==+m[2]-1?iso(d):null}
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function due(t){if(t.done)return'';const h=(new Date(t.date+'T'+(t.time||'23:59'))-new Date())/36e5;
+ return h<0?'<span class="badge late">Terlambat</span>':h<24?'<span class="badge soon">&lt; 24 jam</span>':h<72?`<span class="badge soon">${Math.ceil(h/24)} hari lagi</span>`:''}
+function greet(){const h=new Date().getHours();return h<12?'Selamat pagi':h<15?'Selamat siang':h<19?'Selamat sore':'Selamat malam'}
+setInterval(()=>{const e=$('#gr');if(e)e.textContent=greet()},30000);
+const sorted=a=>[...a].sort((x,y)=>(x.date+(x.time||'')).localeCompare(y.date+(y.time||'')));
+function card(t,inG){const n=(t.files||[]).length;return`<div class="task ${inG?'':'hc'} ${t.done?'done':''}" onclick="detail('${t.id}')">
+<div class="m">${inG?'':`<span class="cs">${esc(t.course)}</span>`}<b>${esc(t.desc)}</b>
+<div class="meta"><span>${I(t.type==='Kelompok'?'users':'person')}${t.type}</span><span>${I('clock')}${dmy(t.date)}${t.time?' · '+t.time:''}</span>${n?`<span>${I('clip')}${n}</span>`:''}${due(t)}</div></div>
+<div class="chk" onclick="event.stopPropagation();toggle('${t.id}')">${I('ok')}</div></div>`}
+const list=(a,msg)=>a.length?a.map(t=>card(t)).join(''):`<div class="empty">${I('note')}<br>${msg}</div>`;
+const openG=new Set();
+const gk=g=>{const p=g.l.find(t=>!t.done),r=p||g.l[0];return(p?'0':'1')+r.date+(r.time||'')};
+function grp(a){const m={};a.forEach(t=>(m[t.course]=m[t.course]||[]).push(t));return Object.keys(m).map(c=>({c,l:sorted(m[c])})).sort((x,y)=>gk(x).localeCompare(gk(y)))}
+function gHtml(g){
+ const d=g.l.filter(t=>t.done).length,nx=g.l.find(t=>!t.done);
+ return`<div class="grp ${openG.has(g.c)?'open':''}"><div class="gh" data-c="${esc(g.c)}" onclick="tg(this)"><div class="gi">${I('book',22)}</div>
+ <div class="m"><b>${esc(g.c)}</b><div class="meta"><span>${g.l.length} tugas${d?' · '+d+' selesai':''}</span>${nx?due(nx):''}</div></div><div class="chev">${I('r')}</div></div>
+ <div class="gb">${g.l.map(t=>card(t,1)).join('')}</div></div>`}
+function tg(el){const c=el.dataset.c;el.parentElement.classList.toggle('open');openG.has(c)?openG.delete(c):openG.add(c)}
+function setFilter(n){filter=n;render()}
+
+function render(){
+ const done=tasks.filter(t=>t.done).length,pend=tasks.length-done,pct=tasks.length?Math.round(done/tasks.length*100):0;
+ 
+ $('#s-home').innerHTML=`<div class="top"><div><h1 id="gr">${greet()}</h1><div class="sub">Yuk, selesaikan tugasmu</div></div><div class="ic">${I('bell')}</div></div>
+ <div class="hero glow"><small>Progres Tugas</small><b>${pct}%</b><div class="bar"><i style="width:${pct}%"></i></div></div>
+ <div class="stats"><div><b>${tasks.length}</b><span>Total</span></div><div><b>${done}</b><span>Selesai</span></div><div><b>${pend}</b><span>Belum</span></div></div>
+ <div class="sec"><h2>Tugas Terdekat</h2><a onclick="go('tasks')">Lihat semua</a></div>${list(sorted(tasks.filter(t=>!t.done)).slice(0,4),'Belum ada tugas.<br>Tekan tombol + untuk menambah.')}`;
+ const f=sorted(tasks).filter(t=>filter==='Semua'||(filter==='Belum'&&!t.done)||(filter==='Selesai'&&t.done)||t.type===filter);
+ $('#s-tasks').innerHTML=`<div class="top"><div><h1>Daftar Tugas</h1><div class="sub">${tasks.length} tugas tercatat</div></div></div>
+ <div class="chips">${['Semua','Individu','Kelompok'].map(n=>`<button class="chip ${n===filter?'on':''}" onclick="setFilter('${n}')">${n}</button>`).join('')}</div>${f.length?grp(f).map(gHtml).join(''):`<div class="empty">${I('note')}<br>Tidak ada tugas di sini.</div>`}`;
+ renderCal();
+ const bc={};tasks.forEach(t=>bc[t.course]=(bc[t.course]||0)+1);
+ $('#s-prof').innerHTML=`<div style="text-align:center"><h1 style="margin-bottom:8px">Profil</h1><div class="av">${I('user')}</div><div style="font-weight:700;font-size:17px">Mahasiswa</div><div class="sub">Task List Kuliah</div></div>
+ <div class="ov glow"><div><small>Total Matkul</small><b>${courses.length}</b></div><div><small>Total Tugas</small><b>${tasks.length}</b></div><div><small>Selesai</small><b>${done}</b></div></div>
+ <div class="sec" style="margin-top:6px"><h2>Mata Kuliah</h2><a onclick="manage()">Tambah / Edit</a></div>
+ <div class="list">${courses.length?courses.map(c=>`<div class="row"><div class="n">${I('book',18)}<span>${esc(c)}</span></div><span class="cnt">${bc[c]||0} tugas</span></div>`).join(''):'<div class="row">Belum ada mata kuliah</div>'}</div>
+ <button class="btn dl" onclick="delAll()">Hapus Semua Tugas</button>`;
+}
+function renderCal(){
+ const y=calM.getFullYear(),m=calM.getMonth(),first=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate(),td=iso(new Date());
+ let g=['M','S','S','R','K','J','S'].map(d=>`<div class="d">${d}</div>`).join('')+'<div></div>'.repeat(first);
+ for(let d=1;d<=n;d++){const k=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  g+=`<div class="c ${k===td?'today':''} ${k===selDate?'sel':''} ${tasks.some(t=>t.date===k)?'has':''}" onclick="selDate='${k}';renderCal()">${d}</div>`}
+ const day=sorted(tasks.filter(t=>t.date===selDate));
+ const mp=y+'-'+String(m+1).padStart(2,'0'),mc=tasks.filter(t=>t.date.startsWith(mp)).length;
+ $('#s-cal').innerHTML=`<div class="top"><div><h1>Kalender Tugas</h1><div class="sub">${mc} deadline di bulan ini</div></div></div><div class="cal-h"><button onclick="calM=new Date(${y},${m-1},1);renderCal()">${I('l')}</button><h1>${calM.toLocaleDateString('id-ID',{month:'long',year:'numeric'})}</h1><button onclick="calM=new Date(${y},${m+1},1);renderCal()">${I('r')}</button></div>
+ <div class="card"><div class="grid">${g}</div></div><div class="sec"><h2>${dmy(selDate)}</h2><span class="sub">${day.length} tugas</span></div>${list(day,'Tidak ada deadline di hari ini.')}`;
+}
+function go(s){document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('on',e.id==='s-'+s));document.querySelectorAll('nav button[data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===s))}
+document.querySelectorAll('nav button[data-s]').forEach(b=>b.onclick=()=>go(b.dataset.s));
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2000)}
+function toggle(id){const t=tasks.find(x=>x.id===id);t.done=!t.done;save();render()}
+function openSheet(h){$('#sheet').innerHTML='<div class="grab"></div>'+h;$('#ov').classList.add('on')}
+function closeSheet(){$('#ov').classList.remove('on')}
+$('#ov').onclick=e=>{if(e.target.id==='ov')closeSheet()};
+$('#fab').onclick=()=>openForm(null);
+$('#lb').onclick=e=>{if(e.target.id==='lb')closeLb()};
+
+/* ===== penyimpanan file (IndexedDB, cadangan localStorage) ===== */
+const FS=(()=>{let db=null,ready=null;
+ function open_(){if(ready)return ready;ready=new Promise(res=>{try{const r=indexedDB.open('tl_files',1);r.onupgradeneeded=()=>r.result.createObjectStore('f');r.onsuccess=()=>{db=r.result;res()};r.onerror=()=>res();r.onblocked=()=>res()}catch(e){res()}});return ready}
+ const tx=(m,fn)=>new Promise((ok,no)=>{try{const r=fn(db.transaction('f',m).objectStore('f'));r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}});
+ const d2b=d=>{const p=d.split(','),m=(/:(.*?);/.exec(p[0])||[0,''])[1],bin=atob(p[1]),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:m})};
+ return{
+  async put(id,blob){await open_();if(db){await tx('readwrite',s=>s.put(blob,id));return}
+   const d=await new Promise((ok,no)=>{const fr=new FileReader();fr.onload=()=>ok(fr.result);fr.onerror=no;fr.readAsDataURL(blob)});localStorage.setItem('tl_f_'+id,d)},
+  async get(id){await open_();if(db){const b=await tx('readonly',s=>s.get(id));if(b)return b}const d=localStorage.getItem('tl_f_'+id);return d?d2b(d):null},
+  async del(id){await open_();try{if(db)await tx('readwrite',s=>s.delete(id))}catch(e){}try{localStorage.removeItem('tl_f_'+id)}catch(e){}}
+ }})();
+const isImg=f=>/^image\//.test(f.type||'');
+const fsz=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(0)+' KB':(n/1048576).toFixed(1)+' MB';
+const fmeta=id=>tasks.flatMap(t=>t.files||[]).find(f=>f.id===id);
+let curF=null,pend=[],rem=[];
+function hyd(){document.querySelectorAll('img[data-fid]').forEach(im=>{const id=im.dataset.fid;im.removeAttribute('data-fid');FS.get(id).then(b=>{if(b)im.src=URL.createObjectURL(b)}).catch(()=>{})})}
+async function shrink(f){
+ if(!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size<500000)return f;
+ try{const bm=await createImageBitmap(f),k=Math.min(1,1600/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
+  c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);
+  const b=await new Promise(r=>c.toBlob(r,'image/jpeg',.82));return b&&b.size<f.size?new File([b],f.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'}):f}catch(e){return f}}
+async function pickF(el){
+ const fl=[...el.files];el.value='';
+ for(const f0 of fl){
+  if(f0.size>20*1048576){toast('"'+f0.name+'" lebih dari 20 MB');continue}
+  const f=await shrink(f0);
+  pend.push({id:'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:f.name,type:f.type,size:f.size,blob:f})}
+ renderFiles()}
+function rmF(i){const f=pend.splice(i,1)[0];if(!f.blob)rem.push(f.id);renderFiles()}
+function renderFiles(){
+ const e=$('#fl');if(!e)return;
+ e.innerHTML=pend.map((f,i)=>`<div class="fi">${isImg(f)?`<img class="th" alt="" ${f.blob?`src="${f.url||(f.url=URL.createObjectURL(f.blob))}"`:`data-fid="${f.id}"`}>`:`<div class="th f">${I('file',20)}</div>`}
+ <div class="fn"><b>${esc(f.name)}</b><small>${fsz(f.size)}</small></div><button type="button" class="ib rd" onclick="rmF(${i})" aria-label="Hapus file">${I('x')}</button></div>`).join('');hyd()}
+async function dlF(id){
+ const m=fmeta(id)||{name:'file'},b=await FS.get(id);if(!b){toast('File tidak ditemukan');return}
+ const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=m.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000)}
+async function viewF(id){const b=await FS.get(id);if(!b){toast('File tidak ditemukan');return}curF=id;$('#lbi').src=URL.createObjectURL(b);$('#lb').classList.add('on')}
+function closeLb(){$('#lb').classList.remove('on');$('#lbi').removeAttribute('src')}
+
+/* ===== dialog konfirmasi ===== */
+function ask(o){return new Promise(res=>{
+ const d=$('#dlg');
+ d.innerHTML=`<div class="dbox"><div class="dic ${o.danger?'red':''}">${I(o.icon||'trash',26)}</div><h3>${o.title}</h3><div class="dm">${o.msg||''}</div>${o.input?`<input id="dv" value="${esc(o.value||'')}" maxlength="60">`:''}
+ <div class="dbt"><button class="btn g" id="dn">Batal</button><button class="btn ${o.danger?'rd':''}" id="dy">${o.ok||'Ya'}</button></div></div>`;
+ d.classList.add('on');
+ const end=v=>{d.classList.remove('on');d.onclick=null;res(v)};
+ $('#dn').onclick=()=>end(o.input?null:false);
+ $('#dy').onclick=()=>end(o.input?$('#dv').value:true);
+ d.onclick=e=>{if(e.target===d)end(o.input?null:false)};
+ if(o.input){const i=$('#dv');i.focus();i.select();i.onkeydown=e=>{if(e.key==='Enter')$('#dy').click()}}
+})}
+
+/* ===== form tugas ===== */
+function openForm(t){
+ edit=t;ftype=t?t.type:'Individu';pend=(t&&t.files||[]).map(f=>({...f}));rem=[];
+ if(!courses.length){openSheet(`<h2>Tambah Tugas</h2><div class="empty">Belum ada mata kuliah.<br>Tambahkan dulu di menu Profil.</div><button class="btn" onclick="closeSheet();go('prof')">Buka Profil</button>`);return}
+ openSheet(`<h2>${t?'Edit Tugas':'Tambah Tugas Baru'}</h2>
+ <label>Mata Kuliah</label><select id="fc">${courses.map(x=>`<option ${t&&x===t.course?'selected':''}>${esc(x)}</option>`).join('')}${t&&!courses.includes(t.course)?`<option selected>${esc(t.course)}</option>`:''}</select>
+ <label>Jenis Tugas</label><div class="seg"><button type="button" id="bi" class="${ftype==='Individu'?'on':''}" onclick="setT('Individu')">${I('person')}Individu</button><button type="button" id="bk" class="${ftype==='Kelompok'?'on':''}" onclick="setT('Kelompok')">${I('users')}Kelompok</button></div>
+ <label>Isi Tugas (disuruh ngapain)</label><textarea id="fd" placeholder="Contoh: Buat makalah 5 halaman">${t?esc(t.desc):''}</textarea>
+ <div class="two"><div><label>Deadline (dd/mm/yyyy)</label><input id="fdt" inputmode="numeric" maxlength="10" placeholder="dd/mm/yyyy" value="${dmy(t?t.date:iso(new Date()))}" oninput="mask(this)"></div><div><label>Jam</label><input type="time" id="ftm" value="${t&&t.time?t.time:'23:59'}"></div></div>
+ <label>Materi Pendukung (opsional)</label>
+ <input type="file" id="ff" multiple hidden onchange="pickF(this)">
+ <button type="button" class="drop" onclick="$('#ff').click()">${I('upload',24)}<span><b>Unggah gambar atau file</b><small>Foto soal, materi, PDF, dokumen (maks. 20 MB)</small></span></button>
+ <div id="fl"></div>
+ <button class="btn" id="sv" onclick="submitF()">${t?'Simpan Perubahan':'Simpan Tugas'}</button>`);
+ renderFiles()}
+function editT(id){const t=tasks.find(x=>x.id===id);if(t)openForm(t)}
+function mask(el){let v=el.value.replace(/\D/g,'').slice(0,8);if(v.length>4)v=v.slice(0,2)+'/'+v.slice(2,4)+'/'+v.slice(4);else if(v.length>2)v=v.slice(0,2)+'/'+v.slice(2);el.value=v}
+function setT(t){ftype=t;$('#bi').classList.toggle('on',t==='Individu');$('#bk').classList.toggle('on',t==='Kelompok')}
+async function submitF(){
+ const d=$('#fd').value.trim(),dt=parseDmy($('#fdt').value);
+ if(!d){toast('Isi tugas belum diisi');return}if(!dt){toast('Format tanggal harus dd/mm/yyyy');return}
+ const btn=$('#sv');btn.disabled=true;
+ const files=[];let fail=0;
+ for(const f of pend){if(f.blob){try{await FS.put(f.id,f.blob)}catch(e){fail++;continue}}files.push({id:f.id,name:f.name,type:f.type,size:f.size})}
+ for(const id of rem)await FS.del(id);
+ const o={course:$('#fc').value,type:ftype,desc:d,date:dt,time:$('#ftm').value,files};
+ const was=edit;
+ if(was)Object.assign(tasks.find(x=>x.id===was.id),o);else tasks.push({...o,id:'t'+Date.now(),done:false});
+ save();closeSheet();selDate=dt;calM=new Date(dt+'T00:00');render();
+ toast(fail?fail+' file gagal disimpan (penyimpanan penuh)':was?'Tugas diperbarui':'Tugas ditambahkan')}
+
+/* ===== detail & hapus ===== */
+function detail(id){
+ const t=tasks.find(x=>x.id===id);if(!t)return;
+ const fl=t.files||[],im=fl.filter(isImg),ot=fl.filter(f=>!isImg(f));
+ const fh=fl.length?`<div class="k">Materi Pendukung (${fl.length})</div>${im.length?`<div class="fgrid">${im.map(f=>`<img class="th big" alt="${esc(f.name)}" data-fid="${f.id}" onclick="viewF('${f.id}')">`).join('')}</div>`:''}${ot.map(f=>`<div class="fi" onclick="dlF('${f.id}')"><div class="th f">${I('file',20)}</div><div class="fn"><b>${esc(f.name)}</b><small>${fsz(f.size)} · ketuk untuk mengunduh</small></div></div>`).join('')}`:'';
+ openSheet(`<div class="det"><h2>Detail Tugas</h2><div class="k">Mata Kuliah</div><p><b>${esc(t.course)}</b></p>
+ <div class="k">Jenis</div><p>${t.type}</p><div class="k">Tugas</div><p>${esc(t.desc)}</p>
+ <div class="k">Deadline</div><p>${dmy(t.date)}${t.time?', '+t.time:''} ${due(t)}</p>${fh}</div>
+ <button class="btn" onclick="toggle('${id}');closeSheet()">${t.done?'Tandai Belum Selesai':'Tandai Selesai'}</button>
+ <button class="btn g" onclick="editT('${id}')">Edit Tugas</button>
+ <button class="btn dl" onclick="delT('${id}')">Hapus Tugas</button>`);hyd()}
+async function delT(id){
+ const t=tasks.find(x=>x.id===id);if(!t)return;const n=(t.files||[]).length;
+ const ok=await ask({danger:1,title:'Hapus tugas ini?',ok:'Ya, Hapus',
+  msg:`<div class="dprev"><small>${esc(t.course)}</small><b>${esc(t.desc)}</b></div><div style="margin-top:12px">${n?`${n} lampiran materi juga akan ikut terhapus. `:''}Tindakan ini tidak dapat dibatalkan.</div>`});
+ if(!ok)return;
+ for(const f of t.files||[])await FS.del(f.id);
+ tasks=tasks.filter(x=>x.id!==id);save();closeSheet();render();toast('Tugas dihapus')}
+async function delAll(){
+ if(!tasks.length){toast('Belum ada tugas');return}
+ const ok=await ask({danger:1,title:'Hapus semua tugas?',ok:'Ya, Hapus Semua',msg:`${tasks.length} tugas beserta lampirannya akan dihapus permanen. Mata kuliah tidak ikut terhapus.`});
+ if(!ok)return;
+ for(const t of tasks)for(const f of t.files||[])await FS.del(f.id);
+ tasks=[];save();render();toast('Semua tugas dihapus')}
+
+/* ===== kelola mata kuliah ===== */
+function manage(){
+ openSheet(`<h2>Kelola Mata Kuliah</h2><div class="sub">Tambah, ubah nama, atau hapus mata kuliah</div>
+ <div class="add"><input id="nc" placeholder="Nama mata kuliah baru"><button class="btn" onclick="addC()">Tambah</button></div>
+ <div class="list">${courses.map((c,i)=>`<div class="row"><div class="n"><span>${esc(c)}</span></div><button class="ib" onclick="renC(${i})" aria-label="Ubah nama">${I('edit')}</button><button class="ib rd" onclick="delC(${i})" aria-label="Hapus">${I('trash')}</button></div>`).join('')||'<div class="row">Belum ada mata kuliah</div>'}</div>
+ <button class="btn g" onclick="closeSheet()">Selesai</button>`)}
+function addC(){const v=$('#nc').value.trim();if(!v)return;if(courses.some(c=>c.toLowerCase()===v.toLowerCase())){toast('Mata kuliah sudah ada');return}courses.push(v);save();render();manage()}
+async function renC(i){
+ const o=courses[i],r=await ask({icon:'edit',title:'Ubah nama mata kuliah',msg:'Semua tugas di mata kuliah ini ikut diperbarui.',input:1,value:o,ok:'Simpan'});
+ const v=(r||'').trim();if(!v||v===o)return;
+ if(courses.some((c,j)=>j!==i&&c.toLowerCase()===v.toLowerCase())){toast('Nama sudah dipakai');return}
+ courses[i]=v;tasks.forEach(t=>{if(t.course===o)t.course=v});if(openG.has(o)){openG.delete(o);openG.add(v)}save();render();manage()}
+async function delC(i){
+ const c=courses[i],n=tasks.filter(t=>t.course===c).length;
+ if(n){toast(`Masih dipakai ${n} tugas`);return}
+ const ok=await ask({danger:1,title:'Hapus mata kuliah?',ok:'Ya, Hapus',msg:`<div class="dprev"><small>Mata Kuliah</small><b>${esc(c)}</b></div>`});
+ if(!ok)return;courses.splice(i,1);save();render();manage()}
+render();
+</script>
+</body>
+</html>
