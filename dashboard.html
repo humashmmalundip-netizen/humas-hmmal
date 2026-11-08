@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard dan Simulasi SparePart Hub</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg1:#17404b;--bg2:#3a8a78;--card:#ffffff;--ink:#17404b;--sub:#3f5b63;--glass:rgba(255,255,255,.16);--line:rgba(255,255,255,.55);--ok:#1e9e6a;--warn:#c98a00;--bad:#d64545;--accent:#2e8b7a;--chip:#eef5f5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--card:#10333c;--ink:#e6f2f1;--sub:#a9c7c6;--chip:#17424d}}
+:root[data-theme="dark"]{--card:#10333c;--ink:#e6f2f1;--sub:#a9c7c6;--chip:#17424d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:Calibri,Arial,sans-serif;color:#fff;background:linear-gradient(135deg,var(--bg1),var(--bg2));background-attachment:fixed;min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 40px}
+.brand{letter-spacing:.2em;font-weight:700;font-size:13px}
+h1{margin:4px 0 2px;font-size:clamp(26px,5vw,38px)}
+.lead{margin:0 0 16px;opacity:.85;font-style:italic}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.kpi{border-radius:16px;padding:12px 14px;border:1px solid var(--line);background:var(--glass)}
+.kpi:nth-child(odd){background:var(--card);color:var(--ink)}
+.kpi b{display:block;font-size:13px}.kpi strong{display:block;font-size:clamp(20px,3vw,28px);margin:4px 0}.kpi small{opacity:.8;font-size:11px}
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:860px){.grid,.grid2{grid-template-columns:1fr!important}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.panel{border-radius:18px;padding:14px;border:1px solid var(--line);background:var(--glass);min-width:0}
+.panel.w{background:var(--card);color:var(--ink)}
+h2{margin:0 0 10px;font-size:17px}
+.rack{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+.tile{background:var(--card);color:var(--ink);border-radius:12px;padding:8px;border:2px solid transparent;cursor:pointer;text-align:left;font:inherit;position:relative}
+.tile:focus-visible{outline:3px solid #ffd54a}
+.tile.sel{border-color:#ffd54a}
+.tile .r{font-size:11px;color:var(--sub);display:flex;justify-content:space-between}
+.tile .n{font-size:12px;font-weight:700;min-height:30px;margin:2px 0}
+.tile .u{font-size:20px;font-weight:700}
+.led{width:10px;height:10px;border-radius:50%;background:#9aa;display:inline-block}
+.tile.lit{animation:pulse .6s infinite alternate;border-color:#ffd54a}
+.tile.lit .led{background:#ffd54a;box-shadow:0 0 10px 3px #ffd54a}
+@keyframes pulse{to{transform:scale(1.04)}}
+@media(prefers-reduced-motion:reduce){.tile.lit{animation:none}}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;color:#fff}
+.Aman{background:var(--ok)}.Menipis{background:var(--warn)}.Habis{background:var(--bad)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+button.b{font:inherit;font-weight:700;border:0;border-radius:10px;padding:9px 12px;cursor:pointer;background:var(--accent);color:#fff}
+button.b.alt{background:var(--chip);color:var(--ink)}button.b.on{background:#d64545}
+button.b:focus-visible{outline:3px solid #ffd54a}
+input[type=range]{width:100%}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.stat div{background:var(--chip);border-radius:10px;padding:8px;text-align:center}.stat b{display:block;font-size:20px}.stat small{color:var(--sub)}
+.log{list-style:none;margin:0;padding:0;max-height:150px;overflow:auto;font-size:13px}
+.log li{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.2)}.log time{opacity:.7;margin-right:6px}
+svg{width:100%;height:auto;display:block}
+.ax{fill:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:6px 4px;border-bottom:1px solid rgba(128,128,128,.25)}
+.scroll{overflow-x:auto}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#17404b;color:#fff;padding:10px 16px;border-radius:12px;border:1px solid #fff;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
+.toast.show{opacity:1}
+.note{font-size:12px;opacity:.85;margin-top:14px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">SPAREPART HUB</div>
+  <h1>Dashboard dan Simulasi Gudang Pintar IoT</h1>
+  <p class="lead">Pilih rak, ubah berat sensor, atau buat pesanan untuk melihat perubahan pada dashboard.</p>
+
+  <section class="kpis" id="kpis" aria-label="Ringkasan"></section>
+
+  <div class="grid">
+    <section class="panel" aria-label="Rak pintar">
+      <h2>Rak Pintar (klik rak untuk memilih)</h2>
+      <div class="rack" id="rack"></div>
+    </section>
+    <section class="panel w" aria-label="Panel simulasi">
+      <h2>Panel Simulasi</h2>
+      <div id="sim"></div>
+      <div class="row">
+        <button class="b alt" id="auto" aria-pressed="false">Mulai pesanan otomatis</button>
+        <button class="b alt" id="sync">Sinkronkan catatan sistem</button>
+        <button class="b alt" id="reset">Reset simulasi</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="grid2">
+    <section class="panel w"><h2>Tren Omzet Harian (Rp)</h2><div id="c1"></div></section>
+    <section class="panel w"><h2>Stok per Kategori (unit)</h2><div id="c2"></div></section>
+  </div>
+
+  <div class="grid2">
+    <section class="panel w"><h2>Peringatan Stok Menipis</h2><div class="scroll" id="alerts"></div></section>
+    <section class="panel"><h2>Log Sensor dan Scan Label</h2><ul class="log" id="log" aria-live="polite"></ul></section>
+  </div>
+  <p class="note">Alur simulasi: pesanan dibuat, lampu rak menyala (pick-to-light), sensor berat membaca pengurangan, stok dan peringatan diperbarui otomatis. Jumlah stok = berat terbaca sensor dibagi berat per satuan.</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const P=[["RM-001","Kampas Rem Depan","Rem","A1",120,24,10,24,45000],["RM-002","Kampas Rem Belakang","Rem","A2",110,6,10,7,40000],["RM-003","Kabel Rem","Rem","A3",85,18,8,18,25000],
+["MS-001","Busi","Mesin","B1",55,12,15,12,28000],["MS-002","Filter Oli","Mesin","B2",90,30,12,30,25000],["MS-003","Filter Udara","Mesin","B3",110,9,10,9,55000],
+["MS-004","Oli Mesin 1 L","Mesin","B4",900,40,20,42,55000],["MS-005","V-Belt Matic","Mesin","B5",250,14,6,14,135000],["MS-006","Kabel Gas","Mesin","B6",80,16,8,16,30000],
+["KL-001","Bohlam Lampu Depan","Kelistrikan","C1",25,0,10,0,20000],["KL-002","Aki 12 V","Kelistrikan","C2",3500,3,4,3,280000],["KL-003","Kiprok (Regulator)","Kelistrikan","C3",150,11,5,11,120000],
+["KL-004","Sekring (isi 10)","Kelistrikan","C4",30,35,15,35,15000],["RR-001","Rantai Motor","Rantai & Roda","D1",700,14,6,14,160000],["RR-002","Gir Set","Rantai & Roda","D2",600,8,4,9,220000],
+["RR-003","Ban Dalam","Rantai & Roda","D3",350,26,10,26,40000],["RR-004","Ban Luar","Rantai & Roda","D4",2500,10,5,10,190000],["BD-001","Spion (sepasang)","Body","E1",320,12,6,12,60000],
+["BD-002","Handgrip (sepasang)","Body","E2",280,15,6,15,35000],["BD-003","Lampu Sein","Body","E3",45,20,10,20,25000]];
+const CATS=["Rem","Mesin","Kelistrikan","Rantai & Roda","Body"];
+const HIST=[355000,108000,270000,1214000,255000,475000,510000,710000,219000,545000,200000,405000,555000,370000];
+const BASE_ORD=59, BASE_REV=6191000;
+let W,SYS,orders,rev,today,sel,lit,logs,timer;
+const $=id=>document.getElementById(id);
+const rp=n=>"Rp "+n.toLocaleString("id-ID");
+const units=i=>Math.max(0,Math.round(W[i]/P[i][4]));
+const status=i=>{const u=units(i);return u===0?"Habis":(u<=P[i][6]?"Menipis":"Aman")};
+function init(){
+  W=P.map(p=>p[5]*p[4]); SYS=P.map(p=>p[7]); orders=0; rev=0; today=0; sel=3; lit=-1; logs=[];
+  addLog("Simulasi dimulai. Semua sensor terhubung.");
+  render();
+}
+function addLog(t){const d=new Date();logs.unshift({t:d.toLocaleTimeString("id-ID"),m:t});logs=logs.slice(0,30);}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),2200);}
+function order(i,q,ch){
+  const have=units(i);
+  if(have<q){toast("Stok "+P[i][1]+" tidak cukup ("+have+" unit). Pesanan ditolak.");addLog("Pesanan "+P[i][1]+" x"+q+" ditolak: stok kurang");render();return false;}
+  W[i]-=q*P[i][4]; orders++; rev+=q*P[i][8]; today+=q*P[i][8];
+  lit=i; setTimeout(()=>{if(lit===i){lit=-1;render();}},2500);
+  addLog("Pesanan "+(ch||"Website")+": "+P[i][1]+" x"+q+". Lampu rak "+P[i][3]+" menyala, sensor berat -"+(q*P[i][4])+" g");
+  render(); return true;
+}
+function restock(i,q){
+  W[i]+=q*P[i][4]; addLog("Barang masuk (scan RFID): "+P[i][1]+" +"+q+" unit di rak "+P[i][3]+", berat +"+(q*P[i][4])+" g"); render();
+}
+function render(){
+  const tot=P.reduce((s,_,i)=>s+units(i),0), low=P.filter((_,i)=>status(i)!=="Aman").length;
+  const acc=Math.round(P.filter((_,i)=>units(i)===SYS[i]).length/P.length*100);
+  const K=[["Jenis Barang",P.length,"jenis part di rak pintar"],["Total Unit di Gudang",tot.toLocaleString("id-ID"),"dihitung dari sensor berat"],["Perlu Restock",low,"stok sama atau di bawah minimum"],
+   ["Pesanan 14 Hari",BASE_ORD+orders,"semua kanal penjualan"],["Omzet 14 Hari",rp(BASE_REV+rev),"total nilai pesanan"],["Akurasi Stok",acc+"%","sensor sama dengan catatan sistem"]];
+  $("kpis").innerHTML=K.map(k=>`<div class="kpi"><b>${k[0]}</b><strong>${k[1]}</strong><small>${k[2]}</small></div>`).join("");
+  $("rack").innerHTML=P.map((p,i)=>`<button class="tile ${i===sel?"sel":""} ${i===lit?"lit":""}" data-i="${i}" aria-label="Rak ${p[3]} ${p[1]}, ${units(i)} unit, ${status(i)}">
+    <div class="r"><span>Rak ${p[3]}</span><span class="led"></span></div><div class="n">${p[1]}</div>
+    <div class="u">${units(i)}</div><span class="badge ${status(i)}">${status(i)}</span></button>`).join("");
+  const p=P[sel], max=Math.max(p[5],p[6]*2,5)*2*p[4];
+  $("sim").innerHTML=`<div><b>${p[1]}</b> <small>(${p[0]}, rak ${p[3]})</small></div>
+   <div class="stat"><div><b>${W[sel]}</b><small>berat sensor (g)</small></div><div><b>${units(sel)}</b><small>unit (min ${p[6]})</small></div><div><b><span class="badge ${status(sel)}">${status(sel)}</span></b><small>status</small></div></div>
+   <label for="wt"><small>Ubah berat terbaca sensor (g), per satuan ${p[4]} g</small></label>
+   <input type="range" id="wt" min="0" max="${max}" step="1" value="${Math.min(W[sel],max)}">
+   <div class="row"><button class="b" data-a="o1">Pesan 1 unit</button><button class="b" data-a="o3">Pesan 3 unit</button><button class="b alt" data-a="r5">Barang masuk +5</button></div>
+   <small>Catatan sistem: ${SYS[sel]} unit. Harga: ${rp(p[8])}</small>`;
+  $("wt").oninput=e=>{W[sel]=+e.target.value;addLog("Sensor "+p[3]+" membaca "+W[sel]+" g ("+units(sel)+" unit)");render();$("wt").focus();};
+  line(); bars(); alerts();
+  $("log").innerHTML=logs.map(l=>`<li><time>${l.t}</time>${l.m}</li>`).join("");
+}
+function line(){
+  const d=HIST.concat([today]), w=600,h=250,l=56,r=10,t=14,b=30, mx=Math.max(...d,1)*1.1;
+  const x=i=>l+i*(w-l-r)/(d.length-1), y=v=>h-b-v/mx*(h-t-b);
+  let s=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Grafik omzet harian">`;
+  for(let k=0;k<=4;k++){const v=mx*k/4,yy=y(v);s+=`<line x1="${l}" x2="${w-r}" y1="${yy}" y2="${yy}" stroke="#8aa" stroke-opacity=".3"/><text class="ax" x="${l-6}" y="${yy+4}" text-anchor="end">${Math.round(v/1000)}rb</text>`;}
+  s+=`<polyline fill="none" stroke="#1f6f78" stroke-width="3" points="${d.map((v,i)=>x(i)+","+y(v)).join(" ")}"/>`;
+  d.forEach((v,i)=>{s+=`<circle cx="${x(i)}" cy="${y(v)}" r="${i===d.length-1?6:4}" fill="${i===d.length-1?"#d98e00":"#1f6f78"}"><title>${i===d.length-1?"Hari ini (simulasi)":"Hari "+(i+1)}: ${rp(v)}</title></circle>`;if(i%2===0||i===d.length-1)s+=`<text class="ax" x="${x(i)}" y="${h-10}" text-anchor="middle">${i===d.length-1?"Hari ini":i+1}</text>`;});
+  $("c1").innerHTML=s+"</svg>";
+}
+function bars(){
+  const v=CATS.map(c=>P.reduce((s,p,i)=>s+(p[2]===c?units(i):0),0)), w=600,h=250,l=40,b=34,t=18, mx=Math.max(...v,1)*1.15, bw=(w-l-10)/v.length;
+  let s=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Grafik stok per kategori">`;
+  for(let k=0;k<=4;k++){const val=mx*k/4,yy=h-b-val/mx*(h-t-b);s+=`<line x1="${l}" x2="${w-10}" y1="${yy}" y2="${yy}" stroke="#8aa" stroke-opacity=".3"/><text class="ax" x="${l-6}" y="${yy+4}" text-anchor="end">${Math.round(val)}</text>`;}
+  v.forEach((n,i)=>{const bh=n/mx*(h-t-b),x=l+i*bw+bw*.2;s+=`<rect x="${x}" y="${h-b-bh}" width="${bw*.6}" height="${bh}" rx="4" fill="#2e8b7a"/><text class="ax" x="${x+bw*.3}" y="${h-b-bh-5}" text-anchor="middle" style="font-weight:700">${n}</text><text class="ax" x="${x+bw*.3}" y="${h-12}" text-anchor="middle">${CATS[i]}</text>`;});
+  $("c2").innerHTML=s+"</svg>";
+}
+function alerts(){
+  const a=P.map((p,i)=>i).filter(i=>status(i)!=="Aman");
+  $("alerts").innerHTML=a.length?`<table><tr><th>Nama Part</th><th>Rak</th><th>Stok</th><th>Min</th><th>Status</th></tr>`+a.map(i=>`<tr><td>${P[i][1]}</td><td>${P[i][3]}</td><td>${units(i)}</td><td>${P[i][6]}</td><td><span class="badge ${status(i)}">${status(i)}</span></td></tr>`).join("")+"</table>":"<p>Semua stok aman.</p>";
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest(".tile"); if(t){sel=+t.dataset.i;render();return;}
+  const a=e.target.dataset&&e.target.dataset.a; if(!a)return;
+  if(a==="o1")order(sel,1); if(a==="o3")order(sel,3); if(a==="r5")restock(sel,5);
+});
+$("sync").onclick=()=>{SYS=P.map((_,i)=>units(i));addLog("Catatan sistem disinkronkan dengan hitungan sensor");toast("Catatan sistem disamakan dengan sensor");render();};
+$("reset").onclick=()=>{stopAuto();init();toast("Simulasi direset");};
+function stopAuto(){clearInterval(timer);timer=null;$("auto").textContent="Mulai pesanan otomatis";$("auto").classList.remove("on");$("auto").setAttribute("aria-pressed","false");}
+$("auto").onclick=()=>{
+  if(timer){stopAuto();return;}
+  $("auto").textContent="Hentikan pesanan otomatis";$("auto").classList.add("on");$("auto").setAttribute("aria-pressed","true");
+  timer=setInterval(()=>{
+    const i=Math.floor(Math.random()*P.length), chs=["Website","Marketplace","Bengkel Mitra"], ch=chs[Math.floor(Math.random()*3)];
+    if(Math.random()<.15)restock(i,3+Math.floor(Math.random()*5));
+    else order(i,ch==="Bengkel Mitra"&&P[i][4]<300?3:1,ch);
+  },2200);
+};
+init();
+</script>
+</body>
+</html>
